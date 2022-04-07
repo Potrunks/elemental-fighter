@@ -34,8 +34,7 @@ public class MovePlayer : MonoBehaviour
     public float dashForce;
     public const float dashCooldownTime = 1;
     public float nextTimeDash;
-    [SerializeField]
-    private int playerIndex;
+    public int playerIndex;
     public GameObject dashEffectPrefab;
     public GameObject dashSpawnPoint;
     private ICharacterState currentState;

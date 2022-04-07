@@ -10,24 +10,32 @@ public class IdleCharacterState : CharacterState
         }
         else
         {
-            // Verify if blocking
-            if (player.isBlockingAttack == true)
+            // Fall State
+            if (player.rb.velocity.y <= -0.1f)
             {
-                return nextState = new BlockCharacterState();
+                return nextState = new FallCharacterState();
             }
             else
             {
-                // Move Forward
-                if ((player.rb.velocity.x > 0.1f && player.spriteRenderer.flipX == false)
-                || (player.rb.velocity.x < -0.1f && player.spriteRenderer.flipX == true))
+                // Verify if blocking
+                if (player.isBlockingAttack == true)
                 {
-                    return nextState = new MoveForwardCharacterState();
+                    return nextState = new BlockCharacterState();
                 }
-                // Move Backward
-                if ((player.rb.velocity.x < -0.1f && player.spriteRenderer.flipX == false)
-                || (player.rb.velocity.x > 0.1f && player.spriteRenderer.flipX == true))
+                else
                 {
-                    return nextState = new MoveBackwardCharacterState();
+                    // Move Forward
+                    if ((player.rb.velocity.x > 0.1f && player.spriteRenderer.flipX == false)
+                    || (player.rb.velocity.x < -0.1f && player.spriteRenderer.flipX == true))
+                    {
+                        return nextState = new MoveForwardCharacterState();
+                    }
+                    // Move Backward
+                    if ((player.rb.velocity.x < -0.1f && player.spriteRenderer.flipX == false)
+                    || (player.rb.velocity.x > 0.1f && player.spriteRenderer.flipX == true))
+                    {
+                        return nextState = new MoveBackwardCharacterState();
+                    }
                 }
             }
         }
