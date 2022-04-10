@@ -147,9 +147,12 @@ public class MovePlayer : MonoBehaviour
             }
         }
     }
-    public void LightATK()
+    public void OnLightATK(InputAction.CallbackContext context)
     {
-        currentState.PerformingInput("LightATK");
+        if (context.performed)
+        {
+            currentState.PerformingInput("LightATK");
+        }
     }
     void Start()
     {
@@ -169,13 +172,19 @@ public class MovePlayer : MonoBehaviour
         MultipleTargetCamFollow.instance.players.Add(this.transform);
     }
 
-    public void MediumATK()
+    public void OnMediumATK(InputAction.CallbackContext context)
     {
-        currentState.PerformingInput("MediumATK");
+        if (context.performed)
+        {
+            currentState.PerformingInput("MediumATK");
+        }
     }
-    public void HeavyATK()
+    public void OnHeavyATK(InputAction.CallbackContext context)
     {
-        currentState.PerformingInput("HeavyATK");
+        if (context.performed)
+        {
+            currentState.PerformingInput("HeavyATK");
+        }
     }
     private void CastMediumFireElemental()
     {
@@ -204,7 +213,8 @@ public class MovePlayer : MonoBehaviour
         //Instantiate(dashEffectPrefab, dashSpawnPoint.transform.position, Quaternion.identity);
     }
 
-    public void BloodEffect(){
+    public void BloodEffect()
+    {
         bloodEffect.Play();
     }
 }

@@ -135,7 +135,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   dashForce: 50
   nextTimeDash: 0
-  playerIndex: 0
+  playerIndex: 1
   dashEffectPrefab: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
   dashSpawnPoint: {fileID: 4152062392739471539}
   dashEffect: {fileID: 4152062393090402417}
@@ -275,8 +275,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4152062391814938603}
         m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: LightATK
-        m_Mode: 1
+        m_MethodName: OnLightATK
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -291,8 +291,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4152062391814938603}
         m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: MediumATK
-        m_Mode: 1
+        m_MethodName: OnMediumATK
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -307,8 +307,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4152062391814938603}
         m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: HeavyATK
-        m_Mode: 1
+        m_MethodName: OnHeavyATK
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
