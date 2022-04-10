@@ -50,6 +50,7 @@ public class HurtCharacterState : CharacterState
         player.moveSpeed = player.stopMoveSpeed;
         // isHurting go to False value
         player.isHurting = false;
+        player.BloodEffect();
         player.animator.Play("Hurt", -1, 0.0f);
     }
 

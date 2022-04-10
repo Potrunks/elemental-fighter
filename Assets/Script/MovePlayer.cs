@@ -40,6 +40,7 @@ public class MovePlayer : MonoBehaviour
     private ICharacterState currentState;
     private ICharacterState nextState;
     public ParticleSystem dashEffect;
+    public ParticleSystem bloodEffect;
     public int GetPlayerIndex()
     {
         return playerIndex;
@@ -126,6 +127,7 @@ public class MovePlayer : MonoBehaviour
                 hitBoxWeapon.GetComponent<HitBoxWeapon>().Rotate(spriteRenderer.flipX);
                 dashSpawnPoint.GetComponent<DashSpawnPointFlip>().Rotate(spriteRenderer.flipX);
                 dashEffect.transform.Rotate(0f, 180f, 0f);
+                bloodEffect.transform.Rotate(0f, 0f, 180f);
             }
         }
         else if (transform.position.x > enemy.transform.position.x)
@@ -141,6 +143,7 @@ public class MovePlayer : MonoBehaviour
                 hitBoxWeapon.GetComponent<HitBoxWeapon>().Rotate(spriteRenderer.flipX);
                 dashSpawnPoint.GetComponent<DashSpawnPointFlip>().Rotate(spriteRenderer.flipX);
                 dashEffect.transform.Rotate(0f, 180f, 0f);
+                bloodEffect.transform.Rotate(0f, 0f, 180f);
             }
         }
     }
@@ -199,5 +202,9 @@ public class MovePlayer : MonoBehaviour
     {
         dashEffect.Play();
         //Instantiate(dashEffectPrefab, dashSpawnPoint.transform.position, Quaternion.identity);
+    }
+
+    public void BloodEffect(){
+        bloodEffect.Play();
     }
 }
