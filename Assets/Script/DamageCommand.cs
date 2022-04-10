@@ -10,7 +10,7 @@ public class DamageCommand : MonoBehaviour
     public float heavyATKPushForce;
     void Start()
     {
-        currentHealth = maxHealth;
+        ResetHealth();
     }
     public void TakeDamage(int damage)
     {
@@ -30,14 +30,21 @@ public class DamageCommand : MonoBehaviour
         Instantiate(blockingEffectPrefab, BlockingEffectSpawnPoint.transform.position, Quaternion.identity);
     }
 
-    public void TakeHeavyDamage(){
-        if (GetComponent<MovePlayer>().spriteRenderer.flipX == false)
-        {
-            GetComponent<MovePlayer>().rb.velocity = Vector2.left * heavyATKPushForce;
-        }
-        else
-        {
-            GetComponent<MovePlayer>().rb.velocity = Vector2.right * heavyATKPushForce;
-        }
+    public void ResetHealth(){
+        currentHealth = maxHealth;
+    }
+
+    public void ResetPlayer(MovePlayer player, GameObject enemy){
+        ResetHealth();
+        PlayerStartSpawn(player);
+        EnemyStartSpawn(enemy);
+    }
+
+    public void PlayerStartSpawn(MovePlayer player){
+        player.transform.position = player.GetComponentInParent<SpawnPlayer>().transform.position;
+    }
+
+    public void EnemyStartSpawn(GameObject enemy){
+        enemy.transform.position = enemy.GetComponentInParent<SpawnPlayer>().transform.position;
     }
 }

@@ -29,7 +29,6 @@ public class HeavyFireElementalCommand : MonoBehaviour
         try
         {
             other.GetComponent<DamageCommand>().TakeDamage(heavyFireElementalDamage);
-            //other.GetComponent<DamageCommand>().TakeHeavyDamage();
             EnemyTakeHeavyATK(other.GetComponent<Rigidbody2D>(), other.GetComponent<MovePlayer>());
         }
         finally

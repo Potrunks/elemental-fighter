@@ -6,7 +6,9 @@ public class DieCharacterState : CharacterState
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
-            GameObject.Destroy(player.gameObject);
+            //GameObject.Destroy(player.gameObject);
+            player.GetComponent<DamageCommand>().ResetPlayer(player, player.enemy);
+            return nextState = new IdleCharacterState();
         }
         return nextState;
     }

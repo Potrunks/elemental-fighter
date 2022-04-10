@@ -11,6 +11,6 @@ public class SpawnPlayer : MonoBehaviour
         // lui donner l'index
         selectedCharacter.GetComponent<MovePlayer>().playerIndex = playerIndex;
         // instancier un joueur et le faire apparaitre sur le spawn
-        Instantiate(selectedCharacter, this.transform.position, Quaternion.identity);
+        Instantiate(selectedCharacter, this.transform.position, Quaternion.identity, this.transform);
     }
 }
