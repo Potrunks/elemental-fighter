@@ -128,6 +128,7 @@ public class MovePlayer : MonoBehaviour
                 dashSpawnPoint.GetComponent<DashSpawnPointFlip>().Rotate(spriteRenderer.flipX);
                 dashEffect.transform.Rotate(0f, 180f, 0f);
                 bloodEffect.transform.Rotate(0f, 0f, 180f);
+                GetComponent<DamageCommand>().bleedingEffect.transform.Rotate(0f, 180f, 0f);
             }
         }
         else if (transform.position.x > enemy.transform.position.x)
@@ -144,6 +145,7 @@ public class MovePlayer : MonoBehaviour
                 dashSpawnPoint.GetComponent<DashSpawnPointFlip>().Rotate(spriteRenderer.flipX);
                 dashEffect.transform.Rotate(0f, 180f, 0f);
                 bloodEffect.transform.Rotate(0f, 0f, 180f);
+                GetComponent<DamageCommand>().bleedingEffect.transform.Rotate(0f, 180f, 0f);
             }
         }
     }

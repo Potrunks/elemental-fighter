@@ -56,7 +56,10 @@ public class HurtCharacterState : CharacterState
 
     public override void OnExit(MovePlayer player)
     {
-
+        DamageCommand damageCommandPlayer = player.GetComponent<DamageCommand>();
+        int currentHealth = damageCommandPlayer.currentHealth;
+        int maxHealth = damageCommandPlayer.maxHealth;
+        
     }
 
     public override void PerformingInput(string action)
