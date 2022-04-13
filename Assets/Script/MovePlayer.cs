@@ -161,12 +161,12 @@ public class MovePlayer : MonoBehaviour
         animator = GetComponent<Animator>();
         if (GetComponent<MovePlayer>().playerIndex == 0)
         {
-            this.gameObject.tag = "Player";
+            //this.gameObject.tag = "Player";
             this.gameObject.name = "Character1";
         }
         else
         {
-            this.gameObject.tag = "Player2";
+            //this.gameObject.tag = "Player2";
             this.gameObject.name = "Character2";
         }
         currentState = new IdleCharacterState();
@@ -218,5 +218,13 @@ public class MovePlayer : MonoBehaviour
     public void BloodEffect()
     {
         bloodEffect.Play();
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PauseMenu.instance.PauseGame(this.playerIndex);
+        }
     }
 }
