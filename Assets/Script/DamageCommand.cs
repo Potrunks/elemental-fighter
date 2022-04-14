@@ -111,6 +111,7 @@ public class DamageCommand : MonoBehaviour
 
     public void ResetPlayer(MovePlayer player, GameObject enemy)
     {
+        enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().victoryPoint ++;
         ResetHealth();
         PlayerStartSpawn(player);
         EnemyStartSpawn(enemy);
