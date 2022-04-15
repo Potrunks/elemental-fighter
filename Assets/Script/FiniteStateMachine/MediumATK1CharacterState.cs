@@ -21,6 +21,7 @@ public class MediumATK1CharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("Fire");
         // Check if grounded
         if (player.isGrounding == true)
         {

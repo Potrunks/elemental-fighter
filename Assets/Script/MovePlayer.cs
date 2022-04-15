@@ -41,6 +41,7 @@ public class MovePlayer : MonoBehaviour
     private ICharacterState nextState;
     public ParticleSystem dashEffect;
     public ParticleSystem bloodEffect;
+    public AudioManager audioManager;
     public int GetPlayerIndex()
     {
         return playerIndex;

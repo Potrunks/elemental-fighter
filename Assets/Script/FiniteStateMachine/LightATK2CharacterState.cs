@@ -21,6 +21,7 @@ public class LightATK2CharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("Hit");
         // Check if grounded
         if (player.isGrounding == true)
         {

@@ -27,6 +27,7 @@ public class BlockingCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("Block");
         // Push effect
         player.GetComponent<DamageCommand>().DisplayBlockingEffect();
         // Move player with push
