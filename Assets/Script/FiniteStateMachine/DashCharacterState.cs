@@ -39,6 +39,7 @@ public class DashCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("FireDash");
         // dash effect
         player.DashEffect();
         // dash move

@@ -34,6 +34,7 @@ public class JumpCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("Jump");
         player.moveSpeed = player.normalMoveSpeed;
         player.rb.AddForce(new Vector2(0f, player.jumpForce));
         player.animator.Play("Jump");

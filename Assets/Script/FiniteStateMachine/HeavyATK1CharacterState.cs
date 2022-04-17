@@ -21,7 +21,7 @@ public class HeavyATK1CharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
-        player.audioManager.Play("Fire");
+        player.audioManager.Play("Fireball");
         if (player.isGrounding == true)
         {
             // Disable Velocity Player

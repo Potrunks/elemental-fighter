@@ -21,7 +21,7 @@ public class LightATK1CharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
-        player.audioManager.Play("Hit");
+        player.audioManager.Play("SwordAttack1");
         // Check if grounded
         if (player.isGrounding == true)
         {

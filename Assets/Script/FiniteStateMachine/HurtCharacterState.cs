@@ -46,6 +46,7 @@ public class HurtCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("Hurting");
         // Play animation
         player.moveSpeed = player.stopMoveSpeed;
         // isHurting go to False value

@@ -26,7 +26,10 @@ public class FallCharacterState : CharacterState
 
     public override void OnExit(MovePlayer player)
     {
-
+        if (player.isGrounding == true)
+        {
+            player.audioManager.Play("Grounding");
+        }
     }
 
     public override void PerformingInput(string action)

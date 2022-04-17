@@ -30,13 +30,14 @@ public class MoveBackwardCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("MoveBackward");
         player.moveSpeed = player.normalMoveSpeed / 2;
         player.animator.Play("BackWalk");
     }
 
     public override void OnExit(MovePlayer player)
     {
-
+        player.audioManager.Stop("MoveBackward");
     }
 
     public override void PerformingInput(string action)

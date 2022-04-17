@@ -30,12 +30,13 @@ public class MoveForwardCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
+        player.audioManager.Play("MoveForward");
         player.animator.Play("Run");
     }
 
     public override void OnExit(MovePlayer player)
     {
-
+        player.audioManager.Stop("MoveForward");
     }
 
     public override void PerformingInput(string action)
