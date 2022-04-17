@@ -1,6 +1,7 @@
 public class HeavyATK1TransitionCharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private bool isAirTransition = false;
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.isHurting == true)
@@ -11,7 +12,7 @@ public class HeavyATK1TransitionCharacterState : CharacterState
         else
         {
             // attendre fin animation sauf pour hurt state
-            if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            if ((isAirTransition == true && player.isGrounding == true) || player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
             {
                 // idle state
                 if (player.isGrounding == true)
@@ -48,12 +49,13 @@ public class HeavyATK1TransitionCharacterState : CharacterState
         {
             // if false, air heavy atk 1 transition
             player.animator.Play("AirHeavyAttack1Transition");
+            isAirTransition = true;
         }
     }
 
     public override void OnExit(MovePlayer player)
     {
-
+        isAirTransition = false;
     }
 
     public override void PerformingInput(string action)

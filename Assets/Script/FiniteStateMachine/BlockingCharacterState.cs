@@ -21,7 +21,6 @@ public class BlockingCharacterState : CharacterState
                 }
             }
         }
-
         return nextState;
     }
 

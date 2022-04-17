@@ -38,7 +38,7 @@ public class LightATK1CharacterState : CharacterState
 
     public override void OnExit(MovePlayer player)
     {
-
+        
     }
 
     public override void PerformingInput(string action)

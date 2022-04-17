@@ -13,7 +13,7 @@ public class IdleCharacterState : CharacterState
         else
         {
             // Fall State
-            if (player.rb.velocity.y <= -0.1f)
+            if (player.rb.velocity.y <= -0.01f)
             {
                 return nextState = new FallCharacterState();
             }

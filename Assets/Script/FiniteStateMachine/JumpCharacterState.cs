@@ -7,17 +7,20 @@ public class JumpCharacterState : CharacterState
     {
         if (player.isHurting == false)
         {
-            // Idle State
-            if (player.isGrounding == true)
+            if (!(player.rb.velocity.y >= 0.01f))
             {
-                return nextState = new IdleCharacterState();
-            }
-            else
-            {
-                // Fall State
-                if (player.rb.velocity.y <= -0.1f)
+                // Idle State
+                if (player.isGrounding == true)
                 {
-                    return nextState = new FallCharacterState();
+                    return nextState = new IdleCharacterState();
+                }
+                else
+                {
+                    // Fall State
+                    if (player.rb.velocity.y <= -0.1f)
+                    {
+                        return nextState = new FallCharacterState();
+                    }
                 }
             }
         }
@@ -38,7 +41,7 @@ public class JumpCharacterState : CharacterState
 
     public override void OnExit(MovePlayer player)
     {
-        
+
     }
 
     public override void PerformingInput(string action)

@@ -4,12 +4,17 @@ public class BlockCharacterState : CharacterState
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // Verify if blocking ATK
-        if(player.isHurting == true){
+        if (player.isHurting == true)
+        {
             return nextState = new BlockingCharacterState();
         }
-        // Verify if is not blocking
-        if(player.isBlockingAttack == false){
-            return nextState = new IdleCharacterState();
+        else
+        {
+            // Verify if is not blocking
+            if (player.isBlockingAttack == false)
+            {
+                return nextState = new IdleCharacterState();
+            }
         }
         return nextState;
     }
@@ -25,11 +30,11 @@ public class BlockCharacterState : CharacterState
 
     public override void OnExit(MovePlayer player)
     {
-        
+
     }
 
     public override void PerformingInput(string action)
     {
-        
+
     }
 }
