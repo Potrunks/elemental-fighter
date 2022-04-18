@@ -83,12 +83,15 @@ public class MovePlayer : MonoBehaviour
     }
     public void OnMove(InputAction.CallbackContext context)
     {
-        // creer un Vector 2 avec toutes les valeur de x et y en fonction des touches appuyé sur le GamePad
-        horizontalMovementV2 = context.ReadValue<Vector2>();
+        if (PauseMenu.instance.isPaused == false)
+        {
+            // creer un Vector 2 avec toutes les valeur de x et y en fonction des touches appuyé sur le GamePad
+            horizontalMovementV2 = context.ReadValue<Vector2>();
+        }
     }
     public void OnBlock(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && PauseMenu.instance.isPaused == false)
         {
             isBlockingAttack = true;
             currentState.PerformingInput("Block");
@@ -100,7 +103,7 @@ public class MovePlayer : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && PauseMenu.instance.isPaused == false)
         {
             currentState.PerformingInput("Jumping");
         }
@@ -152,7 +155,7 @@ public class MovePlayer : MonoBehaviour
     }
     public void OnLightATK(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && PauseMenu.instance.isPaused == false)
         {
             currentState.PerformingInput("LightATK");
         }
@@ -177,14 +180,14 @@ public class MovePlayer : MonoBehaviour
 
     public void OnMediumATK(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && PauseMenu.instance.isPaused == false)
         {
             currentState.PerformingInput("MediumATK");
         }
     }
     public void OnHeavyATK(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && PauseMenu.instance.isPaused == false)
         {
             currentState.PerformingInput("HeavyATK");
         }
@@ -201,7 +204,7 @@ public class MovePlayer : MonoBehaviour
 
     public void OnDashMove(InputAction.CallbackContext context)
     {
-        if (context.performed && Time.time > nextTimeDash)
+        if (context.performed && Time.time > nextTimeDash && PauseMenu.instance.isPaused == false)
         {
             if ((spriteRenderer.flipX == true && rb.velocity.x < -0.1f)
             || (spriteRenderer.flipX == false && rb.velocity.x > 0.1f))

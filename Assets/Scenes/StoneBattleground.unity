@@ -943,8 +943,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6.345581, y: 29.265411}
-  m_SizeDelta: {x: 1386, y: 677}
+  m_AnchoredPosition: {x: 3.7766, y: 25.3723}
+  m_SizeDelta: {x: 1484.1082, y: 669.2137}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496797603
 MonoBehaviour:
@@ -1502,6 +1502,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1204961639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 286262870548866479, guid: dcbd24beee84fca4e9a64ae8992b7df5, type: 3}
+  m_PrefabInstance: {fileID: 290214560}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e30b9bf41bd31c419b6e3f8fdb24d28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1295302862
 GameObject:
   m_ObjectHideFlags: 0
@@ -6948,6 +6959,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1295302862}
+  scorePlayer1: {fileID: 1547117280}
+  scorePlayer2: {fileID: 924688021}
+  audioManager: {fileID: 1204961639}
 --- !u!1 &1838625327
 GameObject:
   m_ObjectHideFlags: 0

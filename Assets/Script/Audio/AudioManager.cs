@@ -55,6 +55,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void DecreaseVolume(string name, float percentage)
+    {
+        Sound sound = FindSoundByName(name);
+        if (sound != null)
+        {
+            sound.audioSource.volume = sound.volume * percentage / 100;
+        }
+    }
+
+    public void RestoreOriginVolume(string name)
+    {
+        Sound sound = FindSoundByName(name);
+        if (sound != null)
+        {
+            sound.audioSource.volume = sound.volume;
+        }
+    }
+
     private Sound FindSoundByName(string name)
     {
         Sound sound = Array.Find(sounds, sound => sound.name == name);
