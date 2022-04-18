@@ -1,20 +1,27 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class ScorePlayer : MonoBehaviour
 {
-    private Text textScore;
+    private TextMeshProUGUI textScore;
     public int playerIndex;
     public int victoryPoint;
     // Start is called before the first frame update
     void Start()
     {
-        textScore = GetComponent<Text>();
+        textScore = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        textScore.text = "Player " + (playerIndex + 1) + " : " + victoryPoint;
+        if (playerIndex == 0)
+        {
+            textScore.text = "Player " + (playerIndex + 1) + " : " + victoryPoint;
+        }
+        else
+        {
+            textScore.text = victoryPoint + " : " + "Player " + (playerIndex + 1);
+        }
     }
 }
