@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject optionMenu;
     public void PlayButtonScript()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -15,6 +16,7 @@ public class MainMenu : MonoBehaviour
 
     public void OptionButtonScript()
     {
-        // TO DO
+        this.gameObject.SetActive(false);
+        optionMenu.SetActive(true);
     }
 }
