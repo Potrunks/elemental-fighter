@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     */
     public Sound[] sounds;
+    private GameManager gameManager;
     void Awake()
     {
         /* Implementation of singleton pattern
@@ -22,11 +23,12 @@ public class AudioManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         */
+        gameManager = GameManager.instance;
         foreach (Sound sound in sounds)
         {
             sound.audioSource = gameObject.AddComponent<AudioSource>();
             sound.audioSource.clip = sound.audioClip;
-            sound.audioSource.volume = sound.volume;
+            sound.audioSource.volume = gameManager.volumeMainTheme * sound.amplifyValue;
             sound.audioSource.pitch = sound.pitch;
             sound.audioSource.loop = sound.loop;
             sound.audioSource.time = sound.time;
@@ -60,7 +62,7 @@ public class AudioManager : MonoBehaviour
         Sound sound = FindSoundByName(name);
         if (sound != null)
         {
-            sound.audioSource.volume = sound.volume * percentage / 100;
+            sound.audioSource.volume = gameManager.volumeMainTheme * percentage / 100;
         }
     }
 
@@ -69,11 +71,11 @@ public class AudioManager : MonoBehaviour
         Sound sound = FindSoundByName(name);
         if (sound != null)
         {
-            sound.audioSource.volume = sound.volume;
+            sound.audioSource.volume = gameManager.volumeMainTheme;
         }
     }
 
-    private Sound FindSoundByName(string name)
+    public Sound FindSoundByName(string name)
     {
         Sound sound = Array.Find(sounds, sound => sound.name == name);
         if (sound == null)

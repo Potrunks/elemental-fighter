@@ -42,6 +42,15 @@ public class MovePlayer : MonoBehaviour
     public ParticleSystem dashEffect;
     public ParticleSystem bloodEffect;
     public AudioManager audioManager;
+    public float mainAmplifyValue;
+
+    private void Awake()
+    {
+        foreach (Sound sound in audioManager.sounds)
+        {
+            sound.amplifyValue = mainAmplifyValue;
+        }
+    }
     public int GetPlayerIndex()
     {
         return playerIndex;
