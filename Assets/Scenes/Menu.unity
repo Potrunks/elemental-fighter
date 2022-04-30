@@ -1011,6 +1011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 22442256}
+  mainSlider: {fileID: 1083258242}
   audioManager: {fileID: 286262869365483430}
 --- !u!1 &839857971
 GameObject:
