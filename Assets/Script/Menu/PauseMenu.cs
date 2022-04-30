@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject scorePlayer1;
     public GameObject scorePlayer2;
+    public GameObject pauseMenu;
+    public GameObject optionMenu;
     public AudioManager audioManager;
+    public Slider mainSlider;
     private int playerPauseTheGame;
 
     private void Awake()
@@ -22,6 +26,7 @@ public class PauseMenu : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        mainSlider.value = GameManager.instance.volumeMainTheme;
     }
 
     public void PauseGame(int playerIndex)
@@ -61,5 +66,27 @@ public class PauseMenu : MonoBehaviour
     {
         ResumeTheGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void OptionButtonScript()
+    {
+        pauseMenu.SetActive(false);
+        optionMenu.SetActive(true);
+    }
+
+    public void BackToPauseMenu()
+    {
+        optionMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+
+    public void SetMainThemeVolume(float sliderVolumeMainTheme)
+    {
+        GameManager.instance.volumeMainTheme = sliderVolumeMainTheme;
+        Sound sound = audioManager.FindSoundByName("MainTheme");
+        if (sound != null)
+        {
+            sound.audioSource.volume = GameManager.instance.volumeMainTheme;
+        }
     }
 }
