@@ -143,7 +143,7 @@ MonoBehaviour:
   dashEffect: {fileID: 4152062393090402417}
   bloodEffect: {fileID: 3003757487408969805}
   audioManager: {fileID: 8927663242418888209}
-  playerInput: {fileID: 4152062391814938598}
+  mainAmplifyValue: 2
 --- !u!50 &4152062391814938602
 Rigidbody2D:
   serializedVersion: 4
