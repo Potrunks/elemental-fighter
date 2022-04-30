@@ -6,14 +6,19 @@ public class ScorePlayer : MonoBehaviour
     private TextMeshProUGUI textScore;
     public int playerIndex;
     public int victoryPoint;
-    // Start is called before the first frame update
     void Start()
     {
         textScore = GetComponent<TextMeshProUGUI>();
+        DisplayScore();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateScore()
+    {
+        this.victoryPoint++;
+        DisplayScore();
+    }
+
+    private void DisplayScore()
     {
         if (playerIndex == 0)
         {

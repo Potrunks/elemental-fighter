@@ -111,11 +111,19 @@ public class DamageCommand : MonoBehaviour
 
     public void ResetPlayer(MovePlayer player, GameObject enemy)
     {
-        enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().victoryPoint ++;
-        ResetHealth();
-        PlayerStartSpawn(player);
-        EnemyStartSpawn(enemy);
-        ResetBleedingState();
+        enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().UpdateScore();
+        int enemyScore = enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().victoryPoint;
+        if (enemyScore == GameManager.instance.victoryPointCondition)
+        {
+            Debug.Log("The player " + (enemy.GetComponent<MovePlayer>().playerIndex + 1) + " win the game !!!");
+        }
+        else
+        {
+            ResetHealth();
+            PlayerStartSpawn(player);
+            EnemyStartSpawn(enemy);
+            ResetBleedingState();
+        }
     }
 
     public void PlayerStartSpawn(MovePlayer player)

@@ -50,6 +50,7 @@ public class PauseMenu : MonoBehaviour
         audioManager.DecreaseVolume("MainTheme", 50);
         Time.timeScale = 0f;
         isPaused = true;
+        GameManager.instance.timeIsActivated = false;
     }
 
     public void ResumeTheGame()
@@ -60,11 +61,13 @@ public class PauseMenu : MonoBehaviour
         audioManager.RestoreOriginVolume("MainTheme");
         Time.timeScale = 1f;
         isPaused = false;
+        GameManager.instance.timeIsActivated = true;
     }
 
     public void QuitButtonScript()
     {
         ResumeTheGame();
+        GameManager.instance.timeIsActivated = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
