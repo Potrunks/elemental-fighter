@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject scorePlayer1;
     public GameObject scorePlayer2;
+    public GameObject timer;
     public GameObject pauseMenu;
     public GameObject optionMenu;
     public AudioManager audioManager;
@@ -47,6 +48,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         scorePlayer1.SetActive(false);
         scorePlayer2.SetActive(false);
+        timer.SetActive(false);
         audioManager.DecreaseVolume("MainTheme", 50);
         Time.timeScale = 0f;
         isPaused = true;
@@ -58,6 +60,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         scorePlayer1.SetActive(true);
         scorePlayer2.SetActive(true);
+        timer.SetActive(true);
         audioManager.RestoreOriginVolume("MainTheme");
         Time.timeScale = 1f;
         isPaused = false;
