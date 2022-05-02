@@ -26,8 +26,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentTime > 0 && timeIsActivated)
         {
-            currentTime -= 1 * Time.deltaTime;
-            Debug.Log(currentTime);
+            currentTime -= Time.deltaTime % 60;
         }
     }
 }
