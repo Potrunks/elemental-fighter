@@ -7,6 +7,9 @@ public class PauseMenu : MonoBehaviour
     public static PauseMenu instance;
     public bool isPaused = false;
     public GameObject pauseMenuUI;
+    public GameObject endGameResults;
+    public GameObject scoreList;
+    public GameObject winner;
     public GameObject scorePlayer1;
     public GameObject scorePlayer2;
     public GameObject timer;
@@ -46,12 +49,23 @@ public class PauseMenu : MonoBehaviour
     {
         playerPauseTheGame = playerIndex;
         pauseMenuUI.SetActive(true);
+        isPaused = true;
+        StopGameBackground();
+    }
+
+    public void EndTheGame()
+    {
+        endGameResults.SetActive(true);
+        StopGameBackground();
+    }
+
+    private void StopGameBackground()
+    {
         scorePlayer1.SetActive(false);
         scorePlayer2.SetActive(false);
         timer.SetActive(false);
         audioManager.DecreaseVolume("MainTheme", 50);
         Time.timeScale = 0f;
-        isPaused = true;
         GameManager.instance.timeIsActivated = false;
     }
 
@@ -94,5 +108,12 @@ public class PauseMenu : MonoBehaviour
         {
             sound.audioSource.volume = GameManager.instance.volumeMainTheme;
         }
+    }
+
+    public void ReplayButtonScript()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.instance.currentTime = GameManager.instance.timeCondition;
+        ResumeTheGame();
     }
 }
