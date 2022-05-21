@@ -47,6 +47,20 @@ public class GameManager : MonoBehaviour
             return;
         }
         List<ScorePlayerResult> scorePlayerResultList = new List<ScorePlayerResult>();
+        scorePlayerResultList = AddAllScorePlayerInfoToTheList(scorePlayerArray, scorePlayerResultList);
+        scorePlayerResultList.Sort((scorePlayerResult1, scorePlayerResult2) => scorePlayerResult2.kill.CompareTo(scorePlayerResult1.kill));
+        PrepareTextEndGameToDisplay(scorePlayerResultList);
+        PauseMenu.instance.EndTheGame();
+    }
+
+    /// <summary>
+    /// Add all information about the score of all player in the game to the list will go displayed
+    /// </summary>
+    /// <param name="scorePlayerArray">Score player source</param>
+    /// <param name="scorePlayerResultList">The list with all scores players</param>
+    /// <returns>Return a list of score player with all informations like the name of the player and the number of kill</returns>
+    private List<ScorePlayerResult> AddAllScorePlayerInfoToTheList(ScorePlayer[] scorePlayerArray, List<ScorePlayerResult> scorePlayerResultList)
+    {
         foreach (ScorePlayer scorePlayer in scorePlayerArray)
         {
             ScorePlayerResult scorePlayerResult = new ScorePlayerResult();
@@ -54,7 +68,15 @@ public class GameManager : MonoBehaviour
             scorePlayerResult.name = "Player " + (scorePlayer.playerIndex + 1);
             scorePlayerResultList.Add(scorePlayerResult);
         }
-        scorePlayerResultList.Sort((scorePlayerResult1, scorePlayerResult2) => scorePlayerResult2.kill.CompareTo(scorePlayerResult1.kill));
+        return scorePlayerResultList;
+    }
+
+    /// <summary>
+    /// Prepare the end game text to display
+    /// </summary>
+    /// <param name="scorePlayerResultList">The list with all scores players</param>
+    private void PrepareTextEndGameToDisplay(List<ScorePlayerResult> scorePlayerResultList)
+    {
         TextMeshProUGUI scoreListText = PauseMenu.instance.scoreList.GetComponent<TextMeshProUGUI>();
         scoreListText.text = "";
         for (int i = 0; i < scorePlayerResultList.Count; i++)
@@ -67,6 +89,5 @@ public class GameManager : MonoBehaviour
         }
         TextMeshProUGUI winnerText = PauseMenu.instance.winner.GetComponent<TextMeshProUGUI>();
         winnerText.text = scorePlayerResultList[0].name + " win";
-        PauseMenu.instance.EndTheGame();
     }
 }
