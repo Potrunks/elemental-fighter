@@ -116,6 +116,7 @@ public class DamageCommand : MonoBehaviour
         if (enemyScore == GameManager.instance.victoryPointCondition)
         {
             Debug.Log("The player " + (enemy.GetComponent<MovePlayer>().playerIndex + 1) + " win the game !!!");
+            GameManager.instance.DisplayEndgameResults(enemy.GetComponent<MovePlayer>().playerIndex + 1);
         }
         else
         {
