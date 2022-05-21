@@ -29,11 +29,15 @@ public class GameManager : MonoBehaviour
         if (currentTime > 0 && timeIsActivated)
         {
             currentTime -= Time.deltaTime % 60;
+            if (currentTime <= 0 && currentTime != -1)
+            {
+                DisplayEndgameResults();
+            }
         }
     }
 
     // Display an end game results when one player have enough kill or the time is over
-    public void DisplayEndgameResults(int playerWinner)
+    public void DisplayEndgameResults()
     {
         Debug.Log("Displaying endgame results...");
         ScorePlayer[] scorePlayerArray = GameObject.FindObjectsOfType<ScorePlayer>();
@@ -62,11 +66,7 @@ public class GameManager : MonoBehaviour
             }
         }
         TextMeshProUGUI winnerText = PauseMenu.instance.winner.GetComponent<TextMeshProUGUI>();
-        winnerText.text = "Player " + playerWinner + " win";
+        winnerText.text = scorePlayerResultList[0].name + " win";
         PauseMenu.instance.EndTheGame();
-        // Stopper le jeu
-        // En en-tête, le vainqueur de la partie
-        // Afficher la liste des joueur avec leur nombre de kill et de mort
-        // 2 boutons : Rejouer et Menu Principal
     }
 }
