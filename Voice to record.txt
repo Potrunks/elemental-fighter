@@ -1,0 +1,19 @@
+Sound to record
+
+1 - Main menu
+
+Elemental Fighters
+
+2 - Battleground
+
+Ready
+Fight
+
+3 - Firewarrior
+
+Sound when sword attack
+Sound when fireball casting
+Sound when take damage
+Sound when block attack
+Sound when die
+Some sentence

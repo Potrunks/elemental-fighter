@@ -43,6 +43,7 @@ public class MovePlayer : MonoBehaviour
     public ParticleSystem bloodEffect;
     public AudioManager audioManager;
     public float mainAmplifyValue;
+    public bool isModeAI = false;
 
     private void Awake()
     {
@@ -239,5 +240,11 @@ public class MovePlayer : MonoBehaviour
         {
             PauseMenu.instance.PauseGame(this.playerIndex);
         }
+    }
+
+    public float? CalculateDistancePlayerEnemy()
+    {
+        float distance = Vector3.Distance(this.gameObject.transform.position, enemy.transform.position);
+        return distance;
     }
 }
