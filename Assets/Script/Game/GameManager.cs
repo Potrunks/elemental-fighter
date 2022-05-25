@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public int timeCondition;
     public bool timeIsActivated;
     public float currentTime;
+    public IDictionary<int, bool> selectedMode = new Dictionary<int, bool>();
     private void Awake()
     {
         if (instance == null)

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class MoveForwardCharacterState : CharacterState
 {
     private ICharacterState nextState;

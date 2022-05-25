@@ -30,14 +30,14 @@ public class MovePlayer : MonoBehaviour
     private float horizontalMovement;
     public bool isBlockingAttack = false;
     public GameObject enemy = null;
-    private Vector2 horizontalMovementV2;
+    public Vector2 horizontalMovementV2;
     public float dashForce;
     public const float dashCooldownTime = 1;
     public float nextTimeDash;
     public int playerIndex;
     public GameObject dashEffectPrefab;
     public GameObject dashSpawnPoint;
-    private ICharacterState currentState;
+    public ICharacterState currentState;
     private ICharacterState nextState;
     public ParticleSystem dashEffect;
     public ParticleSystem bloodEffect;

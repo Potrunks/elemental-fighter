@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 4152062391814938596}
   - component: {fileID: 4152062391814938599}
   - component: {fileID: 4152062391814938598}
+  - component: {fileID: 3169930632477874865}
+  - component: {fileID: 6986510874514222213}
   m_Layer: 3
   m_Name: FireWarrior
   m_TagString: Player
@@ -135,6 +137,7 @@ MonoBehaviour:
   elementalSpawnPoint: {fileID: 4152062392735839210}
   isBlockingAttack: 0
   enemy: {fileID: 0}
+  horizontalMovementV2: {x: 0, y: 0}
   dashForce: 50
   nextTimeDash: 0
   playerIndex: 0
@@ -212,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950f93228e611b3478848e40f9e3c275, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 400
   currentHealth: 0
   blockingEffectPrefab: {fileID: 8922435012184272699, guid: 8ed7e3af56ee6ad42a395e6bfb92a196, type: 3}
   BlockingEffectSpawnPoint: {fileID: 4152062392247602468}
@@ -377,6 +380,53 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3169930632477874865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152062391814938593}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36be3948a9e82049a44c867a54fbe7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  pathUpdateSeconds: 0.5
+  nextWaypointDistance: 1
+  jumpNodeHeightRequirement: 0.8
+  longRangeDistanceRequirement: 10
+  shortRangeDistanceRequirement: 2
+  followEnabled: 1
+--- !u!114 &6986510874514222213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152062391814938593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: 2147483647
 --- !u!1 &4152062392247602468
 GameObject:
   m_ObjectHideFlags: 0

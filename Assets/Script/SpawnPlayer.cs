@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpawnPlayer : MonoBehaviour
 {
@@ -11,9 +10,12 @@ public class SpawnPlayer : MonoBehaviour
     {
         scorePlayer.GetComponent<ScorePlayer>().playerIndex = playerIndex;
         scorePlayer.GetComponent<ScorePlayer>().victoryPoint = 0;
-        // lui donner l'index
         selectedCharacter.GetComponent<MovePlayer>().playerIndex = playerIndex;
-        // instancier un joueur et le faire apparaitre sur le spawn
+        if (GameManager.instance.selectedMode[playerIndex])
+        {
+            selectedCharacter.GetComponent<EnemyAI>().enabled = true;
+            selectedCharacter.GetComponent<PlayerInput>().enabled = false;
+        }
         Instantiate(selectedCharacter, this.transform.position, Quaternion.identity, this.transform);
     }
 }
