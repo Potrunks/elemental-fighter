@@ -14,6 +14,6 @@ Fight
 Sound when sword attack
 Sound when fireball casting
 Sound when take damage
-Sound when block attack
-Sound when die
-Some sentence
+Sound when block attack osoi
+Sound when die shine
+Some sentence baka urusai

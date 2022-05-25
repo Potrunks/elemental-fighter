@@ -40,10 +40,13 @@ public class MediumATK1TransitionCharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         // check if grounded
-        if(player.isGrounding == true){
+        if (player.isGrounding == true)
+        {
             // if grounded, transition normal
             player.animator.Play("MediumATK1Transition");
-        } else {
+        }
+        else
+        {
             // if not grounded, air transition
             player.animator.Play("AirMediumAttack1Transition");
             isAirTransition = true;

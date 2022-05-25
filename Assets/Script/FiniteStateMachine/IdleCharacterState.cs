@@ -5,20 +5,6 @@ public class IdleCharacterState : CharacterState
     private ICharacterState nextState;
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
-        if (player.isModeAI)
-        {
-            if (player.CalculateDistancePlayerEnemy() > 2)
-            {
-                if (player.spriteRenderer.flipX == true)
-                {
-                    player.PlayerMove(-7);
-                }
-                else
-                {
-                    player.PlayerMove(7);
-                }
-            }
-        }
         // Hurting
         if (player.isHurting == true)
         {
