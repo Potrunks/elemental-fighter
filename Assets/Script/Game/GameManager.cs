@@ -41,17 +41,29 @@ public class GameManager : MonoBehaviour
     public void DisplayEndgameResults()
     {
         Debug.Log("Displaying endgame results...");
+
         ScorePlayer[] scorePlayerArray = GameObject.FindObjectsOfType<ScorePlayer>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        List<ScorePlayerResult> scorePlayerResultList = new List<ScorePlayerResult>();
+
+        disablePlayersGameObject(players);
         if (scorePlayerArray == null || scorePlayerArray.Length == 0)
         {
             Debug.LogWarning("No component type of ScorePlayer found");
             return;
         }
-        List<ScorePlayerResult> scorePlayerResultList = new List<ScorePlayerResult>();
         scorePlayerResultList = AddAllScorePlayerInfoToTheList(scorePlayerArray, scorePlayerResultList);
         scorePlayerResultList.Sort((scorePlayerResult1, scorePlayerResult2) => scorePlayerResult2.kill.CompareTo(scorePlayerResult1.kill));
         PrepareTextEndGameToDisplay(scorePlayerResultList);
         PauseMenu.instance.EndTheGame();
+    }
+
+    private void disablePlayersGameObject(GameObject[] playersToDisable)
+    {
+        foreach (GameObject player in playersToDisable)
+        {
+            player.SetActive(false);
+        }
     }
 
     /// <summary>

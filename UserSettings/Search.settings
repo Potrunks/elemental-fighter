@@ -49,6 +49,7 @@ providers = {
 	}
 }
 recentSearches = [
+	"s"
 ]
 searchItemFavorites = [
 ]

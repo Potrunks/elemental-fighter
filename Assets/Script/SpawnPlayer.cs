@@ -6,16 +6,33 @@ public class SpawnPlayer : MonoBehaviour
     public int playerIndex;
     public GameObject selectedCharacter;
     public GameObject scorePlayer;
+    private bool playersIsActivated = false;
     void Start()
     {
         scorePlayer.GetComponent<ScorePlayer>().playerIndex = playerIndex;
         scorePlayer.GetComponent<ScorePlayer>().victoryPoint = 0;
         selectedCharacter.GetComponent<MovePlayer>().playerIndex = playerIndex;
-        if (GameManager.instance.selectedMode[playerIndex])
-        {
-            selectedCharacter.GetComponent<EnemyAI>().enabled = true;
-            selectedCharacter.GetComponent<PlayerInput>().enabled = false;
-        }
         Instantiate(selectedCharacter, this.transform.position, Quaternion.identity, this.transform);
+    }
+
+    private void Update()
+    {
+        if (playersIsActivated == false)
+        {
+            if (ReadyFightScript.instance.fightIsStarted)
+            {
+                if (GameManager.instance.selectedMode[playerIndex])
+                {
+                    Debug.Log("Activation of AI mode for player " + (GetComponentInChildren<MovePlayer>().playerIndex + 1));
+                    GetComponentInChildren<EnemyAI>().enabled = true;
+                }
+                else
+                {
+                    Debug.Log("Activation of Player mode for player " + (GetComponentInChildren<MovePlayer>().playerIndex + 1));
+                    GetComponentInChildren<PlayerInput>().enabled = true;
+                }
+                playersIsActivated = true;
+            }
+        }
     }
 }

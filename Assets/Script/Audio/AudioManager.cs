@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         Play("MainTheme");
+        StartPlaySoundsMainMenu();
     }
 
     public void Play(string name)
@@ -84,5 +85,10 @@ public class AudioManager : MonoBehaviour
             return sound;
         }
         return sound;
+    }
+
+    private void StartPlaySoundsMainMenu()
+    {
+        Play("MainTitle");
     }
 }
