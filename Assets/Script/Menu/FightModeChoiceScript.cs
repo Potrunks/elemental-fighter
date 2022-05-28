@@ -17,6 +17,11 @@ public class FightModeChoiceScript : MonoBehaviour
         LoadFightScene();
     }
 
+    public void AIVSAIModeButtonScript()
+    {
+        Debug.Log("AI VS AI mode selected...");
+    }
+
     public void backToMainMenuButtonScript()
     {
         Debug.Log("Click on back button to go to the main menu from the fight mode choice");
