@@ -3711,7 +3711,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1555948738}
         m_TargetAssemblyTypeName: FightModeChoiceScript, Assembly-CSharp
-        m_MethodName: J1VSAIModeButtonScript
+        m_MethodName: AIVSAIModeButtonScript
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

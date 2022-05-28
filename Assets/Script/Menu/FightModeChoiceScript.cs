@@ -20,6 +20,8 @@ public class FightModeChoiceScript : MonoBehaviour
     public void AIVSAIModeButtonScript()
     {
         Debug.Log("AI VS AI mode selected...");
+        SetSelectedMode(true, true, true, true);
+        LoadFightScene();
     }
 
     public void backToMainMenuButtonScript()
