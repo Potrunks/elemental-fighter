@@ -30,6 +30,8 @@ public class MovePlayer : MonoBehaviour
     private float horizontalMovement;
     public bool isBlockingAttack = false;
     public GameObject enemy = null;
+    public MovePlayer enemyMovePlayer = null;
+    public DamageCommand enemyDamageCommand = null;
     public Vector2 horizontalMovementV2;
     public float dashForce;
     public const float dashCooldownTime = 1;
@@ -60,10 +62,14 @@ public class MovePlayer : MonoBehaviour
         if (this.gameObject.name == "Character1" && enemy == null)
         {
             enemy = GameObject.Find("Character2");
+            enemyMovePlayer = enemy.GetComponent<MovePlayer>();
+            enemyDamageCommand = enemy.GetComponent<DamageCommand>();
         }
         else if (this.gameObject.name == "Character2" && enemy == null)
         {
             enemy = GameObject.Find("Character1");
+            enemyMovePlayer = enemy.GetComponent<MovePlayer>();
+            enemyDamageCommand = enemy.GetComponent<DamageCommand>();
         }
         isGrounding = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayer);
         horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;

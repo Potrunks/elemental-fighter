@@ -1,7 +1,8 @@
-using UnityEngine;
 public class DieCharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private System.Random random = new System.Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
@@ -16,6 +17,7 @@ public class DieCharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.animator.Play("Die");
+        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.dieSounds, random.Next(0, player.audioManager.dieSounds.Length));
     }
 
     public override void OnExit(MovePlayer player)

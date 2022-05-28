@@ -1,5 +1,5 @@
-using UnityEngine.Audio;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -7,8 +7,20 @@ public class AudioManager : MonoBehaviour
     /* If needed, do a singleton pattern with this instance
     public static AudioManager instance;
     */
+    [Header("Sound Effect")]
     public Sound[] sounds;
+    public Sound[] lightATKSounds;
+    public Sound[] hurtSounds;
+    public Sound[] astonishmentSounds;
+    public Sound[] blockingSounds;
+    public Sound[] dieSounds;
+    public Sound[] heavyATKSounds;
+    public Sound[] insultSounds;
+    public Sound[] jumpSounds;
+    public Sound[] mediumATKSounds;
+
     private GameManager gameManager;
+
     void Awake()
     {
         /* Implementation of singleton pattern
@@ -24,7 +36,33 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         */
         gameManager = GameManager.instance;
-        foreach (Sound sound in sounds)
+
+        List<Sound[]> allSoundTypes = new List<Sound[]>();
+        allSoundTypes.Add(sounds);
+        allSoundTypes.Add(lightATKSounds);
+        allSoundTypes.Add(hurtSounds);
+        allSoundTypes.Add(astonishmentSounds);
+        allSoundTypes.Add(blockingSounds);
+        allSoundTypes.Add(dieSounds);
+        allSoundTypes.Add(heavyATKSounds);
+        allSoundTypes.Add(insultSounds);
+        allSoundTypes.Add(jumpSounds);
+        allSoundTypes.Add(mediumATKSounds);
+
+        CreateAllAudioSourceComponentForAllType(allSoundTypes);
+    }
+
+    private void CreateAllAudioSourceComponentForAllType(List<Sound[]> soundTypes)
+    {
+        foreach (Sound[] soundType in soundTypes)
+        {
+            CreateAudioSourceComponentByType(soundType);
+        }
+    }
+
+    private void CreateAudioSourceComponentByType(Sound[] soundType)
+    {
+        foreach (Sound sound in soundType)
         {
             sound.audioSource = gameObject.AddComponent<AudioSource>();
             sound.audioSource.clip = sound.audioClip;
@@ -49,6 +87,17 @@ public class AudioManager : MonoBehaviour
             sound.audioSource.Play();
         }
     }
+
+    public void PlaySoundByIndexInListOfSound(Sound[] sounds, int index)
+    {
+        Debug.Log("Playing sound index : " + index + " in sound list : " + sounds);
+        Sound soundToPlay = sounds[index];
+        if (soundToPlay != null)
+        {
+            soundToPlay.audioSource.Play();
+        }
+    }
+
     public void Stop(string name)
     {
         Sound sound = FindSoundByName(name);

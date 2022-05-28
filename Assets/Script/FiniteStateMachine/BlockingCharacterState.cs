@@ -3,6 +3,8 @@ using UnityEngine;
 public class BlockingCharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private System.Random random = new System.Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // go to idle
@@ -27,6 +29,8 @@ public class BlockingCharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.audioManager.Play("Blocking");
+        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.blockingSounds, random.Next(0, player.audioManager.blockingSounds.Length));
+        player.enemyMovePlayer.audioManager.PlaySoundByIndexInListOfSound(player.enemyMovePlayer.audioManager.astonishmentSounds, random.Next(0, player.enemyMovePlayer.audioManager.astonishmentSounds.Length));
         // Push effect
         player.GetComponent<DamageCommand>().DisplayBlockingEffect();
         // Move player with push

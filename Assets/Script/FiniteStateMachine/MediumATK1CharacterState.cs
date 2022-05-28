@@ -1,6 +1,8 @@
 public class MediumATK1CharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private System.Random random = new System.Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // hurt state
@@ -22,6 +24,7 @@ public class MediumATK1CharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.audioManager.Play("Fireball");
+        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.mediumATKSounds, random.Next(0, player.audioManager.mediumATKSounds.Length));
         // Check if grounded
         if (player.isGrounding == true)
         {

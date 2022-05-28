@@ -3,6 +3,8 @@ using UnityEngine;
 public class JumpCharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private System.Random random = new System.Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.isHurting == false)
@@ -35,6 +37,7 @@ public class JumpCharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.audioManager.Play("Jump");
+        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.jumpSounds, random.Next(0, player.audioManager.jumpSounds.Length));
         player.moveSpeed = player.normalMoveSpeed;
         player.rb.AddForce(new Vector2(0f, player.jumpForce));
         player.animator.Play("Jump");

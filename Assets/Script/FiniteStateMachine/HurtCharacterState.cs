@@ -1,8 +1,10 @@
-using UnityEngine;
+using System;
 
 public class HurtCharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private Random random = new Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // When damage is taken, go to Idle State
@@ -47,6 +49,7 @@ public class HurtCharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.audioManager.Play("Hurting");
+        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.hurtSounds, random.Next(0, player.audioManager.hurtSounds.Length));
         // Play animation
         player.moveSpeed = player.stopMoveSpeed;
         // isHurting go to False value
