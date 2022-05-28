@@ -1,6 +1,10 @@
+using System;
+
 public class LightATK2CharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private Random random = new Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // hurt state
@@ -22,6 +26,7 @@ public class LightATK2CharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.audioManager.Play("SwordAttack2");
+        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.lightATKSounds, random.Next(0, player.audioManager.lightATKSounds.Length));
         // Check if grounded
         if (player.isGrounding == true)
         {

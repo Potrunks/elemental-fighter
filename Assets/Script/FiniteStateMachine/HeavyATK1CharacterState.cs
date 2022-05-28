@@ -1,6 +1,8 @@
 public class HeavyATK1CharacterState : CharacterState
 {
     private ICharacterState nextState;
+    private System.Random random = new System.Random();
+
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // Hurt state
@@ -22,6 +24,14 @@ public class HeavyATK1CharacterState : CharacterState
     public override void OnEnter(MovePlayer player)
     {
         player.audioManager.Play("Fireball");
+        if (player.enemyDamageCommand.currentHealth <= (player.enemyDamageCommand.maxHealth / 5))
+        {
+            player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.insultSounds, random.Next(0, player.audioManager.insultSounds.Length));
+        }
+        else
+        {
+            player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.heavyATKSounds, random.Next(0, player.audioManager.heavyATKSounds.Length));
+        }
         if (player.isGrounding == true)
         {
             // Disable Velocity Player

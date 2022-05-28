@@ -36,7 +36,6 @@ public class FightModeChoiceScript : MonoBehaviour
     private void LoadFightScene()
     {
         GameManager.instance.currentTime = GameManager.instance.timeCondition;
-        GameManager.instance.timeIsActivated = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
