@@ -21,6 +21,7 @@ public class EnemyAI : MonoBehaviour
     private Seeker seeker;
     private Rigidbody2D rb;
     private MovePlayer movePlayer;
+    private DamageCommand damageCommand;
     private System.Random probability = new System.Random();
 
     private void Start()
@@ -30,6 +31,7 @@ public class EnemyAI : MonoBehaviour
         movePlayer = GetComponent<MovePlayer>();
         movePlayer.jumpForce = 600;
         movePlayer.normalMoveSpeed = 225;
+        this.damageCommand = GetComponent<DamageCommand>();
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
 
