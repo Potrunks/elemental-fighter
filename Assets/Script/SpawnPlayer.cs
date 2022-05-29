@@ -6,11 +6,14 @@ public class SpawnPlayer : MonoBehaviour
     public int playerIndex;
     public GameObject selectedCharacter;
     public GameObject scorePlayer;
+    private ScorePlayer scorePlayerScript;
     private bool playersIsActivated = false;
+
     void Start()
     {
-        scorePlayer.GetComponent<ScorePlayer>().playerIndex = playerIndex;
-        scorePlayer.GetComponent<ScorePlayer>().victoryPoint = 0;
+        scorePlayerScript = scorePlayer.GetComponent<ScorePlayer>();
+        scorePlayerScript.playerIndex = playerIndex;
+        scorePlayerScript.victoryPoint = 0;
         selectedCharacter.GetComponent<MovePlayer>().playerIndex = playerIndex;
         Instantiate(selectedCharacter, this.transform.position, Quaternion.identity, this.transform);
     }

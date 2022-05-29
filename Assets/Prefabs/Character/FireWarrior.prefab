@@ -115,12 +115,12 @@ MonoBehaviour:
   normalMoveSpeed: 350
   stopMoveSpeed: 0
   moveSpeed: 0
-  rb: {fileID: 4152062391814938602}
-  isGrounding: 0
-  isHurting: 0
   jumpForce: 400
+  horizontalMovementV2: {x: 0, y: 0}
+  dashForce: 50
+  nextTimeDash: 0
+  rb: {fileID: 4152062391814938602}
   groundCheck: {fileID: 4152062392815420815}
-  groundCheckRadius: 0.32
   animator: {fileID: 4152062391814938596}
   collisionLayer:
     serializedVersion: 2
@@ -129,23 +129,25 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
-  hitBoxWeaponRange: 1
-  attackDamage: 20
   spriteRenderer: {fileID: 4152062391814938600}
   mediumFireElementalPrefabs: {fileID: 3712065554095806988, guid: 2c7bd6e0d206a1f49aab30443550dede, type: 3}
   heavyFireElementalPrefabs: {fileID: 8491521707335108994, guid: a6fb304d9d483b04b823a1f469c70442, type: 3}
   elementalSpawnPoint: {fileID: 4152062392735839210}
-  isBlockingAttack: 0
   enemy: {fileID: 0}
-  horizontalMovementV2: {x: 0, y: 0}
-  dashForce: 50
-  nextTimeDash: 0
-  playerIndex: 0
+  enemyMovePlayer: {fileID: 0}
+  enemyDamageCommand: {fileID: 0}
   dashEffectPrefab: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
   dashSpawnPoint: {fileID: 4152062392739471539}
   dashEffect: {fileID: 4152062393090402417}
   bloodEffect: {fileID: 3003757487408969805}
   audioManager: {fileID: 8927663242418888209}
+  isHurting: 0
+  isGrounding: 0
+  isBlockingAttack: 0
+  playerIndex: 0
+  groundCheckRadius: 0.32
+  hitBoxWeaponRange: 1
+  attackDamage: 20
   mainAmplifyValue: 2
 --- !u!50 &4152062391814938602
 Rigidbody2D:
