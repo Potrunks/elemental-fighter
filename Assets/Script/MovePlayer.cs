@@ -203,6 +203,7 @@ public class MovePlayer : MonoBehaviour
         currentState.OnEnter(this);
         MultipleTargetCamFollow.instance.players.Add(this.transform);
         rendererCharacter = GetComponent<Renderer>();
+        SetRendererColorByPlayerIndex(playerIndex);
     }
 
     public void OnMediumATK(InputAction.CallbackContext context)
@@ -263,15 +264,18 @@ public class MovePlayer : MonoBehaviour
     {
         if (playerIndex == 1)
         {
-            this.rendererCharacter.material.color = Color.blue;
+            // Blue
+            rendererCharacter.material.color = new Color32(133, 136, 253, 255);
         }
         if (playerIndex == 2)
         {
-            this.rendererCharacter.material.color = Color.green;
+            // Green
+            rendererCharacter.material.color = new Color32(141, 253, 134, 255);
         }
         if (playerIndex == 3)
         {
-            this.rendererCharacter.material.color = Color.yellow;
+            // Yellow
+            rendererCharacter.material.color = new Color32(245, 253, 133, 255);
         }
     }
 }

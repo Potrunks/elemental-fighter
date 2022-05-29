@@ -5,7 +5,6 @@ public class SpawnPlayer : MonoBehaviour
 {
     public int playerIndex;
     public GameObject selectedCharacter;
-    private MovePlayer selectedCharacterMovePlayer;
     public GameObject scorePlayer;
     private ScorePlayer scorePlayerScript;
     private bool playersIsActivated = false;
@@ -15,9 +14,7 @@ public class SpawnPlayer : MonoBehaviour
         scorePlayerScript = scorePlayer.GetComponent<ScorePlayer>();
         scorePlayerScript.playerIndex = playerIndex;
         scorePlayerScript.victoryPoint = 0;
-        selectedCharacterMovePlayer = selectedCharacter.GetComponent<MovePlayer>();
-        selectedCharacterMovePlayer.playerIndex = playerIndex;
-        selectedCharacterMovePlayer.SetRendererColorByPlayerIndex(playerIndex);
+        selectedCharacter.GetComponent<MovePlayer>().playerIndex = playerIndex;
         Instantiate(selectedCharacter, this.transform.position, Quaternion.identity, this.transform);
     }
 
