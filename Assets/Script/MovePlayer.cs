@@ -3,47 +3,58 @@ using UnityEngine.InputSystem;
 
 public class MovePlayer : MonoBehaviour
 {
+    [Header("Move")]
     // variable de la vitesse de deplacement
     public float normalMoveSpeed;
     public float stopMoveSpeed;
     public float moveSpeed;
+    public float jumpForce;
+    private float horizontalMovement;
+    public Vector2 horizontalMovementV2;
+    public float dashForce;
+    public const float dashCooldownTime = 1;
+    public float nextTimeDash;
+    private Vector3 velocity = Vector3.zero;
+
+    [Header("Component")]
     // fait ref au rigid body du joueur
     public Rigidbody2D rb;
-    private Vector3 velocity = Vector3.zero;
-    public bool isGrounding;
-    public bool isHurting = false;
-    public float jumpForce;
     public Transform groundCheck;
-    public float groundCheckRadius;
     public Animator animator;
     public LayerMask collisionLayer;
     // Pour la hit box de l'arme au cac (hitBoxWeapon, enemyLayer, hitBoxWeaponRange)
     public GameObject hitBoxWeapon;
     public LayerMask enemyLayer;
-    public float hitBoxWeaponRange;
-    public int attackDamage;
-    // atkRate is to define number of atk per atkRecovery (sec)
     public SpriteRenderer spriteRenderer;
     public GameObject mediumFireElementalPrefabs;
     public GameObject heavyFireElementalPrefabs;
     public GameObject elementalSpawnPoint;
-    private float horizontalMovement;
-    public bool isBlockingAttack = false;
     public GameObject enemy = null;
     public MovePlayer enemyMovePlayer = null;
     public DamageCommand enemyDamageCommand = null;
-    public Vector2 horizontalMovementV2;
-    public float dashForce;
-    public const float dashCooldownTime = 1;
-    public float nextTimeDash;
-    public int playerIndex;
     public GameObject dashEffectPrefab;
     public GameObject dashSpawnPoint;
-    public ICharacterState currentState;
-    private ICharacterState nextState;
     public ParticleSystem dashEffect;
     public ParticleSystem bloodEffect;
     public AudioManager audioManager;
+    private Renderer rendererCharacter;
+
+    [Header("State")]
+    public bool isHurting = false;
+    public bool isGrounding;
+    public bool isBlockingAttack = false;
+    public int playerIndex;
+    public ICharacterState currentState;
+    private ICharacterState nextState;
+
+    [Header("Checking Condition")]
+    public float groundCheckRadius;
+    public float hitBoxWeaponRange;
+
+    [Header("Fighting Condition")]
+    public int attackDamage;
+
+    [Header("Sound")]
     public float mainAmplifyValue;
 
     private void Awake()
@@ -191,6 +202,7 @@ public class MovePlayer : MonoBehaviour
         currentState = new IdleCharacterState();
         currentState.OnEnter(this);
         MultipleTargetCamFollow.instance.players.Add(this.transform);
+        rendererCharacter = GetComponent<Renderer>();
     }
 
     public void OnMediumATK(InputAction.CallbackContext context)
@@ -244,6 +256,22 @@ public class MovePlayer : MonoBehaviour
         if (context.performed)
         {
             PauseMenu.instance.PauseGame(this.playerIndex);
+        }
+    }
+
+    public void SetRendererColorByPlayerIndex(int playerIndex)
+    {
+        if (playerIndex == 1)
+        {
+            this.rendererCharacter.material.color = Color.blue;
+        }
+        if (playerIndex == 2)
+        {
+            this.rendererCharacter.material.color = Color.green;
+        }
+        if (playerIndex == 3)
+        {
+            this.rendererCharacter.material.color = Color.yellow;
         }
     }
 }
