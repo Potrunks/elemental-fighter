@@ -42,5 +42,6 @@ public class ReadyFightScript : MonoBehaviour
         readyFightText.text = "";
         GameManager.instance.timeIsActivated = true;
         fightIsStarted = true;
+        this.gameObject.SetActive(false);
     }
 }
