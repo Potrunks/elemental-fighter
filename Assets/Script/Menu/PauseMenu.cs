@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PauseMenu : MonoBehaviour
     public AudioManager audioManager;
     public Slider mainSlider;
     private int playerPauseTheGame;
+    public GameObject firstButtonSelectedAfterPauseButton, firstButtonSelectedAfterEndGame, firstButtonSelectedAfterOptionButton, firstButtonSelectedAfterBackButton;
 
     private void Awake()
     {
@@ -49,6 +51,8 @@ public class PauseMenu : MonoBehaviour
     {
         playerPauseTheGame = playerIndex;
         pauseMenuUI.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterPauseButton);
         isPaused = true;
         StopGameBackground();
     }
@@ -56,6 +60,8 @@ public class PauseMenu : MonoBehaviour
     public void EndTheGame()
     {
         endGameResults.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterEndGame);
         StopGameBackground();
     }
 
@@ -72,6 +78,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeTheGame()
     {
         pauseMenuUI.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
         scorePlayer1.SetActive(true);
         scorePlayer2.SetActive(true);
         timer.SetActive(true);
@@ -92,12 +99,16 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         optionMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterOptionButton);
     }
 
     public void BackToPauseMenu()
     {
         optionMenu.SetActive(false);
         pauseMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterBackButton);
     }
 
     public void SetMainThemeVolume(float sliderVolumeMainTheme)

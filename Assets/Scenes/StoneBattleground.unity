@@ -9635,6 +9635,10 @@ MonoBehaviour:
   optionMenu: {fileID: 1077137370}
   audioManager: {fileID: 1204961639}
   mainSlider: {fileID: 1321552742}
+  firstButtonSelectedAfterPauseButton: {fileID: 7834176}
+  firstButtonSelectedAfterEndGame: {fileID: 2020804323}
+  firstButtonSelectedAfterOptionButton: {fileID: 1215330577}
+  firstButtonSelectedAfterBackButton: {fileID: 7834176}
 --- !u!1001 &1775804142
 PrefabInstance:
   m_ObjectHideFlags: 0
