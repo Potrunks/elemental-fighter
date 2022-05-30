@@ -26,10 +26,14 @@ public class HeavyFireElementalCommand : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        DamageCommand targetHit = other.GetComponent<DamageCommand>();
         try
         {
-            other.GetComponent<DamageCommand>().TakeDamage(heavyFireElementalDamage);
-            EnemyTakeHeavyATK(other.GetComponent<Rigidbody2D>(), other.GetComponent<MovePlayer>());
+            if (targetHit.isInvincible == false)
+            {
+                targetHit.TakeDamage(heavyFireElementalDamage);
+                EnemyTakeHeavyATK(other.GetComponent<Rigidbody2D>(), other.GetComponent<MovePlayer>());
+            }
         }
         finally
         {

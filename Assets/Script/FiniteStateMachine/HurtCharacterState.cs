@@ -48,14 +48,17 @@ public class HurtCharacterState : CharacterState
 
     public override void OnEnter(MovePlayer player)
     {
-        player.audioManager.Play("Hurting");
-        player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.hurtSounds, random.Next(0, player.audioManager.hurtSounds.Length));
-        // Play animation
-        player.moveSpeed = player.stopMoveSpeed;
-        // isHurting go to False value
-        player.isHurting = false;
-        player.BloodEffect();
-        player.animator.Play("Hurt", -1, 0.0f);
+        if (player.playerDamageCommand.isInvincible == false)
+        {
+            player.audioManager.Play("Hurting");
+            player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.hurtSounds, random.Next(0, player.audioManager.hurtSounds.Length));
+            // Play animation
+            player.moveSpeed = player.stopMoveSpeed;
+            // isHurting go to False value
+            player.isHurting = false;
+            player.BloodEffect();
+            player.animator.Play("Hurt", -1, 0.0f);
+        }
     }
 
     public override void OnExit(MovePlayer player)
@@ -63,7 +66,7 @@ public class HurtCharacterState : CharacterState
         DamageCommand damageCommandPlayer = player.GetComponent<DamageCommand>();
         int currentHealth = damageCommandPlayer.currentHealth;
         int maxHealth = damageCommandPlayer.maxHealth;
-        
+
     }
 
     public override void PerformingInput(string action)
