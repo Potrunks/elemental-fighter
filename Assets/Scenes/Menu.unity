@@ -177,6 +177,8 @@ MonoBehaviour:
   optionMenu: {fileID: 820666980}
   fightModeChoice: {fileID: 1555948736}
   victoryConditionToggleGroup: {fileID: 2038035523}
+  firstButtonSelectedAfterPlayButton: {fileID: 499427037}
+  firstButtonSelectedAfterOptionButton: {fileID: 1175144287}
 --- !u!1 &72947581
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +735,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 1, g: 0.9614235, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -901,7 +903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 897754592}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &361462189
@@ -1322,7 +1324,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 1, g: 0.9614235, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1623,7 +1625,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 0.7019608}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
     m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2125,6 +2127,7 @@ MonoBehaviour:
   audioManager: {fileID: 286262869365483430}
   victoryConditionToggleGroup: {fileID: 2038035523}
   timeConditionToggleGroup: {fileID: 308420477}
+  firstButtonSelectedAfterApplyButton: {fileID: 897754592}
 --- !u!1 &820952498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,7 +2549,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 0.7019608}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
     m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3158,7 +3161,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3602,7 +3605,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 1, g: 0.9614235, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3821,7 +3824,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 1, g: 0.9614235, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -4459,6 +4462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 22442256}
+  firstButtonSelectedAfterBackButton: {fileID: 897754592}
 --- !u!1 &1607995161
 GameObject:
   m_ObjectHideFlags: 0
@@ -5418,7 +5422,7 @@ MonoBehaviour:
     m_NormalColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
     m_HighlightedColor: {r: 1, g: 0, b: 0, a: 1}
     m_PressedColor: {r: 1, g: 0.9614235, b: 0, a: 1}
-    m_SelectedColor: {r: 0.9607844, g: 0.6627451, b: 0.1254902, a: 1}
+    m_SelectedColor: {r: 1, g: 0, b: 0, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Linq;
-using TMPro;
+using UnityEngine.EventSystems;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject optionMenu;
     public GameObject fightModeChoice;
     public ToggleGroup victoryConditionToggleGroup;
+    public GameObject firstButtonSelectedAfterPlayButton, firstButtonSelectedAfterOptionButton;
 
     public void PlayButtonScript()
     {
@@ -19,6 +18,8 @@ public class MainMenu : MonoBehaviour
         */
         this.gameObject.SetActive(false);
         fightModeChoice.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterPlayButton);
     }
 
     public void QuitButtonScript()
@@ -30,5 +31,7 @@ public class MainMenu : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         optionMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterOptionButton);
     }
 }

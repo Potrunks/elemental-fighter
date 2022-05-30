@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class OptionMenu : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class OptionMenu : MonoBehaviour
     public AudioManager audioManager;
     public ToggleGroup victoryConditionToggleGroup;
     public ToggleGroup timeConditionToggleGroup;
+    public GameObject firstButtonSelectedAfterApplyButton;
     private void Awake()
     {
         mainSlider.value = GameManager.instance.volumeMainTheme;
@@ -20,6 +22,8 @@ public class OptionMenu : MonoBehaviour
         UpdateTimeCondition();
         this.gameObject.SetActive(false);
         mainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterApplyButton);
     }
     public void SetMainThemeVolume(float sliderVolumeMainTheme)
     {

@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class FightModeChoiceScript : MonoBehaviour
 {
     public GameObject mainMenu;
+    public GameObject firstButtonSelectedAfterBackButton;
 
     public void J1VSJ2ModeButtonScript()
     {
@@ -29,6 +31,8 @@ public class FightModeChoiceScript : MonoBehaviour
         Debug.Log("Click on back button to go to the main menu from the fight mode choice");
         this.gameObject.SetActive(false);
         mainMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterBackButton);
     }
 
     private void SetSelectedMode(bool j1AIMode, bool j2AIMode, bool j3AIMode, bool j4AIMode)
