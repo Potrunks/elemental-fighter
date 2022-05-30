@@ -122,7 +122,6 @@ public class DamageCommand : MonoBehaviour
         {
             ResetHealth();
             PlayerStartSpawn(player);
-            EnemyStartSpawn(enemy);
             ResetBleedingState();
         }
     }
@@ -130,11 +129,6 @@ public class DamageCommand : MonoBehaviour
     public void PlayerStartSpawn(MovePlayer player)
     {
         player.transform.position = player.GetComponentInParent<SpawnPlayer>().transform.position;
-    }
-
-    public void EnemyStartSpawn(GameObject enemy)
-    {
-        enemy.transform.position = enemy.GetComponentInParent<SpawnPlayer>().transform.position;
     }
 
     private void ResetBleedingState()
