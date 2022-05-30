@@ -162,7 +162,7 @@ MonoBehaviour:
   MediumFireElementalImpactEffect: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
   target: {fileID: 0}
   caster: {fileID: 0}
-  heavyATKPushForce: 35
+  heavyATKPushForce: 50
 --- !u!114 &-2074939772911346362
 MonoBehaviour:
   m_ObjectHideFlags: 0
