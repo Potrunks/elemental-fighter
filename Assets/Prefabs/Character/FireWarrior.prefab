@@ -136,6 +136,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   enemyMovePlayer: {fileID: 0}
   enemyDamageCommand: {fileID: 0}
+  playerDamageCommand: {fileID: 0}
   dashEffectPrefab: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
   dashSpawnPoint: {fileID: 4152062392739471539}
   dashEffect: {fileID: 4152062393090402417}
@@ -224,6 +225,8 @@ MonoBehaviour:
   blockPush: 35
   heavyATKPushForce: 35
   bleedingEffect: {fileID: 1333191153991818883}
+  isInvincible: 0
+  invincibleDuration: 3
 --- !u!114 &4152062391814938598
 MonoBehaviour:
   m_ObjectHideFlags: 0

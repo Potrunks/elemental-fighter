@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DamageCommand : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class DamageCommand : MonoBehaviour
     private float bleedingCooldownTime = 5f;
     private float nextBleedingTime = 0f;
     private bool isBleeding = false;
+    public bool isInvincible = false;
+    [SerializeField]
+    private int invincibleDuration;
 
     private void Update()
     {
@@ -48,7 +52,9 @@ public class DamageCommand : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (GetComponent<MovePlayer>().isBlockingAttack == true)
+        if (isInvincible == false)
+        {
+            if (GetComponent<MovePlayer>().isBlockingAttack == true)
         {
             currentHealth -= damage / 5;
             GetComponent<MovePlayer>().isHurting = true;
@@ -59,6 +65,7 @@ public class DamageCommand : MonoBehaviour
             GetComponent<MovePlayer>().isHurting = true;
         }
         UpdateBleedingState();
+        }
     }
 
     private void UpdateBleedingState()
@@ -129,6 +136,7 @@ public class DamageCommand : MonoBehaviour
     public void PlayerStartSpawn(MovePlayer player)
     {
         player.transform.position = player.GetComponentInParent<SpawnPlayer>().transform.position;
+        StartCoroutine(invicibleWhenRespawn(player));
     }
 
     private void ResetBleedingState()
@@ -137,5 +145,14 @@ public class DamageCommand : MonoBehaviour
         bleedingCooldownTime = 5f;
         nextBleedingTime = 0f;
         isBleeding = false;
+    }
+
+    private IEnumerator invicibleWhenRespawn(MovePlayer player)
+    {
+        isInvincible = true;
+        player.spriteRenderer.material.color = new Color(player.spriteRenderer.material.color.r, player.spriteRenderer.material.color.g, player.spriteRenderer.material.color.b, 0.25f);
+        yield return new WaitForSeconds(invincibleDuration);
+        isInvincible = false;
+        player.spriteRenderer.material.color = new Color(player.spriteRenderer.material.color.r, player.spriteRenderer.material.color.g, player.spriteRenderer.material.color.b, 1f);
     }
 }

@@ -32,12 +32,12 @@ public class MovePlayer : MonoBehaviour
     public GameObject enemy = null;
     public MovePlayer enemyMovePlayer = null;
     public DamageCommand enemyDamageCommand = null;
+    public DamageCommand playerDamageCommand;
     public GameObject dashEffectPrefab;
     public GameObject dashSpawnPoint;
     public ParticleSystem dashEffect;
     public ParticleSystem bloodEffect;
     public AudioManager audioManager;
-    private Renderer rendererCharacter;
 
     [Header("State")]
     public bool isHurting = false;
@@ -189,6 +189,7 @@ public class MovePlayer : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        playerDamageCommand = GetComponent<DamageCommand>();
         if (GetComponent<MovePlayer>().playerIndex == 0)
         {
             //this.gameObject.tag = "Player";
@@ -202,7 +203,6 @@ public class MovePlayer : MonoBehaviour
         currentState = new IdleCharacterState();
         currentState.OnEnter(this);
         MultipleTargetCamFollow.instance.players.Add(this.transform);
-        rendererCharacter = GetComponent<Renderer>();
         SetRendererColorByPlayerIndex(playerIndex);
     }
 
@@ -265,17 +265,17 @@ public class MovePlayer : MonoBehaviour
         if (playerIndex == 1)
         {
             // Blue
-            rendererCharacter.material.color = new Color32(133, 136, 253, 255);
+            spriteRenderer.material.color = new Color32(133, 136, 253, 255);
         }
         if (playerIndex == 2)
         {
             // Green
-            rendererCharacter.material.color = new Color32(141, 253, 134, 255);
+            spriteRenderer.material.color = new Color32(141, 253, 134, 255);
         }
         if (playerIndex == 3)
         {
             // Yellow
-            rendererCharacter.material.color = new Color32(245, 253, 133, 255);
+            spriteRenderer.material.color = new Color32(245, 253, 133, 255);
         }
     }
 }
