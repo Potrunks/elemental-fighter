@@ -6,7 +6,7 @@
 
 Windows Build [OK]
 UWP Build []
-Mac Build []
+Mac Build [OK]
 
 2 - News Release
 
