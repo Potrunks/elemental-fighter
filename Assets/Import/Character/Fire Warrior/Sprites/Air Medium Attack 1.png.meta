@@ -39,6 +39,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -292,6 +293,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Air Medium Attack 1_3: -1529738104251153116
+      Air Medium Attack 1_5: 4410658545390522326
+      Air Medium Attack 1_7: 4881069648875859421
+      Air Medium Attack 1_1: 1081350498097224161
+      Air Medium Attack 1_2: -178936515830121887
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
