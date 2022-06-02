@@ -1,1 +1,22 @@
 --- Build and Release ---
+
+--- 31-05-22 ---
+
+1 - Build
+
+Windows Build [OK]
+UWP Build [OK]
+Mac Build [OK]
+
+2 - News Release
+
+Add sound recorded by Poulet Braisé team
+Create an AI versus AI mode
+Color of the character change depending of the index player
+When the heavy fireball of the firewarrior hit someone, the affected player is thrown further than before
+Update the canva
+After the second light atk of the firewarrior the recovery is more longer
+After the player dies or falls, he respawns and is untouchable for 3 seconds
+Possibility to move in the menu with the gamepad or the keyboard
+Update the Editor version for Unity Hub (to 2021.3.2f1 LTS)
+Install Windows 10 SDK
