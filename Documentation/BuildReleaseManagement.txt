@@ -5,7 +5,7 @@
 1 - Build
 
 Windows Build [OK]
-UWP Build []
+UWP Build [OK]
 Mac Build [OK]
 
 2 - News Release
