@@ -37,7 +37,7 @@ public class HeavyFireElementalCommand : MonoBehaviour
         }
         catch (System.NullReferenceException e)
         {
-            Debug.Log("The projectile doesn't touch an enemy character");
+            Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character");
         }
         finally
         {
