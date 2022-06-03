@@ -35,6 +35,10 @@ public class HeavyFireElementalCommand : MonoBehaviour
                 EnemyTakeHeavyATK(other.GetComponent<Rigidbody2D>(), other.GetComponent<MovePlayer>());
             }
         }
+        catch (System.NullReferenceException e)
+        {
+            Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character");
+        }
         finally
         {
             Destroy(this.gameObject);

@@ -26,9 +26,17 @@ public class MediumFireElementalCommand : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        DamageCommand targetHit = other.GetComponent<DamageCommand>();
         try
         {
-            other.GetComponent<DamageCommand>().TakeDamage(mediumFireElementalDamage);
+            if (targetHit.isInvincible == false)
+            {
+                targetHit.TakeDamage(mediumFireElementalDamage);
+            }
+        }
+        catch (System.NullReferenceException e)
+        {
+            Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character");
         }
         finally
         {
