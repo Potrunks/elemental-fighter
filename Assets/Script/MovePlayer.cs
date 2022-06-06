@@ -15,6 +15,7 @@ public class MovePlayer : MonoBehaviour
     public const float dashCooldownTime = 1;
     public float nextTimeDash;
     private Vector3 velocity = Vector3.zero;
+    public bool isFlipLeft = false;
 
     [Header("Component")]
     // fait ref au rigid body du joueur
@@ -43,6 +44,7 @@ public class MovePlayer : MonoBehaviour
     public bool isHurting = false;
     public bool isGrounding;
     public bool isBlockingAttack = false;
+    public bool isHurtingByPushAttack = false;
     public int playerIndex;
     public ICharacterState currentState;
     private ICharacterState nextState;
@@ -82,10 +84,6 @@ public class MovePlayer : MonoBehaviour
             enemyMovePlayer = enemy.GetComponent<MovePlayer>();
             enemyDamageCommand = enemy.GetComponent<DamageCommand>();
         }
-        isGrounding = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayer);
-        horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;
-        PlayerMove(horizontalMovement);
-        Flip();
         nextState = currentState.CheckingStateModification(this);
         if (nextState != null)
         {
@@ -93,6 +91,10 @@ public class MovePlayer : MonoBehaviour
             currentState = nextState;
             currentState.OnEnter(this);
         }
+        isGrounding = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayer);
+        horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;
+        PlayerMove(horizontalMovement);
+        Flip();
     }
     public void PlayerMove(float _horizontalMovement)
     {
@@ -139,11 +141,34 @@ public class MovePlayer : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitBoxWeapon.transform.position, hitBoxWeaponRange, enemyLayer);
         foreach (Collider2D enemyCollider2D in hitEnemies)
         {
-            enemyCollider2D.GetComponent<DamageCommand>().TakeDamage(attackDamage);
+            DamageCommand enemyCollider2DDamageCommand = enemyCollider2D.GetComponent<DamageCommand>();
+            Transform enemyCollider2DTransform = enemyCollider2D.GetComponent<Transform>();
+            MovePlayer enemyCollider2DMovePlayer = enemyCollider2D.GetComponent<MovePlayer>();
+            enemyCollider2DDamageCommand.SetIsAttackedFromBehind(enemyCollider2DMovePlayer, enemyCollider2DTransform, this.gameObject.transform);
+            enemyCollider2DDamageCommand.TakeDamage(attackDamage);
         }
     }
     public void Flip()
     {
+        if (isBlockingAttack == true)
+        {
+            return;
+        }
+        if (isHurtingByPushAttack == true)
+        {
+            return;
+        }
+        if (rb.velocity.x < -0.1f && isFlipLeft == false)
+        {
+            transform.Rotate(0f, 180f, 0f);
+            isFlipLeft = true;
+        }
+        if (rb.velocity.x > 0.1f && isFlipLeft == true)
+        {
+            transform.Rotate(0f, 180f, 0f);
+            isFlipLeft = false;
+        }
+        /*
         if (transform.position.x < enemy.transform.position.x)
         {
             if (spriteRenderer.flipX == false)
@@ -178,6 +203,7 @@ public class MovePlayer : MonoBehaviour
                 GetComponent<DamageCommand>().bleedingEffect.transform.Rotate(0f, 180f, 0f);
             }
         }
+        */
     }
     public void OnLightATK(InputAction.CallbackContext context)
     {
@@ -234,11 +260,7 @@ public class MovePlayer : MonoBehaviour
     {
         if (context.performed && Time.time > nextTimeDash && PauseMenu.instance.isPaused == false)
         {
-            if ((spriteRenderer.flipX == true && rb.velocity.x < -0.1f)
-            || (spriteRenderer.flipX == false && rb.velocity.x > 0.1f))
-            {
-                currentState.PerformingInput("Dash");
-            }
+            currentState.PerformingInput("Dash");
         }
     }
     public void DashEffect()

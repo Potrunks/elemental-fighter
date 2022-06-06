@@ -8,8 +8,7 @@ public class MoveForwardCharacterState : CharacterState
         if (player.isHurting == false)
         {
             // Idle State
-            if ((player.rb.velocity.x <= 0.1f && player.spriteRenderer.flipX == false)
-            || (player.rb.velocity.x >= -0.1f && player.spriteRenderer.flipX == true))
+            if (player.rb.velocity.x <= 0.1f && player.rb.velocity.x >= -0.1f)
             {
                 nextState = new IdleCharacterState();
             }

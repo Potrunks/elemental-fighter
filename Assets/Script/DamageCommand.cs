@@ -15,6 +15,7 @@ public class DamageCommand : MonoBehaviour
     private float nextBleedingTime = 0f;
     private bool isBleeding = false;
     public bool isInvincible = false;
+    private bool isAttackedFromBehind = false;
     [SerializeField]
     private int invincibleDuration;
 
@@ -154,5 +155,23 @@ public class DamageCommand : MonoBehaviour
         yield return new WaitForSeconds(invincibleDuration);
         isInvincible = false;
         player.spriteRenderer.material.color = new Color(player.spriteRenderer.material.color.r, player.spriteRenderer.material.color.g, player.spriteRenderer.material.color.b, 1f);
+    }
+
+    public void SetIsAttackedFromBehind(MovePlayer moveplayerTargeted, Transform transformTargeted, Transform transformPrey)
+    {
+        if ((moveplayerTargeted.isFlipLeft == true && transformPrey.position.x > transformTargeted.position.x)
+                    || (moveplayerTargeted.isFlipLeft == false && transformPrey.position.x < transformTargeted.position.x))
+        {
+            this.isAttackedFromBehind = true;
+        }
+        else
+        {
+            this.isAttackedFromBehind = false;
+        }
+    }
+
+    public bool GetIsAttackedFromBehind()
+    {
+        return this.isAttackedFromBehind;
     }
 }

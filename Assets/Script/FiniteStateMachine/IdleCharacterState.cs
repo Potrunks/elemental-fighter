@@ -27,16 +27,9 @@ public class IdleCharacterState : CharacterState
                 else
                 {
                     // Move Forward
-                    if ((player.rb.velocity.x > 0.1f && player.spriteRenderer.flipX == false)
-                    || (player.rb.velocity.x < -0.1f && player.spriteRenderer.flipX == true))
+                    if (player.rb.velocity.x > 0.1f || player.rb.velocity.x < -0.1f)
                     {
                         return nextState = new MoveForwardCharacterState();
-                    }
-                    // Move Backward
-                    if ((player.rb.velocity.x < -0.1f && player.spriteRenderer.flipX == false)
-                    || (player.rb.velocity.x > 0.1f && player.spriteRenderer.flipX == true))
-                    {
-                        return nextState = new MoveBackwardCharacterState();
                     }
                 }
             }

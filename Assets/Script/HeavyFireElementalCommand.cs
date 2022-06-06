@@ -8,7 +8,6 @@ public class HeavyFireElementalCommand : MonoBehaviour
     public GameObject MediumFireElementalImpactEffect;
     public GameObject target;
     public MovePlayer caster;
-    public float heavyATKPushForce;
     void Start()
     {
         caster = GetComponentInParent<MovePlayer>();
@@ -27,34 +26,25 @@ public class HeavyFireElementalCommand : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         DamageCommand targetHit = other.GetComponent<DamageCommand>();
+        Transform targetTransform = other.GetComponent<Transform>();
+        MovePlayer targetMoveplayer = other.GetComponent<MovePlayer>();
         try
         {
             if (targetHit.isInvincible == false)
             {
+                targetHit.SetIsAttackedFromBehind(targetMoveplayer, targetTransform, this.gameObject.transform);
+                targetMoveplayer.isHurtingByPushAttack = true;
                 targetHit.TakeDamage(heavyFireElementalDamage);
-                EnemyTakeHeavyATK(other.GetComponent<Rigidbody2D>(), other.GetComponent<MovePlayer>());
             }
         }
         catch (System.NullReferenceException e)
         {
-            Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character");
+            Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character" + e);
         }
         finally
         {
             Destroy(this.gameObject);
             Instantiate(MediumFireElementalImpactEffect, transform.position, transform.rotation);
-        }
-    }
-
-    private void EnemyTakeHeavyATK(Rigidbody2D rb, MovePlayer player)
-    {
-        if (player.spriteRenderer.flipX == false)
-        {
-            rb.velocity = Vector2.left * heavyATKPushForce;
-        }
-        else
-        {
-            rb.velocity = Vector2.right * heavyATKPushForce;
         }
     }
 }
