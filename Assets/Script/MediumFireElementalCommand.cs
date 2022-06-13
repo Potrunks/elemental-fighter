@@ -6,11 +6,12 @@ public class MediumFireElementalCommand : MonoBehaviour
     public int mediumFireElementalDamage;
     public Rigidbody2D rb;
     public GameObject mediumFireElementalImpactEffect;
-    public GameObject target;
     public MovePlayer caster;
+    public Transform elementalSpawnPointTransform;
 
     void Start()
     {
+        /*
         caster = GetComponentInParent<MovePlayer>();
         if (caster.GetPlayerIndex() == 0)
         {
@@ -22,6 +23,8 @@ public class MediumFireElementalCommand : MonoBehaviour
         }
         transform.right = target.transform.position - transform.position;
         rb.velocity = transform.right * speed;
+        */
+        rb.AddForce(elementalSpawnPointTransform.right * speed, ForceMode2D.Impulse);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

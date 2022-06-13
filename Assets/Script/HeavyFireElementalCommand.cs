@@ -8,19 +8,11 @@ public class HeavyFireElementalCommand : MonoBehaviour
     public GameObject MediumFireElementalImpactEffect;
     public GameObject target;
     public MovePlayer caster;
+    public Transform elementalSpawnPointTransform;
+
     void Start()
     {
-        caster = GetComponentInParent<MovePlayer>();
-        if (caster.GetPlayerIndex() == 0)
-        {
-            target = GameObject.Find("Character2");
-        }
-        else
-        {
-            target = GameObject.Find("Character1");
-        }
-        transform.right = target.transform.position - transform.position;
-        rb.velocity = transform.right * speed;
+        rb.AddForce(elementalSpawnPointTransform.right * speed, ForceMode2D.Impulse);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

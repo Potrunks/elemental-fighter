@@ -16,6 +16,9 @@ public class MovePlayer : MonoBehaviour
     public float nextTimeDash;
     private Vector3 velocity = Vector3.zero;
     public bool isFlipLeft = false;
+    [SerializeField]
+    private float angle;
+    private float modificatorXAxis;
 
     [Header("Component")]
     // fait ref au rigid body du joueur
@@ -95,6 +98,17 @@ public class MovePlayer : MonoBehaviour
         horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;
         PlayerMove(horizontalMovement);
         Flip();
+        if (isFlipLeft == true && horizontalMovementV2.x >= 0)
+        {
+            modificatorXAxis = -1f;
+        }
+        else
+        {
+            modificatorXAxis = 1f;
+        }
+        angle = Mathf.Atan2(horizontalMovementV2.y, modificatorXAxis * horizontalMovementV2.x) * Mathf.Rad2Deg;
+        Quaternion angle2Quaternion = Quaternion.Euler(0, 0, angle);
+        elementalSpawnPoint.transform.rotation = angle2Quaternion;
     }
     public void PlayerMove(float _horizontalMovement)
     {
@@ -248,12 +262,18 @@ public class MovePlayer : MonoBehaviour
     }
     private void CastMediumFireElemental()
     {
-        Instantiate(mediumFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation, this.transform);
+        GameObject mediumElement = Instantiate(mediumFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
+        MediumFireElementalCommand command = mediumElement.GetComponent<MediumFireElementalCommand>();
+        command.caster = this;
+        command.elementalSpawnPointTransform = this.elementalSpawnPoint.transform;
     }
 
     private void CastHeavyFireElemental()
     {
-        Instantiate(heavyFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation, this.transform);
+        GameObject heavyElement = Instantiate(heavyFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
+        HeavyFireElementalCommand command = heavyElement.GetComponent<HeavyFireElementalCommand>();
+        command.caster = this;
+        command.elementalSpawnPointTransform = this.elementalSpawnPoint.transform;
     }
 
     public void OnDashMove(InputAction.CallbackContext context)
