@@ -36,6 +36,7 @@ public class MediumFireElementalCommand : MonoBehaviour
         {
             if (targetHit.isInvincible == false)
             {
+                caster.SetPlayerAsEnemy(targetMoveplayer);
                 targetHit.SetIsAttackedFromBehind(targetMoveplayer, targetTransform, this.gameObject.transform);
                 targetHit.TakeDamage(mediumFireElementalDamage);
             }

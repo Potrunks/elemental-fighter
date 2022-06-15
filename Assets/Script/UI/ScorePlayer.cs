@@ -29,4 +29,10 @@ public class ScorePlayer : MonoBehaviour
             textScore.text = victoryPoint + " : " + "Player " + (playerIndex + 1);
         }
     }
+
+    public void Suicide()
+    {
+        this.victoryPoint = this.victoryPoint - 2;
+        DisplayScore();
+    }
 }

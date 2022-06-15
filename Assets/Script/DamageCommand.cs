@@ -119,19 +119,40 @@ public class DamageCommand : MonoBehaviour
 
     public void ResetPlayer(MovePlayer player, GameObject enemy)
     {
-        enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().UpdateScore();
-        int enemyScore = enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().victoryPoint;
-        if (enemyScore == GameManager.instance.victoryPointCondition)
+        if (enemy != null && player.name != enemy.name)
         {
-            Debug.Log("The player " + (enemy.GetComponent<MovePlayer>().playerIndex + 1) + " win the game !!!");
-            GameManager.instance.DisplayEndgameResults();
+            ScorePlayer scorePlayerEnemy = enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>();
+            scorePlayerEnemy.UpdateScore();
+            int enemyScore = scorePlayerEnemy.victoryPoint;
+            if (enemyScore == GameManager.instance.victoryPointCondition)
+            {
+                Debug.Log("The player " + (enemy.GetComponent<MovePlayer>().playerIndex + 1) + " win the game !!!");
+                GameManager.instance.DisplayEndgameResults();
+            }
+            else
+            {
+                ResetHealth();
+                PlayerStartSpawn(player);
+                ResetBleedingState();
+            }
         }
-        else
+        else if (enemy == null || player.name == enemy.name)
         {
+            ScorePlayer scorePlayerPlayer = player.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>();
+            scorePlayerPlayer.Suicide();
             ResetHealth();
             PlayerStartSpawn(player);
             ResetBleedingState();
+
         }
+        ResetEnemyOfPlayer(player);
+    }
+
+    private void ResetEnemyOfPlayer(MovePlayer player)
+    {
+        player.enemy = null;
+        player.enemyDamageCommand = null;
+        player.enemyMovePlayer = null;
     }
 
     public void PlayerStartSpawn(MovePlayer player)

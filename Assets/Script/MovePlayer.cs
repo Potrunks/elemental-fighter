@@ -75,6 +75,7 @@ public class MovePlayer : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        /*
         if (this.gameObject.name == "Character1" && enemy == null)
         {
             enemy = GameObject.Find("Character2");
@@ -87,6 +88,7 @@ public class MovePlayer : MonoBehaviour
             enemyMovePlayer = enemy.GetComponent<MovePlayer>();
             enemyDamageCommand = enemy.GetComponent<DamageCommand>();
         }
+        */
         nextState = currentState.CheckingStateModification(this);
         if (nextState != null)
         {
@@ -158,10 +160,19 @@ public class MovePlayer : MonoBehaviour
             DamageCommand enemyCollider2DDamageCommand = enemyCollider2D.GetComponent<DamageCommand>();
             Transform enemyCollider2DTransform = enemyCollider2D.GetComponent<Transform>();
             MovePlayer enemyCollider2DMovePlayer = enemyCollider2D.GetComponent<MovePlayer>();
+            SetPlayerAsEnemy(enemyCollider2DMovePlayer);
             enemyCollider2DDamageCommand.SetIsAttackedFromBehind(enemyCollider2DMovePlayer, enemyCollider2DTransform, this.gameObject.transform);
             enemyCollider2DDamageCommand.TakeDamage(attackDamage);
         }
     }
+
+    public void SetPlayerAsEnemy(MovePlayer enemy)
+    {
+        enemy.enemy = this.gameObject;
+        enemy.enemyDamageCommand = this.playerDamageCommand;
+        enemy.enemyMovePlayer = this;
+    }
+
     public void Flip()
     {
         if (isBlockingAttack == true)
