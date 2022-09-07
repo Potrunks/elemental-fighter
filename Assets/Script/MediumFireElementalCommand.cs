@@ -1,3 +1,5 @@
+using Assets.Script.Business.Implementation;
+using Assets.Script.Business.Interface;
 using UnityEngine;
 
 public class MediumFireElementalCommand : MonoBehaviour
@@ -6,11 +8,14 @@ public class MediumFireElementalCommand : MonoBehaviour
     public int mediumFireElementalDamage;
     public Rigidbody2D rb;
     public GameObject mediumFireElementalImpactEffect;
-    public GameObject target;
     public MovePlayer caster;
+    public Transform elementalSpawnPointTransform;
+
+    private IElementalBusiness elementalBusiness = new ElementalBusiness();
 
     void Start()
     {
+        /*
         caster = GetComponentInParent<MovePlayer>();
         if (caster.GetPlayerIndex() == 0)
         {
@@ -22,26 +27,36 @@ public class MediumFireElementalCommand : MonoBehaviour
         }
         transform.right = target.transform.position - transform.position;
         rb.velocity = transform.right * speed;
+        */
+        elementalBusiness.SetElementalColorByPlayerIndex(this.gameObject, caster.playerIndex);
+        rb.AddForce(elementalSpawnPointTransform.right * speed, ForceMode2D.Impulse);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        DamageCommand targetHit = other.GetComponent<DamageCommand>();
-        try
+        MovePlayer targetMoveplayer = other.GetComponent<MovePlayer>();
+        if (caster != targetMoveplayer)
         {
-            if (targetHit.isInvincible == false)
+            DamageCommand targetHit = other.GetComponent<DamageCommand>();
+            Transform targetTransform = other.GetComponent<Transform>();
+            try
             {
-                targetHit.TakeDamage(mediumFireElementalDamage);
+                if (targetHit.isInvincible == false)
+                {
+                    caster.SetPlayerAsEnemy(targetMoveplayer);
+                    targetHit.SetIsAttackedFromBehind(targetMoveplayer, targetTransform, this.gameObject.transform);
+                    targetHit.TakeDamage(mediumFireElementalDamage);
+                }
             }
-        }
-        catch (System.NullReferenceException e)
-        {
-            Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character");
-        }
-        finally
-        {
-            Destroy(this.gameObject);
-            Instantiate(mediumFireElementalImpactEffect, transform.position, transform.rotation);
+            catch (System.NullReferenceException e)
+            {
+                Debug.Log("The projectile of " + this.gameObject.name + " doesn't touch an enemy character : " + e);
+            }
+            finally
+            {
+                Destroy(this.gameObject);
+                Instantiate(mediumFireElementalImpactEffect, transform.position, transform.rotation);
+            }
         }
     }
 }

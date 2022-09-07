@@ -1,10 +1,16 @@
 using UnityEngine;
 using Pathfinding;
+using System.Collections.Generic;
+using System;
 
 public class EnemyAI : MonoBehaviour
 {
     [Header("Pathfinding")]
-    public Transform target;
+    public Transform currentTarget;
+    private Transform nextTarget;
+    [SerializeField]
+    private Transform[] targets;
+    private float? closestDistance = 0f;
     public float pathUpdateSeconds;
 
     [Header("Physics")]
@@ -21,7 +27,6 @@ public class EnemyAI : MonoBehaviour
     private Seeker seeker;
     private Rigidbody2D rb;
     private MovePlayer movePlayer;
-    private DamageCommand damageCommand;
     private System.Random probability = new System.Random();
 
     private void Start()
@@ -31,7 +36,16 @@ public class EnemyAI : MonoBehaviour
         movePlayer = GetComponent<MovePlayer>();
         movePlayer.jumpForce = 600;
         movePlayer.normalMoveSpeed = 225;
-        this.damageCommand = GetComponent<DamageCommand>();
+        MovePlayer[] allPlayers = FindObjectsOfType<MovePlayer>();
+        List<Transform> allPlayersList = new List<Transform>();
+        foreach (MovePlayer player in allPlayers)
+        {
+            if (player.playerIndex != this.movePlayer.playerIndex)
+            {
+                allPlayersList.Add(player.transform);
+            }
+        }
+        targets = allPlayersList.ToArray();
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
 
@@ -41,9 +55,42 @@ public class EnemyAI : MonoBehaviour
         {
             PathFollow();
         }
-        if (target == null && movePlayer.enemy != null)
+        UpdateTarget();
+    }
+
+    /// <summary>
+    /// Update the target enemy of the AI
+    /// </summary>
+    private void UpdateTarget()
+    {
+        CalculateDistanceBetweenAllPlayersEnemies();
+        VerifyNewTargetIsPossible();
+    }
+
+    /// <summary>
+    /// Calculate the distance between all the players enemies on the map
+    /// </summary>
+    private void CalculateDistanceBetweenAllPlayersEnemies()
+    {
+        foreach (Transform t in targets)
         {
-            target = movePlayer.enemy.transform;
+            float? distance = CalculateDistancePlayerEnemy(t);
+            if (distance <= closestDistance || closestDistance == 0f)
+            {
+                closestDistance = distance;
+                nextTarget = t;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Verify if update target its necessary
+    /// </summary>
+    private void VerifyNewTargetIsPossible()
+    {
+        if (nextTarget != currentTarget)
+        {
+            currentTarget = nextTarget;
         }
     }
 
@@ -51,24 +98,27 @@ public class EnemyAI : MonoBehaviour
     {
         if (followEnabled && seeker.IsDone())
         {
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
+            seeker.StartPath(rb.position, currentTarget.position, OnPathComplete);
         }
     }
 
     private void PathFollow()
     {
-        if (target != null)
+        movePlayer.isUsingJoystick = true;
+        if (currentTarget != null)
         {
-            FightStrategy(CalculateDistancePlayerEnemy());
+            FightStrategy(CalculateDistancePlayerEnemy(currentTarget));
         }
         if (path == null)
         {
+            movePlayer.isUsingJoystick = false;
             return;
         }
 
         // Reached end of path
         if (currentWaypoint >= path.vectorPath.Count)
         {
+            movePlayer.isUsingJoystick = false;
             return;
         }
 
@@ -147,9 +197,9 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    public float? CalculateDistancePlayerEnemy()
+    public float? CalculateDistancePlayerEnemy(Transform transformOfEnemy)
     {
-        float distance = Vector3.Distance(this.gameObject.transform.position, target.transform.position);
+        float distance = Vector3.Distance(this.gameObject.transform.position, transformOfEnemy.position);
         return distance;
     }
 }

@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
     /* If needed, do a singleton pattern with this instance
     public static AudioManager instance;
     */
+
     [Header("Sound Effect")]
     public Sound[] sounds;
     public Sound[] lightATKSounds;
@@ -35,6 +36,7 @@ public class AudioManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
         */
+
         gameManager = GameManager.instance;
 
         List<Sound[]> allSoundTypes = new List<Sound[]>();

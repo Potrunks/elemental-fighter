@@ -3,6 +3,7 @@ using UnityEngine;
 public class ElementalSpawnPoint : MonoBehaviour
 {
     public float rotation, absTransformX, absTransformY;
+
     public void Rotate(bool flipX) {
         transform.Rotate(0f, rotation, 0f);
         if (flipX == true) {

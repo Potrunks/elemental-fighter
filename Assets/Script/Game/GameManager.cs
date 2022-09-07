@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     public bool timeIsActivated;
     public float currentTime;
     public IDictionary<int, bool> selectedMode = new Dictionary<int, bool>();
+    public IDictionary<int, List<object>> deviceAndCharacterPlayerByIndex = new Dictionary<int, List<object>>();
+
     private void Awake()
     {
         if (instance == null)
@@ -37,7 +40,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Display an end game results when one player have enough kill or the time is over
+    /// <summary>
+    /// Display an end game results when one player have enough kill or the time is over
+    /// </summary>
     public void DisplayEndgameResults()
     {
         Debug.Log("Displaying endgame results...");

@@ -1,3 +1,5 @@
+using Assets.Script.Business.Implementation;
+using Assets.Script.Business.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +17,11 @@ public class MovePlayer : MonoBehaviour
     public const float dashCooldownTime = 1;
     public float nextTimeDash;
     private Vector3 velocity = Vector3.zero;
+    public bool isFlipLeft = false;
+    [SerializeField]
+    private float angle;
+    private float modificatorXAxis;
+    public bool isUsingJoystick;
 
     [Header("Component")]
     // fait ref au rigid body du joueur
@@ -43,6 +50,7 @@ public class MovePlayer : MonoBehaviour
     public bool isHurting = false;
     public bool isGrounding;
     public bool isBlockingAttack = false;
+    public bool isHurtingByPushAttack = false;
     public int playerIndex;
     public ICharacterState currentState;
     private ICharacterState nextState;
@@ -57,6 +65,8 @@ public class MovePlayer : MonoBehaviour
     [Header("Sound")]
     public float mainAmplifyValue;
 
+    private ICharacterBusiness characterBusiness = new CharacterBusiness();
+
     private void Awake()
     {
         foreach (Sound sound in audioManager.sounds)
@@ -70,6 +80,7 @@ public class MovePlayer : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        /*
         if (this.gameObject.name == "Character1" && enemy == null)
         {
             enemy = GameObject.Find("Character2");
@@ -82,10 +93,7 @@ public class MovePlayer : MonoBehaviour
             enemyMovePlayer = enemy.GetComponent<MovePlayer>();
             enemyDamageCommand = enemy.GetComponent<DamageCommand>();
         }
-        isGrounding = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayer);
-        horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;
-        PlayerMove(horizontalMovement);
-        Flip();
+        */
         nextState = currentState.CheckingStateModification(this);
         if (nextState != null)
         {
@@ -93,6 +101,24 @@ public class MovePlayer : MonoBehaviour
             currentState = nextState;
             currentState.OnEnter(this);
         }
+        isGrounding = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayer);
+        horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;
+        PlayerMove(horizontalMovement);
+        if (isUsingJoystick)
+        {
+            Flip();
+        }
+        if (isFlipLeft == true && horizontalMovementV2.x >= 0)
+        {
+            modificatorXAxis = -1f;
+        }
+        else
+        {
+            modificatorXAxis = 1f;
+        }
+        angle = Mathf.Atan2(horizontalMovementV2.y, modificatorXAxis * horizontalMovementV2.x) * Mathf.Rad2Deg;
+        Quaternion angle2Quaternion = Quaternion.Euler(0, 0, angle);
+        elementalSpawnPoint.transform.rotation = angle2Quaternion;
     }
     public void PlayerMove(float _horizontalMovement)
     {
@@ -111,6 +137,14 @@ public class MovePlayer : MonoBehaviour
     {
         if (PauseMenu.instance.isPaused == false)
         {
+            if (context.started)
+            {
+                isUsingJoystick = true;
+            }
+            else if (context.canceled)
+            {
+                isUsingJoystick= false;
+            }
             // creer un Vector 2 avec toutes les valeur de x et y en fonction des touches appuyé sur le GamePad
             horizontalMovementV2 = context.ReadValue<Vector2>();
         }
@@ -139,11 +173,43 @@ public class MovePlayer : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitBoxWeapon.transform.position, hitBoxWeaponRange, enemyLayer);
         foreach (Collider2D enemyCollider2D in hitEnemies)
         {
-            enemyCollider2D.GetComponent<DamageCommand>().TakeDamage(attackDamage);
+            DamageCommand enemyCollider2DDamageCommand = enemyCollider2D.GetComponent<DamageCommand>();
+            Transform enemyCollider2DTransform = enemyCollider2D.GetComponent<Transform>();
+            MovePlayer enemyCollider2DMovePlayer = enemyCollider2D.GetComponent<MovePlayer>();
+            SetPlayerAsEnemy(enemyCollider2DMovePlayer);
+            enemyCollider2DDamageCommand.SetIsAttackedFromBehind(enemyCollider2DMovePlayer, enemyCollider2DTransform, this.gameObject.transform);
+            enemyCollider2DDamageCommand.TakeDamage(attackDamage);
         }
     }
+
+    public void SetPlayerAsEnemy(MovePlayer enemy)
+    {
+        enemy.enemy = this.gameObject;
+        enemy.enemyDamageCommand = this.playerDamageCommand;
+        enemy.enemyMovePlayer = this;
+    }
+
     public void Flip()
     {
+        if (isBlockingAttack == true)
+        {
+            return;
+        }
+        if (isHurtingByPushAttack == true)
+        {
+            return;
+        }
+        if (rb.velocity.x < -0.1f && isFlipLeft == false)
+        {
+            transform.Rotate(0f, 180f, 0f);
+            isFlipLeft = true;
+        }
+        if (rb.velocity.x > 0.1f && isFlipLeft == true)
+        {
+            transform.Rotate(0f, 180f, 0f);
+            isFlipLeft = false;
+        }
+        /*
         if (transform.position.x < enemy.transform.position.x)
         {
             if (spriteRenderer.flipX == false)
@@ -178,6 +244,7 @@ public class MovePlayer : MonoBehaviour
                 GetComponent<DamageCommand>().bleedingEffect.transform.Rotate(0f, 180f, 0f);
             }
         }
+        */
     }
     public void OnLightATK(InputAction.CallbackContext context)
     {
@@ -188,22 +255,14 @@ public class MovePlayer : MonoBehaviour
     }
     void Start()
     {
+        isUsingJoystick = false;
         animator = GetComponent<Animator>();
         playerDamageCommand = GetComponent<DamageCommand>();
-        if (GetComponent<MovePlayer>().playerIndex == 0)
-        {
-            //this.gameObject.tag = "Player";
-            this.gameObject.name = "Character1";
-        }
-        else
-        {
-            //this.gameObject.tag = "Player2";
-            this.gameObject.name = "Character2";
-        }
+        this.gameObject.name = "Character" + (playerIndex + 1);
         currentState = new IdleCharacterState();
         currentState.OnEnter(this);
         MultipleTargetCamFollow.instance.players.Add(this.transform);
-        SetRendererColorByPlayerIndex(playerIndex);
+        characterBusiness.SetSpriteRendererColorByIndexPlayer(playerIndex, spriteRenderer);
     }
 
     public void OnMediumATK(InputAction.CallbackContext context)
@@ -222,23 +281,25 @@ public class MovePlayer : MonoBehaviour
     }
     private void CastMediumFireElemental()
     {
-        Instantiate(mediumFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation, this.transform);
+        GameObject mediumElement = Instantiate(mediumFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
+        MediumFireElementalCommand command = mediumElement.GetComponent<MediumFireElementalCommand>();
+        command.caster = this;
+        command.elementalSpawnPointTransform = this.elementalSpawnPoint.transform;
     }
 
     private void CastHeavyFireElemental()
     {
-        Instantiate(heavyFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation, this.transform);
+        GameObject heavyElement = Instantiate(heavyFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
+        HeavyFireElementalCommand command = heavyElement.GetComponent<HeavyFireElementalCommand>();
+        command.caster = this;
+        command.elementalSpawnPointTransform = this.elementalSpawnPoint.transform;
     }
 
     public void OnDashMove(InputAction.CallbackContext context)
     {
         if (context.performed && Time.time > nextTimeDash && PauseMenu.instance.isPaused == false)
         {
-            if ((spriteRenderer.flipX == true && rb.velocity.x < -0.1f)
-            || (spriteRenderer.flipX == false && rb.velocity.x > 0.1f))
-            {
-                currentState.PerformingInput("Dash");
-            }
+            currentState.PerformingInput("Dash");
         }
     }
     public void DashEffect()
@@ -257,25 +318,6 @@ public class MovePlayer : MonoBehaviour
         if (context.performed)
         {
             PauseMenu.instance.PauseGame(this.playerIndex);
-        }
-    }
-
-    public void SetRendererColorByPlayerIndex(int playerIndex)
-    {
-        if (playerIndex == 1)
-        {
-            // Blue
-            spriteRenderer.material.color = new Color32(133, 136, 253, 255);
-        }
-        if (playerIndex == 2)
-        {
-            // Green
-            spriteRenderer.material.color = new Color32(141, 253, 134, 255);
-        }
-        if (playerIndex == 3)
-        {
-            // Yellow
-            spriteRenderer.material.color = new Color32(245, 253, 133, 255);
         }
     }
 }

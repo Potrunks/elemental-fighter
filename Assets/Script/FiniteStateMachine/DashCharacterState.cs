@@ -43,13 +43,13 @@ public class DashCharacterState : CharacterState
         // dash effect
         player.DashEffect();
         // dash move
-        if (player.spriteRenderer.flipX == true)
+        if (player.isFlipLeft == true)
         {
             // rb.AddForce(new Vector2(dashForce * -1, 0f));
             player.rb.velocity = Vector2.left * player.dashForce;
 
         }
-        else if (player.spriteRenderer.flipX == false)
+        else if (player.isFlipLeft == false)
         {
             // rb.AddForce(new Vector2(dashForce, 0f));
             player.rb.velocity = Vector2.right * player.dashForce;

@@ -8,8 +8,9 @@ public class BlockingCharacterState : CharacterState
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // go to idle
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {
+            player.isHurtingByPushAttack = false;
             // continu to block
             if (player.isBlockingAttack == true)
             {
@@ -31,16 +32,30 @@ public class BlockingCharacterState : CharacterState
         player.audioManager.Play("Blocking");
         player.audioManager.PlaySoundByIndexInListOfSound(player.audioManager.blockingSounds, random.Next(0, player.audioManager.blockingSounds.Length));
         player.enemyMovePlayer.audioManager.PlaySoundByIndexInListOfSound(player.enemyMovePlayer.audioManager.astonishmentSounds, random.Next(0, player.enemyMovePlayer.audioManager.astonishmentSounds.Length));
+        DamageCommand playerDamageCommand = player.GetComponent<DamageCommand>();
         // Push effect
-        player.GetComponent<DamageCommand>().DisplayBlockingEffect();
+        playerDamageCommand.DisplayBlockingEffect();
         // Move player with push
-        if (player.spriteRenderer.flipX == true)
+        if (player.isFlipLeft == true)
         {
-            player.rb.velocity = Vector2.right * player.GetComponent<DamageCommand>().blockPush;
+            if (playerDamageCommand.GetIsAttackedFromBehind() == true)
+            {
+                player.rb.velocity = PushLeft(playerDamageCommand.blockPush);
+            } else
+            {
+                player.rb.velocity = PushRight(playerDamageCommand.blockPush);
+            }
         }
         else
         {
-            player.rb.velocity = Vector2.left * player.GetComponent<DamageCommand>().blockPush;
+            if (playerDamageCommand.GetIsAttackedFromBehind() == true)
+            {
+                player.rb.velocity = PushRight(playerDamageCommand.blockPush);
+            }
+            else
+            {
+                player.rb.velocity = PushLeft(playerDamageCommand.blockPush);
+            }
         }
         // play animation Blocking
         player.animator.Play("Blocking");
@@ -55,5 +70,15 @@ public class BlockingCharacterState : CharacterState
     public override void PerformingInput(string action)
     {
 
+    }
+
+    private Vector2 PushLeft(float force)
+    {
+        return Vector2.left * force;
+    }
+
+    private Vector2 PushRight(float force)
+    {
+        return Vector2.right * force;
     }
 }

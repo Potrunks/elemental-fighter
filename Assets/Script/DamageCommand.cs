@@ -15,6 +15,7 @@ public class DamageCommand : MonoBehaviour
     private float nextBleedingTime = 0f;
     private bool isBleeding = false;
     public bool isInvincible = false;
+    private bool isAttackedFromBehind = false;
     [SerializeField]
     private int invincibleDuration;
 
@@ -118,19 +119,40 @@ public class DamageCommand : MonoBehaviour
 
     public void ResetPlayer(MovePlayer player, GameObject enemy)
     {
-        enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().UpdateScore();
-        int enemyScore = enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>().victoryPoint;
-        if (enemyScore == GameManager.instance.victoryPointCondition)
+        if (enemy != null && player.name != enemy.name)
         {
-            Debug.Log("The player " + (enemy.GetComponent<MovePlayer>().playerIndex + 1) + " win the game !!!");
-            GameManager.instance.DisplayEndgameResults();
+            ScorePlayer scorePlayerEnemy = enemy.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>();
+            scorePlayerEnemy.UpdateScore();
+            int enemyScore = scorePlayerEnemy.victoryPoint;
+            if (enemyScore == GameManager.instance.victoryPointCondition)
+            {
+                Debug.Log("The player " + (enemy.GetComponent<MovePlayer>().playerIndex + 1) + " win the game !!!");
+                GameManager.instance.DisplayEndgameResults();
+            }
+            else
+            {
+                ResetHealth();
+                PlayerStartSpawn(player);
+                ResetBleedingState();
+            }
         }
-        else
+        else if (enemy == null || player.name == enemy.name)
         {
+            ScorePlayer scorePlayerPlayer = player.GetComponentInParent<SpawnPlayer>().scorePlayer.GetComponent<ScorePlayer>();
+            scorePlayerPlayer.Suicide();
             ResetHealth();
             PlayerStartSpawn(player);
             ResetBleedingState();
+
         }
+        ResetEnemyOfPlayer(player);
+    }
+
+    private void ResetEnemyOfPlayer(MovePlayer player)
+    {
+        player.enemy = null;
+        player.enemyDamageCommand = null;
+        player.enemyMovePlayer = null;
     }
 
     public void PlayerStartSpawn(MovePlayer player)
@@ -154,5 +176,23 @@ public class DamageCommand : MonoBehaviour
         yield return new WaitForSeconds(invincibleDuration);
         isInvincible = false;
         player.spriteRenderer.material.color = new Color(player.spriteRenderer.material.color.r, player.spriteRenderer.material.color.g, player.spriteRenderer.material.color.b, 1f);
+    }
+
+    public void SetIsAttackedFromBehind(MovePlayer moveplayerTargeted, Transform transformTargeted, Transform transformPrey)
+    {
+        if ((moveplayerTargeted.isFlipLeft == true && transformPrey.position.x > transformTargeted.position.x)
+                    || (moveplayerTargeted.isFlipLeft == false && transformPrey.position.x < transformTargeted.position.x))
+        {
+            this.isAttackedFromBehind = true;
+        }
+        else
+        {
+            this.isAttackedFromBehind = false;
+        }
+    }
+
+    public bool GetIsAttackedFromBehind()
+    {
+        return this.isAttackedFromBehind;
     }
 }
