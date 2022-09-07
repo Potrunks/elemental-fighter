@@ -8,8 +8,9 @@ public class BlockingCharacterState : CharacterState
     public override ICharacterState CheckingStateModification(MovePlayer player)
     {
         // go to idle
-        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+        if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {
+            player.isHurtingByPushAttack = false;
             // continu to block
             if (player.isBlockingAttack == true)
             {

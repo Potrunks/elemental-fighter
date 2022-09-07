@@ -1,3 +1,5 @@
+using Assets.Script.Business.Implementation;
+using Assets.Script.Business.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +21,7 @@ public class MovePlayer : MonoBehaviour
     [SerializeField]
     private float angle;
     private float modificatorXAxis;
+    public bool isUsingJoystick;
 
     [Header("Component")]
     // fait ref au rigid body du joueur
@@ -62,6 +65,8 @@ public class MovePlayer : MonoBehaviour
     [Header("Sound")]
     public float mainAmplifyValue;
 
+    private ICharacterBusiness characterBusiness = new CharacterBusiness();
+
     private void Awake()
     {
         foreach (Sound sound in audioManager.sounds)
@@ -99,7 +104,10 @@ public class MovePlayer : MonoBehaviour
         isGrounding = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, collisionLayer);
         horizontalMovement = horizontalMovementV2.x * moveSpeed * Time.deltaTime;
         PlayerMove(horizontalMovement);
-        Flip();
+        if (isUsingJoystick)
+        {
+            Flip();
+        }
         if (isFlipLeft == true && horizontalMovementV2.x >= 0)
         {
             modificatorXAxis = -1f;
@@ -129,6 +137,14 @@ public class MovePlayer : MonoBehaviour
     {
         if (PauseMenu.instance.isPaused == false)
         {
+            if (context.started)
+            {
+                isUsingJoystick = true;
+            }
+            else if (context.canceled)
+            {
+                isUsingJoystick= false;
+            }
             // creer un Vector 2 avec toutes les valeur de x et y en fonction des touches appuyé sur le GamePad
             horizontalMovementV2 = context.ReadValue<Vector2>();
         }
@@ -239,22 +255,14 @@ public class MovePlayer : MonoBehaviour
     }
     void Start()
     {
+        isUsingJoystick = false;
         animator = GetComponent<Animator>();
         playerDamageCommand = GetComponent<DamageCommand>();
-        if (GetComponent<MovePlayer>().playerIndex == 0)
-        {
-            //this.gameObject.tag = "Player";
-            this.gameObject.name = "Character1";
-        }
-        else
-        {
-            //this.gameObject.tag = "Player2";
-            this.gameObject.name = "Character2";
-        }
+        this.gameObject.name = "Character" + (playerIndex + 1);
         currentState = new IdleCharacterState();
         currentState.OnEnter(this);
         MultipleTargetCamFollow.instance.players.Add(this.transform);
-        SetRendererColorByPlayerIndex(playerIndex);
+        characterBusiness.SetSpriteRendererColorByIndexPlayer(playerIndex, spriteRenderer);
     }
 
     public void OnMediumATK(InputAction.CallbackContext context)
@@ -310,25 +318,6 @@ public class MovePlayer : MonoBehaviour
         if (context.performed)
         {
             PauseMenu.instance.PauseGame(this.playerIndex);
-        }
-    }
-
-    public void SetRendererColorByPlayerIndex(int playerIndex)
-    {
-        if (playerIndex == 1)
-        {
-            // Blue
-            spriteRenderer.material.color = new Color32(133, 136, 253, 255);
-        }
-        if (playerIndex == 2)
-        {
-            // Green
-            spriteRenderer.material.color = new Color32(141, 253, 134, 255);
-        }
-        if (playerIndex == 3)
-        {
-            // Yellow
-            spriteRenderer.material.color = new Color32(245, 253, 133, 255);
         }
     }
 }

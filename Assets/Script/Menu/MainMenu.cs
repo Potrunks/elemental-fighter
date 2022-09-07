@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,24 +10,25 @@ public class MainMenu : MonoBehaviour
     public ToggleGroup victoryConditionToggleGroup;
     public GameObject firstButtonSelectedAfterPlayButton, firstButtonSelectedAfterOptionButton;
 
+    /// <summary>
+    /// Allow to go to selection character menu
+    /// </summary>
     public void PlayButtonScript()
     {
-        /*
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        GameManager.instance.currentTime = GameManager.instance.timeCondition;
-        GameManager.instance.timeIsActivated = true;
-        */
-        this.gameObject.SetActive(false);
-        fightModeChoice.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(firstButtonSelectedAfterPlayButton);
+        SceneManager.LoadScene("CharacterSelection");
     }
 
+    /// <summary>
+    /// Quit the Application
+    /// </summary>
     public void QuitButtonScript()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Allow to go to Option Menu
+    /// </summary>
     public void OptionButtonScript()
     {
         this.gameObject.SetActive(false);

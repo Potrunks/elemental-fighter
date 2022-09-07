@@ -104,18 +104,21 @@ public class EnemyAI : MonoBehaviour
 
     private void PathFollow()
     {
+        movePlayer.isUsingJoystick = true;
         if (currentTarget != null)
         {
             FightStrategy(CalculateDistancePlayerEnemy(currentTarget));
         }
         if (path == null)
         {
+            movePlayer.isUsingJoystick = false;
             return;
         }
 
         // Reached end of path
         if (currentWaypoint >= path.vectorPath.Count)
         {
+            movePlayer.isUsingJoystick = false;
             return;
         }
 

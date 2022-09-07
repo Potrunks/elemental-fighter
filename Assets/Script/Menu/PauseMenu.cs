@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using Assets.Script.Business.Interface;
+using Assets.Script.Business.Implementation;
+using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,8 +16,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject endGameResults;
     public GameObject scoreList;
     public GameObject winner;
-    public GameObject scorePlayer1;
-    public GameObject scorePlayer2;
+    public List<GameObject> scorePlayerList;
     public GameObject timer;
     public GameObject pauseMenu;
     public GameObject optionMenu;
@@ -20,6 +24,9 @@ public class PauseMenu : MonoBehaviour
     public Slider mainSlider;
     private int playerPauseTheGame;
     public GameObject firstButtonSelectedAfterPauseButton, firstButtonSelectedAfterEndGame, firstButtonSelectedAfterOptionButton, firstButtonSelectedAfterBackButton;
+    public IDictionary<int, InputDevice> inputDeviceByPlayerIndex = new Dictionary<int, InputDevice>();
+
+    private IPlayerBusiness playerBusiness = new PlayerBusiness();
 
     private void Awake()
     {
@@ -32,6 +39,10 @@ public class PauseMenu : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    private void Start()
+    {
         mainSlider.value = GameManager.instance.volumeMainTheme;
     }
 
@@ -49,6 +60,8 @@ public class PauseMenu : MonoBehaviour
 
     private void PauseTheGame(int playerIndex)
     {
+        List<int> playerIndexList = new List<int>() { playerIndex };
+        playerBusiness.DesactivateAllDeviceWithException(inputDeviceByPlayerIndex, playerIndexList);
         playerPauseTheGame = playerIndex;
         pauseMenuUI.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
@@ -67,8 +80,13 @@ public class PauseMenu : MonoBehaviour
 
     private void StopGameBackground()
     {
-        scorePlayer1.SetActive(false);
-        scorePlayer2.SetActive(false);
+        foreach (GameObject scorePlayer in scorePlayerList)
+        {
+            if (scorePlayer != null)
+            {
+                scorePlayer.SetActive(false);
+            }
+        }
         timer.SetActive(false);
         audioManager.DecreaseVolume("MainTheme", 50);
         Time.timeScale = 0f;
@@ -79,13 +97,19 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenuUI.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
-        scorePlayer1.SetActive(true);
-        scorePlayer2.SetActive(true);
+        foreach (GameObject scorePlayer in scorePlayerList)
+        {
+            if (scorePlayer != null)
+            {
+                scorePlayer.SetActive(true);
+            }
+        }
         timer.SetActive(true);
         audioManager.RestoreOriginVolume("MainTheme");
         Time.timeScale = 1f;
         isPaused = false;
         GameManager.instance.timeIsActivated = true;
+        playerBusiness.ReactivateAllDevice(inputDeviceByPlayerIndex);
     }
 
     public void QuitButtonScript()

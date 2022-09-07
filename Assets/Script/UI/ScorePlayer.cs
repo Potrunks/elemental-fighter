@@ -20,14 +20,7 @@ public class ScorePlayer : MonoBehaviour
 
     private void DisplayScore()
     {
-        if (playerIndex == 0)
-        {
-            textScore.text = "Player " + (playerIndex + 1) + " : " + victoryPoint;
-        }
-        else
-        {
-            textScore.text = victoryPoint + " : " + "Player " + (playerIndex + 1);
-        }
+        textScore.text = "Player " + (playerIndex + 1) + " : " + victoryPoint;
     }
 
     public void Suicide()

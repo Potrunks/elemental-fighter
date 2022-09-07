@@ -27,7 +27,7 @@ public class IdleCharacterState : CharacterState
                 else
                 {
                     // Move Forward
-                    if (player.rb.velocity.x > 0.1f || player.rb.velocity.x < -0.1f)
+                    if (player.isUsingJoystick && (player.rb.velocity.x > 0.1f || player.rb.velocity.x < -0.1f))
                     {
                         return nextState = new MoveForwardCharacterState();
                     }
