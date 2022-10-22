@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: LightATK1
+  m_Name: SpecialATK1Transition
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 45d6ae8e156324f6dabb024742201060, type: 3}
+      value: {fileID: 21300000, guid: 13e9ff82fb53f43fa9e7d9940ad8ac71, type: 3}
     - time: 0.6666667
-      value: {fileID: 21300000, guid: 45d6ae8e156324f6dabb024742201060, type: 3}
+      value: {fileID: 21300000, guid: 6c12ab0f9f7e045279baad6e5fe695a4, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,8 +42,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 45d6ae8e156324f6dabb024742201060, type: 3}
-    - {fileID: 21300000, guid: 45d6ae8e156324f6dabb024742201060, type: 3}
+    - {fileID: 21300000, guid: 13e9ff82fb53f43fa9e7d9940ad8ac71, type: 3}
+    - {fileID: 21300000, guid: 6c12ab0f9f7e045279baad6e5fe695a4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
