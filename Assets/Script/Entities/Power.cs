@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Script.Data.Reference;
+using System;
 using UnityEngine;
 
 namespace Assets.Script.Entities
@@ -9,7 +10,7 @@ namespace Assets.Script.Entities
     {
         public string powerName;
         public string description;
-        public string type;
+        public PowerTypeReference elementType;
         public float speed;
         public float damage;
         public GameObject model;
