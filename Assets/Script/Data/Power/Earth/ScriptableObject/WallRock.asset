@@ -10,11 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e62ca0eafb65927459b70ea950dac89b, type: 3}
-  m_Name: WallOfRock
+  m_Name: WallRock
   m_EditorClassIdentifier: 
   powerName: Wall of Rock
-  description: A wall of rock to protect the warrior
-  elementType: 0
-  speed: 7
-  damage: 20
-  model: {fileID: 7715265300492422884, guid: be690e6630927264484037669cf24100, type: 3}
+  powerDescription: A wall of rock to protect the caster
+  powerType: 0
+  powerLevel: 2
+  powerSpeed: 0
+  powerDamage: 20
+  powerModel: {fileID: 7715265300492422884, guid: d44141a64337be74f89d3b9342a62b5f, type: 3}
+  powerSound:
+    name: 
+    audioClip: {fileID: 0}
+    pitch: 0
+    loop: 0
+    audioSource: {fileID: 0}
+    time: 0
+    amplifyValue: 0

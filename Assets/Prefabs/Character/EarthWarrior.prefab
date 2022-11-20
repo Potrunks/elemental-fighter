@@ -146,6 +146,7 @@ MonoBehaviour:
   dashEffect: {fileID: 4152062393090402417}
   bloodEffect: {fileID: 3003757487408969805}
   audioManager: {fileID: 8927663242418888209}
+  mediumPowerEntity: {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
   isHurting: 0
   isGrounding: 0
   isBlockingAttack: 0
@@ -495,7 +496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4152062392735839210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.2, y: 0.005, z: 0}
+  m_LocalPosition: {x: 0.2, y: -0.262, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
