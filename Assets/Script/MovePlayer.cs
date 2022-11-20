@@ -1,5 +1,7 @@
 using Assets.Script.Business.Implementation;
 using Assets.Script.Business.Interface;
+using Assets.Script.Entities;
+using System.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -45,6 +47,8 @@ public class MovePlayer : MonoBehaviour
     public ParticleSystem dashEffect;
     public ParticleSystem bloodEffect;
     public AudioManager audioManager;
+    public PowerEntity mediumPowerEntity;
+    public PowerEntity specialPowerEntity;
 
     [Header("State")]
     public bool isHurting = false;
@@ -66,9 +70,11 @@ public class MovePlayer : MonoBehaviour
     public float mainAmplifyValue;
 
     private ICharacterBusiness characterBusiness = new CharacterBusiness();
+    private IElementalBusiness elementalBusiness;
 
     private void Awake()
     {
+        elementalBusiness = new ElementalBusiness();
         foreach (Sound sound in audioManager.sounds)
         {
             sound.amplifyValue = mainAmplifyValue;
@@ -279,6 +285,13 @@ public class MovePlayer : MonoBehaviour
             currentState.PerformingInput("HeavyATK");
         }
     }
+
+    private void CastMediumElemental()
+    {
+        elementalBusiness.PrepareCastElemental(mediumPowerEntity, elementalSpawnPoint, this);
+        Instantiate(mediumPowerEntity.powerModel, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
+    }
+
     private void CastMediumFireElemental()
     {
         GameObject mediumElement = Instantiate(mediumFireElementalPrefabs, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);

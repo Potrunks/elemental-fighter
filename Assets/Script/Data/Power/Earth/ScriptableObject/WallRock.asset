@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62ca0eafb65927459b70ea950dac89b, type: 3}
+  m_Name: WallRock
+  m_EditorClassIdentifier: 
+  powerName: Wall of Rock
+  powerDescription: A wall of rock to protect the caster
+  powerType: 0
+  powerLevel: 2
+  powerSpeed: 0
+  powerDamage: 20
+  powerModel: {fileID: 7715265300492422884, guid: d44141a64337be74f89d3b9342a62b5f, type: 3}
+  powerSound:
+    name: 
+    audioClip: {fileID: 0}
+    pitch: 0
+    loop: 0
+    audioSource: {fileID: 0}
+    time: 0
+    amplifyValue: 0
