@@ -1,7 +1,7 @@
-public class BlockCharacterState : CharacterState
+public class BlockCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    private IPlayableCharacterState nextState;
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // Verify if blocking ATK
         if (player.isHurting == true)

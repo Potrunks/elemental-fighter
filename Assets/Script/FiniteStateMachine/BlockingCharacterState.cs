@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class BlockingCharacterState : CharacterState
+public class BlockingCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private System.Random random = new System.Random();
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // go to idle
         if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)

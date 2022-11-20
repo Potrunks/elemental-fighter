@@ -1,9 +1,9 @@
-public class HeavyATK1CharacterState : CharacterState
+public class HeavyATK1CharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private System.Random random = new System.Random();
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // Hurt state
         if (player.isHurting == true)

@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class IdleCharacterState : CharacterState
+public class IdleCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    private IPlayableCharacterState nextState;
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // Hurting
         if (player.isHurting == true)

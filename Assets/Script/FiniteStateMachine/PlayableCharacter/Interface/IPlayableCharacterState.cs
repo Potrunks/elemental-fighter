@@ -1,7 +1,7 @@
-public interface ICharacterState
+public interface IPlayableCharacterState
 {
     void PerformingInput(string action);
-    ICharacterState CheckingStateModification(MovePlayer player);
+    IPlayableCharacterState CheckingStateModification(MovePlayer player);
     void OnEnter(MovePlayer player);
     void OnExit(MovePlayer player);
 }

@@ -56,6 +56,17 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
+        public void ExecuteCheckingPlayableCharacterState(IPlayableCharacterStateV2 currentState, IPlayableCharacterStateV2 nextState, PlayableCharacterController playableCharacterController)
+        {
+            nextState = currentState.CheckingStateModification(playableCharacterController);
+            if (nextState != null)
+            {
+                currentState.OnExit(playableCharacterController);
+                currentState = nextState;
+                currentState.OnEnter(playableCharacterController);
+            }
+        }
+
         public GameObject GetCharacterSelectedByIndex(int playerIndex, IDictionary<int, List<object>> deviceAndCharacterPlayerByIndex)
         {
             GameObject character;

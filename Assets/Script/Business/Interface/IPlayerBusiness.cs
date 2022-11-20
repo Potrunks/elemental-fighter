@@ -58,5 +58,10 @@ namespace Assets.Script.Business.Interface
         /// </summary>
         /// <param name="inputDeviceByPlayerIndex">All device by player index connected</param>
         void ReactivateAllDevice(IDictionary<int, InputDevice> inputDeviceByPlayerIndex);
+
+        /// <summary>
+        /// Execute checking if playable character state need to be change.
+        /// </summary>
+        void ExecuteCheckingPlayableCharacterState(IPlayableCharacterStateV2 currentState, IPlayableCharacterStateV2 nextState, PlayableCharacterController playableCharacterController);
     }
 }

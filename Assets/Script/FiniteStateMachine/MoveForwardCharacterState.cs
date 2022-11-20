@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class MoveForwardCharacterState : CharacterState
+public class MoveForwardCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    private IPlayableCharacterState nextState;
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.isHurting == false)
         {

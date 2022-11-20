@@ -1,9 +1,9 @@
-public class DieCharacterState : CharacterState
+public class DieCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private System.Random random = new System.Random();
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {

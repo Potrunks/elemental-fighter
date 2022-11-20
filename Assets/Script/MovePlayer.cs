@@ -56,8 +56,8 @@ public class MovePlayer : MonoBehaviour
     public bool isBlockingAttack = false;
     public bool isHurtingByPushAttack = false;
     public int playerIndex;
-    public ICharacterState currentState;
-    private ICharacterState nextState;
+    public IPlayableCharacterState currentState;
+    private IPlayableCharacterState nextState;
 
     [Header("Checking Condition")]
     public float groundCheckRadius;
@@ -290,6 +290,12 @@ public class MovePlayer : MonoBehaviour
     {
         elementalBusiness.PrepareCastElemental(mediumPowerEntity, elementalSpawnPoint, this);
         Instantiate(mediumPowerEntity.powerModel, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
+    }
+
+    private void CastSpecialElemental()
+    {
+        elementalBusiness.PrepareCastElemental(specialPowerEntity, elementalSpawnPoint, this);
+        Instantiate(specialPowerEntity.powerModel, elementalSpawnPoint.transform.position, elementalSpawnPoint.transform.rotation);
     }
 
     private void CastMediumFireElemental()
