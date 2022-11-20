@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cbf8f025808904886daa0af9b909da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerEntity: {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
-  selfDestructTimer: 10
+  powerEntity: {fileID: 11400000, guid: ced7a176f338e2044bd95aa6ee77b301, type: 2}
+  selfDestructTimer: 0
   caster: {fileID: 0}
   elementalSpawnPointTransform: {fileID: 0}
   rb: {fileID: 0}
@@ -159,6 +159,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.005}
-  m_Size: {x: 0.21, y: 0.07}
-  m_Direction: 1
+  m_Offset: {x: 0.020513833, y: -0.0006485805}
+  m_Size: {x: 0.14286384, y: 0.24481134}
+  m_Direction: 0
