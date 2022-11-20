@@ -11,7 +11,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            throw new System.NotImplementedException();
+            playableCharacterController.playableCharacterAnimator.Play("Idle");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
