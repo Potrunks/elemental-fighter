@@ -1,6 +1,7 @@
 using Assets.Script.Business;
 using Assets.Script.Business.Implementation;
 using Assets.Script.Business.Interface;
+using Assets.Script.Data;
 using Assets.Script.Entities;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,18 +20,23 @@ public class PlayableCharacterController : MonoBehaviour
     [Header("Animation")]
     public Animator playableCharacterAnimator;
 
-    Vector2 inputMoveValue;
-    bool isDeviceUsed;
+    [Header("Move Parameter")]
+    public Vector2 inputMoveValue;
+    public Rigidbody2D playableCharacterRigidbody;
+    float playableCharacterMoveSpeed;
+    public bool isDeviceUsed;
 
     public IPlayableCharacterStateV2 currentState;
     IPlayableCharacterStateV2 nextState;
 
     IPlayerBusiness playerBusiness;
     IInputDeviceBusiness inputDeviceBusiness;
+    ICharacterBusiness characterBusiness;
 
     private void FixedUpdate()
     {
         isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
+        playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
         playerBusiness.ExecuteCheckingPlayableCharacterState(currentState, nextState, this);
     }
 
@@ -38,9 +44,14 @@ public class PlayableCharacterController : MonoBehaviour
     {
         playerBusiness = new PlayerBusiness();
         inputDeviceBusiness = new InputDeviceBusiness();
-        isDeviceUsed = false;
+        characterBusiness = new CharacterBusiness();
+
+        isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
+        playableCharacterMoveSpeed = playableCharacter.moveSpeed;
+
         groundCheck = transform.Find("GroundCheck").gameObject;
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
+        playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
 
     private void OnDrawGizmos()

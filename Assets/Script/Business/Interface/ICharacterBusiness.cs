@@ -24,6 +24,12 @@ namespace Assets.Script.Business.Interface
         /// <param name="playerIndex">Index of the player</param>
         /// <param name="spriteRenderer">SpriteRenderer of the character selected by the player</param>
         void SetSpriteRendererColorByIndexPlayer(int playerIndex, SpriteRenderer spriteRenderer);
+
         GameObject GetRandomCharacter();
+
+        /// <summary>
+        /// Allow to move a rigibody when player use device.
+        /// </summary>
+        Vector2 MoveCharacter(Vector2 inputMoveValue, float moveSpeed, Rigidbody2D rigidbodyToMove, float smoothTime);
     }
 }

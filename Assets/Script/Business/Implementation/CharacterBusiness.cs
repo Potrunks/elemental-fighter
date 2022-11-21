@@ -27,6 +27,16 @@ namespace Assets.Script.Business.Implementation
             return characterPreviewListWoRandom.ElementAt(randomInt).characterPrefab;
         }
 
+        public Vector2 MoveCharacter(Vector2 inputMoveValue, float moveSpeed, Rigidbody2D rigidbodyToMove, float smoothTime)
+        {
+            Vector3 reference = Vector3.zero;
+            float horizontalMovement = inputMoveValue.x * moveSpeed * Time.deltaTime;
+            return Vector3.SmoothDamp(rigidbodyToMove.velocity,
+                                      new Vector2(horizontalMovement, rigidbodyToMove.velocity.y),
+                                      ref reference,
+                                      smoothTime);
+        }
+
         public void SetSpriteRendererColorByIndexPlayer(int playerIndex, SpriteRenderer spriteRenderer)
         {
             switch (playerIndex)
