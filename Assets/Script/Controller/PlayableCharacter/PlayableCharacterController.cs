@@ -9,10 +9,11 @@ using UnityEngine.InputSystem;
 public class PlayableCharacterController : MonoBehaviour
 {
     [Header("Ground State")]
-    GameObject groundCheck;
     public LayerMask groundLayer;
     public float groundCheckRadius;
+    [SerializeField]
     bool isGrounding;
+    public GameObject groundCheck;
 
     [Header("Playable Character Entity")]
     public PlayableCharacterEntity playableCharacter;
@@ -21,10 +22,18 @@ public class PlayableCharacterController : MonoBehaviour
     public Animator playableCharacterAnimator;
 
     [Header("Move Parameter")]
-    public Vector2 inputMoveValue;
+    [SerializeField]
+    Vector2 inputMoveValue;
     public Rigidbody2D playableCharacterRigidbody;
+    [SerializeField]
     float playableCharacterMoveSpeed;
     public bool isDeviceUsed;
+    [SerializeField]
+    bool isLeftFlip;
+
+    [Header("Elemental Spawn")]
+    [SerializeField]
+    GameObject gameObjectElementalSpawnPoint;
 
     public IPlayableCharacterStateV2 currentState;
     IPlayableCharacterStateV2 nextState;
@@ -37,7 +46,29 @@ public class PlayableCharacterController : MonoBehaviour
     {
         isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
         playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
-        playerBusiness.ExecuteCheckingPlayableCharacterState(currentState, nextState, this);
+        if (isDeviceUsed)
+        {
+            if (playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityXLowThreshold
+                && !isLeftFlip)
+            {
+                transform.Rotate(0f, 180f, 0f);
+                isLeftFlip = true;
+            }
+            if (playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityXHighThreshold
+                && isLeftFlip)
+            {
+                transform.Rotate(0f, 180f, 0f);
+                isLeftFlip = false;
+            }
+        }
+        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue);
+        nextState = currentState.CheckingStateModification(this);
+        if (nextState != null)
+        {
+            currentState.OnExit(this);
+            currentState = nextState;
+            currentState.OnEnter(this);
+        }
     }
 
     private void Awake()
@@ -48,8 +79,9 @@ public class PlayableCharacterController : MonoBehaviour
 
         isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
         playableCharacterMoveSpeed = playableCharacter.moveSpeed;
+        isLeftFlip = false;
 
-        groundCheck = transform.Find("GroundCheck").gameObject;
+        gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
         playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
@@ -62,7 +94,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnInputMove(InputAction.CallbackContext context)
     {
-        isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context);
+        isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context, isDeviceUsed);
         inputMoveValue = context.ReadValue<Vector2>();
     }
 }

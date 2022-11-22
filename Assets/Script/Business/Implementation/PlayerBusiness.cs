@@ -10,6 +10,11 @@ namespace Assets.Script.Business.Implementation
 {
     internal class PlayerBusiness : IPlayerBusiness
     {
+        public Quaternion CalculateShootAngle(Vector2 vector2)
+        {
+            return Quaternion.Euler(0, 0, Mathf.Atan2(vector2.y, vector2.x) * Mathf.Rad2Deg);
+        }
+
         public void CreateNewPlayer(GameObject playerSelectionPreviewPrefab, GameObject tokenPrefab, GameObject cursorPrefab, Transform currentTransform, Transform playerSelectionGridTransform, List<CursorDetection> cursorDetectionList, IColorBusiness colorBusiness, InputDevice device, IDictionary<InputDevice, List<GameObject>> playerSelectGameObjectByDevice, int indexPlayer)
         {
             GameObject newPlayerSelectionPreview = GameObject.Instantiate(playerSelectionPreviewPrefab, playerSelectionGridTransform);
@@ -53,17 +58,6 @@ namespace Assets.Script.Business.Implementation
             foreach (InputDevice device in inputDeviceListToDesactivate)
             {
                 InputSystem.DisableDevice(device);
-            }
-        }
-
-        public void ExecuteCheckingPlayableCharacterState(IPlayableCharacterStateV2 currentState, IPlayableCharacterStateV2 nextState, PlayableCharacterController playableCharacterController)
-        {
-            nextState = currentState.CheckingStateModification(playableCharacterController);
-            if (nextState != null)
-            {
-                currentState.OnExit(playableCharacterController);
-                currentState = nextState;
-                currentState.OnEnter(playableCharacterController);
             }
         }
 

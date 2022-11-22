@@ -20,20 +20,21 @@ namespace Assets.Script.FiniteStateMachine
             {
                 return new EarthIdlePlayableCharacterState();
             }
-
             return null;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            moveForwardSound = playableCharacterController
+            if (playableCharacterController.playableCharacter.soundEffectList.Any())
+            {
+                moveForwardSound = playableCharacterController
                 .playableCharacter
                 .soundEffectList
                 .First(sound => sound.name == "MoveForward")
                 .audioSource;
 
-            moveForwardSound.Play();
-
+                moveForwardSound.Play();
+            }
             playableCharacterController
                 .playableCharacterAnimator
                 .Play("Run");
@@ -41,12 +42,14 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            moveForwardSound.Stop();
+            if (moveForwardSound != null)
+            {
+                moveForwardSound.Stop();
+            }
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            throw new NotImplementedException();
         }
     }
 }

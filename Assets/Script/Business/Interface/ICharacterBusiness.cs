@@ -31,5 +31,10 @@ namespace Assets.Script.Business.Interface
         /// Allow to move a rigibody when player use device.
         /// </summary>
         Vector2 MoveCharacter(Vector2 inputMoveValue, float moveSpeed, Rigidbody2D rigidbodyToMove, float smoothTime);
+
+        /// <summary>
+        /// Flip the model depending on velocity orientation.
+        /// </summary>
+        void CheckFlipCharacterModel(PlayableCharacterController playableCharacterControllerToFlip, bool isLeftFlip);
     }
 }

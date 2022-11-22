@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Business.Interface;
+using Assets.Script.Data;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,25 @@ namespace Assets.Script.Business.Implementation
         {
             vFXBusiness.ClearTweenEffectOfImageComponent(characterUnderCursor, "Border");
             playerslot.transform.DOPunchPosition(Vector3.down * 3, .3f, 10, 1);
+        }
+
+        public void CheckFlipCharacterModel(PlayableCharacterController playableCharacterControllerToFlip, bool isLeftFlip)
+        {
+            if (playableCharacterControllerToFlip.isDeviceUsed)
+            {
+                if (playableCharacterControllerToFlip.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityXLowThreshold
+                    && !isLeftFlip)
+                {
+                    playableCharacterControllerToFlip.transform.Rotate(0f, 180f, 0f);
+                    isLeftFlip = true;
+                }
+                if (playableCharacterControllerToFlip.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityXHighThreshold
+                    && isLeftFlip)
+                {
+                    playableCharacterControllerToFlip.transform.Rotate(0f, 180f, 0f);
+                    isLeftFlip = false;
+                }
+            }
         }
 
         public GameObject GetRandomCharacter()

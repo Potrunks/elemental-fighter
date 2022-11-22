@@ -24,6 +24,6 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Check if the player is using the device.
         /// </summary>
-        bool CheckPlayerUsingDevice(InputAction.CallbackContext context);
+        bool CheckPlayerUsingDevice(InputAction.CallbackContext context, bool playerUsedDeviceBool);
     }
 }

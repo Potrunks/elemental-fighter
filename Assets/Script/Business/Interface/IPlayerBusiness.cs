@@ -60,8 +60,8 @@ namespace Assets.Script.Business.Interface
         void ReactivateAllDevice(IDictionary<int, InputDevice> inputDeviceByPlayerIndex);
 
         /// <summary>
-        /// Execute checking if playable character state need to be change.
+        /// Calculate the shoot angle of the player.
         /// </summary>
-        void ExecuteCheckingPlayableCharacterState(IPlayableCharacterStateV2 currentState, IPlayableCharacterStateV2 nextState, PlayableCharacterController playableCharacterController);
+        Quaternion CalculateShootAngle(Vector2 vector2);
     }
 }

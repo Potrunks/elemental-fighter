@@ -8,19 +8,17 @@ namespace Assets.Script.Business.Implementation
 {
     internal class InputDeviceBusiness : IInputDeviceBusiness
     {
-        public bool CheckPlayerUsingDevice(InputAction.CallbackContext context)
+        public bool CheckPlayerUsingDevice(InputAction.CallbackContext context, bool playerUsedDeviceBool)
         {
             if (context.started)
             {
                 return true;
             }
-
-            if (context.canceled)
+            else if (context.canceled)
             { 
                 return false;
             }
-
-            return false;
+            return playerUsedDeviceBool;
         }
 
         public List<InputDevice> GetAllGamePadAndKeyBoardDevices(List<InputDevice> inputDeviceList)

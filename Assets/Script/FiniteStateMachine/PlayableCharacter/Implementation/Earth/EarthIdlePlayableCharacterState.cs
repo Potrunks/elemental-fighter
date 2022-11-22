@@ -13,7 +13,6 @@ namespace Assets.Script.FiniteStateMachine
             {
                 return new EarthMovePlayableCharacterState();
             }
-
             return null;
         }
 
@@ -24,12 +23,10 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            throw new System.NotImplementedException();
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
