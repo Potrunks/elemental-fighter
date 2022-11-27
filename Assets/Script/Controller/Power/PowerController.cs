@@ -1,3 +1,4 @@
+using Assets.Script.Business;
 using Assets.Script.Business.Implementation;
 using Assets.Script.Business.Interface;
 using Assets.Script.Entities;
@@ -21,7 +22,8 @@ public class PowerController : MonoBehaviour
     public Collider2D _collider;
 
     [Header("InGame Value")]
-    public bool _hasTouchedSomething;
+    public bool _willBeDestroyed;
+    public float _destroyLimitTimer;
 
     public IElementalBusiness _elementalBusiness;
     public ICharacterBusiness _characterBusiness;
@@ -39,12 +41,13 @@ public class PowerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 
-        _hasTouchedSomething = false;
+        _willBeDestroyed = false;
+        _destroyLimitTimer = Time.time + _selfDestructTimer;
+    }
 
-        if (_selfDestructTimer != 0)
-        {
-            Destroy(gameObject, _selfDestructTimer);
-        }
+    private void FixedUpdate()
+    {
+        _willBeDestroyed = this.isTimeToBeDestruct();
     }
 
     private void Update()

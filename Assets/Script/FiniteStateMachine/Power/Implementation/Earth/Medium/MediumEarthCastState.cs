@@ -6,7 +6,7 @@ namespace Assets.Script.FiniteStateMachine
     {
         public override IPowerState CheckingStateModification(PowerController powerController)
         {
-            if (powerController._hasTouchedSomething)
+            if (powerController._willBeDestroyed)
             {
                 return nextState = new MediumEarthDestroyState();
             }

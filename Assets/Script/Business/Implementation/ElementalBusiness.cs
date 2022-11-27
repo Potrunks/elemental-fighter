@@ -164,7 +164,7 @@ namespace Assets.Script.Business.Implementation
 
         public void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false)
         {
-            if (!powerController._hasTouchedSomething)
+            if (!powerController._willBeDestroyed)
             {
                 PlayableCharacterController playerTouched = colliderTouched.GetComponent<PlayableCharacterController>();
                 if (playerTouched != null)
@@ -172,12 +172,12 @@ namespace Assets.Script.Business.Implementation
                     if (playerTouched != caster)
                     {
                         powerController._characterBusiness.InflictedDamage(playerTouched, caster, isPushingAtk);
-                        powerController._hasTouchedSomething = true;
+                        powerController._willBeDestroyed = true;
                     }
                 }
                 else
                 {
-                    powerController._hasTouchedSomething = true;
+                    powerController._willBeDestroyed = true;
                 }
             }
         }
