@@ -50,7 +50,7 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Inflict damage to the enemy.
         /// </summary>
-        void InflictedDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
+        void InflictedMeleeAttackDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
 
         /// <summary>
         /// Push an elemental power depending of this layer.

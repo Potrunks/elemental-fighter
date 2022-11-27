@@ -32,9 +32,9 @@ namespace Assets.Script.Business.Interface
         void InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster);
 
         /// <summary>
-        /// Check all object touched by the attack and apply appropriate treatment.
+        /// Inflicted damage on every enemy touched by elemental hit box.
         /// </summary>
-        void CheckObjectTouchedByAttack(GameObject hitBoxAtk, float hitBoxAtkRadius);
+        void InflictedDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity);
 
         /// <summary>
         /// Check if state of the elemental in the scene need to be changed.
@@ -44,6 +44,6 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Inflict damage to the collider if this is an enemy. Work only one time.
         /// </summary>
-        void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false);
+        void InflictedDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false);
     }
 }

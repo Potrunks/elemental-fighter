@@ -6,21 +6,21 @@ using Assets.Script.Entities;
 using System.Data;
 using System.Linq;
 using UnityEngine;
+using static Pathfinding.Util.RetainedGizmos;
 
 namespace Assets.Script.Business.Implementation
 {
     public class ElementalBusiness : IElementalBusiness
     {
-        public void CheckObjectTouchedByAttack(GameObject hitBoxAtk, float hitBoxAtkRadius)
+        public void InflictedDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity)
         {
-            Collider2D[] playerTouchedColliderArray = Physics2D.OverlapCircleAll(hitBoxAtk.transform.position, hitBoxAtkRadius, LayerMask.GetMask(new string[] { "Player" }));
-
-            if (playerTouchedColliderArray.Any())
+            Collider2D[] playerColliderTouchedArray = Physics2D.OverlapCircleAll(hitBoxAtk.transform.position, hitBoxAtkRadius, LayerMask.GetMask(new string[] { "Player" }));
+            if (playerColliderTouchedArray.Any())
             {
-                foreach (Collider2D playerTouchedCollider in playerTouchedColliderArray)
+                foreach (Collider2D collider in playerColliderTouchedArray)
                 {
-                    // Recup le controller de l'ennemi touché
-                    // On lui fait prendre des degat
+                    PlayableCharacterController enemy = collider.GetComponent<PlayableCharacterController>();
+                    InflictedElementalAttackDamage(isPushingAtk, caster, enemy, powerEntity);
                 }
             }
         }
@@ -162,16 +162,16 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
-        public void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false)
+        public void InflictedDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false)
         {
             if (!powerController._willBeDestroyed)
             {
-                PlayableCharacterController playerTouched = colliderTouched.GetComponent<PlayableCharacterController>();
-                if (playerTouched != null)
+                PlayableCharacterController enemy = colliderTouched.GetComponent<PlayableCharacterController>();
+                if (enemy != null)
                 {
-                    if (playerTouched != caster)
+                    if (enemy != caster)
                     {
-                        powerController._characterBusiness.InflictedDamage(playerTouched, caster, isPushingAtk);
+                        InflictedElementalAttackDamage(isPushingAtk, caster, enemy, powerController._powerEntity);
                         powerController._willBeDestroyed = true;
                     }
                 }
@@ -180,6 +180,24 @@ namespace Assets.Script.Business.Implementation
                     powerController._willBeDestroyed = true;
                 }
             }
+        }
+
+        private void InflictedElementalAttackDamage(bool isPushingAtk, PlayableCharacterController caster, PlayableCharacterController enemy, PowerEntity powerEntity)
+        {
+            if (isPushingAtk)
+            {
+                if (caster.isLeftFlip)
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.left * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.right * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                }
+            }
+            enemy._currentHealth -= powerEntity.powerDamage;
+            enemy._lastTouchedBy = caster;
+            enemy._isTouchingByAttack = true;
         }
     }
 }

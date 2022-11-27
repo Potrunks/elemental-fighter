@@ -1,14 +1,15 @@
-﻿using Assets.Script.Controller;
+﻿using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
-    public class HeavyEarthCastState : PowerState
+    public class HeavyEarthDestroyState : PowerState
     {
         public override IPowerState CheckingStateModification(PowerController powerController)
         {
-            if (powerController._willBeDestroyed)
+            if (powerController._animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
-                return nextState = new HeavyEarthDestroyState();
+                GameObject.Destroy(powerController.gameObject);
+                return nextState = null;
             }
 
             return nextState;
@@ -16,7 +17,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PowerController powerController)
         {
-            powerController._animator.Play("Throwing");
+            powerController._animator.Play("Destroying");
         }
 
         public override void OnExit(PowerController powerController)

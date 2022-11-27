@@ -13,7 +13,7 @@ namespace Assets.Script.Entities
         public PowerTypeReference powerType;
         public PowerLevelReference powerLevel;
         public float powerSpeed;
-        public float powerDamage;
+        public int powerDamage;
         public GameObject powerModel;
         public Sound powerSound;
     }

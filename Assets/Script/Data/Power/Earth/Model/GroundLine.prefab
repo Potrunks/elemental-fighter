@@ -140,7 +140,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!95 &7228407284451920481
 Animator:
   serializedVersion: 4
@@ -195,5 +195,9 @@ MonoBehaviour:
   _casterV2: {fileID: 0}
   _spawnPoint: {fileID: 0}
   _rigidbody: {fileID: 0}
+  _animator: {fileID: 0}
+  _collider: {fileID: 0}
+  _willBeDestroyed: 0
+  _destroyLimitTimer: 0
   _hitBoxAtk: {fileID: 6758054195761944032}
   _hitBoxAtkRadius: 0.26

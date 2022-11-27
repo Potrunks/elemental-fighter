@@ -122,12 +122,12 @@ namespace Assets.Script.Business.Implementation
             {
                 foreach (Collider2D enemyCollider in enemyColliderArray)
                 {
-                    InflictedDamage(enemyCollider.GetComponent<PlayableCharacterController>(), caster, isPushingAtk);
+                    InflictedMeleeAttackDamage(enemyCollider.GetComponent<PlayableCharacterController>(), caster, isPushingAtk);
                 }
             }
         }
 
-        public void InflictedDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
+        public void InflictedMeleeAttackDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
         {
             if (isPushingAtk)
             {
