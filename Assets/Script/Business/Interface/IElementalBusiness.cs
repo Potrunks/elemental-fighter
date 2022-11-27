@@ -42,7 +42,7 @@ namespace Assets.Script.Business.Interface
         void CheckElementalStateChange(PowerController controller);
 
         /// <summary>
-        /// Inflict damage to the collider if this is an enemy.
+        /// Inflict damage to the collider if this is an enemy. Work only one time.
         /// </summary>
         void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false);
     }
