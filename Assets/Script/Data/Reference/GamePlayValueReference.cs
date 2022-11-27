@@ -4,7 +4,7 @@
     {
         public static bool startDeviceUsingState = false;
         public static float smoothTimeDuringMove = 0.05f;
-        public static float velocityXLowThreshold = -0.1f;
-        public static float velocityXHighThreshold = 0.1f;
+        public static float velocityLowThreshold = -0.1f;
+        public static float velocityHighThreshold = 0.1f;
     }
 }

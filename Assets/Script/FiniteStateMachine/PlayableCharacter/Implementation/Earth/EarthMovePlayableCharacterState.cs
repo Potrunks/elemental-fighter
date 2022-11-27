@@ -1,55 +1,89 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.ConstraintException;
 using Assets.Script.Data.Reference;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
-    internal class EarthMovePlayableCharacterState : PlayableCharacterStateV2
+    public class EarthMovePlayableCharacterState : PlayableCharacterStateV2
     {
-        private AudioSource moveForwardSound;
+        IPlayableCharacterStateV2 nextState;
+        private AudioSource soundEffect;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityXHighThreshold
-                && playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityXLowThreshold)
+            if (playableCharacterController._isTouchingByAttack)
+            {
+                return new EarthHurtPlayableCharacterState();
+            }
+
+            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
+            {
+                return new EarthFallPlayableCharacterState();
+            }
+
+            if (playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityHighThreshold
+                && playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityLowThreshold)
             {
                 return new EarthIdlePlayableCharacterState();
             }
-            return null;
+            return nextState;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController.playableCharacter.soundEffectList.Any())
-            {
-                moveForwardSound = playableCharacterController
-                .playableCharacter
-                .soundEffectList
-                .First(sound => sound.name == "MoveForward")
-                .audioSource;
-
-                moveForwardSound.Play();
-            }
             playableCharacterController
                 .playableCharacterAnimator
                 .Play("Run");
+
+            if (playableCharacterController.playableCharacter.SoundEffectList.Any())
+            {
+                soundEffect = playableCharacterController
+                .playableCharacter
+                .SoundEffectList
+                .First(sound => sound.name == "MoveForward")
+                .audioSource;
+
+                soundEffect.Play();
+            }
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            if (moveForwardSound != null)
+            if (soundEffect != null)
             {
-                moveForwardSound.Stop();
+                soundEffect.Stop();
             }
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
+            switch (action)
+            {
+                case PlayableCharacterActionReference.Jump:
+                    nextState = new EarthJumpPlayableCharacterState();
+                    break;
+                case PlayableCharacterActionReference.MediumAtk:
+                    nextState = new EarthMediumAtkPlayableCharacterState();
+                    break;
+                case PlayableCharacterActionReference.LightAtk:
+                    nextState = new EarthLightAtkPlayableCharacterState();
+                    break;
+                case PlayableCharacterActionReference.HeavyAtk:
+                    nextState = new EarthHeavyAtkPlayableCharacterState();
+                    break;
+                case PlayableCharacterActionReference.SpecialAtk:
+                    nextState = new EarthSpecialAtkPlayableCharacterState();
+                    break;
+                case PlayableCharacterActionReference.SpecialAtk2:
+                    nextState = new EarthMediumAtk2PlayableCharacterState();
+                    break;
+                default:
+                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
+                    nextState = null;
+                    break;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5625705088686958778}
   - component: {fileID: 7228407284451920481}
   - component: {fileID: 178775526293121983}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -969165228, guid: 6cef0cf0dc4198644801345822489646, type: 3}
-  m_Color: {r: 0.52156866, g: 0.53333336, b: 0.99215686, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -121,11 +121,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cbf8f025808904886daa0af9b909da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerEntity: {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
-  selfDestructTimer: 10
-  caster: {fileID: 0}
-  elementalSpawnPointTransform: {fileID: 0}
-  rb: {fileID: 0}
+  _powerEntity: {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
+  _selfDestructTimer: 10
+  _caster: {fileID: 0}
+  _casterV2: {fileID: 0}
+  _spawnPoint: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  _animator: {fileID: 0}
+  _hasTouchedSomething: 0
 --- !u!95 &7228407284451920481
 Animator:
   serializedVersion: 4

@@ -8,5 +8,11 @@ namespace Assets.Script.Data.Reference
 {
     public enum PlayableCharacterActionReference
     {
+        Jump,
+        LightAtk,
+        MediumAtk,
+        HeavyAtk,
+        SpecialAtk,
+        SpecialAtk2
     }
 }

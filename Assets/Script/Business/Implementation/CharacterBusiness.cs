@@ -1,6 +1,7 @@
 ﻿using Assets.Script.Business.Interface;
 using Assets.Script.Data;
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -21,21 +22,21 @@ namespace Assets.Script.Business.Implementation
             playerslot.transform.DOPunchPosition(Vector3.down * 3, .3f, 10, 1);
         }
 
-        public void CheckFlipCharacterModel(PlayableCharacterController playableCharacterControllerToFlip, bool isLeftFlip)
+        public void CheckFlipCharacterModel(PlayableCharacterController controller)
         {
-            if (playableCharacterControllerToFlip.isDeviceUsed)
+            if (controller.isDeviceUsed)
             {
-                if (playableCharacterControllerToFlip.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityXLowThreshold
-                    && !isLeftFlip)
+                if (controller.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold
+                    && !controller.isLeftFlip)
                 {
-                    playableCharacterControllerToFlip.transform.Rotate(0f, 180f, 0f);
-                    isLeftFlip = true;
+                    controller.transform.Rotate(0f, 180f, 0f);
+                    controller.isLeftFlip = true;
                 }
-                if (playableCharacterControllerToFlip.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityXHighThreshold
-                    && isLeftFlip)
+                if (controller.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
+                    && controller.isLeftFlip)
                 {
-                    playableCharacterControllerToFlip.transform.Rotate(0f, 180f, 0f);
-                    isLeftFlip = false;
+                    controller.transform.Rotate(0f, 180f, 0f);
+                    controller.isLeftFlip = false;
                 }
             }
         }
@@ -99,6 +100,67 @@ namespace Assets.Script.Business.Implementation
                 s.Append(playerSlotImageTransform.DOLocalMoveX(0, 0.05f).SetEase(Ease.OutCubic));
                 TextMeshProUGUI characterUnderPlayerCursorText = characterUnderPlayerCursor.transform.Find("Name").GetComponent<TextMeshProUGUI>();
                 playerSlotCharacterName.text = characterUnderPlayerCursorText.text;
+            }
+        }
+
+        public void CheckCharacterStateChange(PlayableCharacterController controller)
+        {
+            controller.nextState = controller.currentState.CheckingStateModification(controller);
+            if (controller.nextState != null)
+            {
+                controller.currentState.OnExit(controller);
+                controller.currentState = controller.nextState;
+                controller.currentState.OnEnter(controller);
+            }
+        }
+
+        public void CheckObjectTouchByMeleeAttack(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false)
+        {
+            Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] {"Player"}));
+
+            if (enemyColliderArray.Any())
+            {
+                foreach (Collider2D enemyCollider in enemyColliderArray)
+                {
+                    InflictedDamage(enemyCollider.GetComponent<PlayableCharacterController>(), caster, isPushingAtk);
+                }
+            }
+        }
+
+        public void InflictedDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
+        {
+            if (isPushingAtk)
+            {
+                if (caster.isLeftFlip)
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.left * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.right * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                }
+            }
+            enemy._currentHealth -= caster.playableCharacter.AttackForce;
+            enemy._lastTouchedBy = caster;
+            enemy._isTouchingByAttack = true;
+        }
+
+        public void PushElemental(PlayableCharacterController pusher, string elementalLayerName)
+        {
+            Collider2D[] elementalColliderListTouched = Physics2D.OverlapCircleAll(pusher._hitBoxAtk.transform.position, pusher._hitBoxAtkRadius, LayerMask.GetMask(new string[] { elementalLayerName }));
+
+            if (elementalColliderListTouched.Any())
+            {
+                foreach (Collider2D elementalCollider in elementalColliderListTouched)
+                {
+                    PowerController elemental = elementalCollider.GetComponent<PowerController>();
+                    if (elemental != null && elemental._casterV2.Equals(pusher))
+                    {
+                        elemental.transform.rotation = pusher.gameObjectElementalSpawnPoint.transform.rotation;
+                        elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2), ForceMode2D.Impulse);
+                        elemental._collider.isTrigger = true;
+                    }
+                }
             }
         }
     }

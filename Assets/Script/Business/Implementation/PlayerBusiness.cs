@@ -10,9 +10,13 @@ namespace Assets.Script.Business.Implementation
 {
     internal class PlayerBusiness : IPlayerBusiness
     {
-        public Quaternion CalculateShootAngle(Vector2 vector2)
+        public Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice)
         {
-            return Quaternion.Euler(0, 0, Mathf.Atan2(vector2.y, vector2.x) * Mathf.Rad2Deg);
+            int xVector2Modificator = characterIsFlipLeft && !playerIsUsingDevice ? -1 : 1;
+            int zDegreeModificator = characterIsFlipLeft && playerIsUsingDevice ? -1 : 1;
+            float xDegreeModificator = characterIsFlipLeft ? 180f : 0f;
+
+            return Quaternion.Euler(xDegreeModificator, 0, Mathf.Atan2(vector2.y, vector2.x * xVector2Modificator) * Mathf.Rad2Deg * zDegreeModificator);
         }
 
         public void CreateNewPlayer(GameObject playerSelectionPreviewPrefab, GameObject tokenPrefab, GameObject cursorPrefab, Transform currentTransform, Transform playerSelectionGridTransform, List<CursorDetection> cursorDetectionList, IColorBusiness colorBusiness, InputDevice device, IDictionary<InputDevice, List<GameObject>> playerSelectGameObjectByDevice, int indexPlayer)

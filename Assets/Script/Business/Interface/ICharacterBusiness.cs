@@ -2,7 +2,7 @@
 
 namespace Assets.Script.Business.Interface
 {
-    internal interface ICharacterBusiness
+    public interface ICharacterBusiness
     {
         /// <summary>
         /// Confirm the character choice
@@ -35,6 +35,27 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Flip the model depending on velocity orientation.
         /// </summary>
-        void CheckFlipCharacterModel(PlayableCharacterController playableCharacterControllerToFlip, bool isLeftFlip);
+        void CheckFlipCharacterModel(PlayableCharacterController controller);
+
+        /// <summary>
+        /// Verify if the character state have been change.
+        /// </summary>
+        void CheckCharacterStateChange(PlayableCharacterController controller);
+
+        /// <summary>
+        /// Check what kind of object is touching by the attack and apply the good treatment.
+        /// </summary>
+        void CheckObjectTouchByMeleeAttack(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false);
+
+        /// <summary>
+        /// Inflict damage to the enemy.
+        /// </summary>
+        void InflictedDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
+
+        /// <summary>
+        /// Push an elemental power depending of this layer.
+        /// </summary>
+        /// <param name="elementalLayerName">Layer name of the target elemental to push.</param>
+        void PushElemental(PlayableCharacterController pusher, string elementalLayerName);
     }
 }
