@@ -14,7 +14,7 @@ namespace Assets.Script.Controller
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            _elementalBusiness.InflictedDamageAfterColliderCollision(collision, _casterV2, this, isPushingAtk: true);
+            _elementalBusiness.InflictedElementalDamageAfterColliderCollision(collision, _casterV2, this, isPushingAtk: true);
         }
         #endregion
     }

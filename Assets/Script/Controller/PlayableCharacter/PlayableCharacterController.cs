@@ -159,7 +159,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnThrowLightAtk()
     {
-        characterBusiness.CheckObjectTouchByMeleeAttack(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
+        characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
     }
     #endregion
 }

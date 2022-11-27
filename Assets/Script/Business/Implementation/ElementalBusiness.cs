@@ -12,7 +12,7 @@ namespace Assets.Script.Business.Implementation
 {
     public class ElementalBusiness : IElementalBusiness
     {
-        public void InflictedDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity)
+        public void InflictedElementalDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity)
         {
             Collider2D[] playerColliderTouchedArray = Physics2D.OverlapCircleAll(hitBoxAtk.transform.position, hitBoxAtkRadius, LayerMask.GetMask(new string[] { "Player" }));
             if (playerColliderTouchedArray.Any())
@@ -20,7 +20,7 @@ namespace Assets.Script.Business.Implementation
                 foreach (Collider2D collider in playerColliderTouchedArray)
                 {
                     PlayableCharacterController enemy = collider.GetComponent<PlayableCharacterController>();
-                    InflictedElementalAttackDamage(isPushingAtk, caster, enemy, powerEntity);
+                    InflictedElementalDamage(isPushingAtk, caster, enemy, powerEntity);
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
-        public void InflictedDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false)
+        public void InflictedElementalDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false)
         {
             if (!powerController._willBeDestroyed)
             {
@@ -171,7 +171,7 @@ namespace Assets.Script.Business.Implementation
                 {
                     if (enemy != caster)
                     {
-                        InflictedElementalAttackDamage(isPushingAtk, caster, enemy, powerController._powerEntity);
+                        InflictedElementalDamage(isPushingAtk, caster, enemy, powerController._powerEntity);
                         powerController._willBeDestroyed = true;
                     }
                 }
@@ -182,7 +182,7 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
-        private void InflictedElementalAttackDamage(bool isPushingAtk, PlayableCharacterController caster, PlayableCharacterController enemy, PowerEntity powerEntity)
+        private void InflictedElementalDamage(bool isPushingAtk, PlayableCharacterController caster, PlayableCharacterController enemy, PowerEntity powerEntity)
         {
             if (isPushingAtk)
             {

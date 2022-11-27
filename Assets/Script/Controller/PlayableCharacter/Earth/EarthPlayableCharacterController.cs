@@ -24,12 +24,14 @@ namespace Assets.Script.Controller
         public void OnThrowMediumAtk()
         {
             characterBusiness.PushElemental(this, "EarthElemental");
+            characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
 
         public void OnCastHeavyAtk()
         {
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Heavy, out GameObject heavyElementalToCast);
             elementalBusiness.InstantiateStaticElemental(heavyElementalToCast, gameObjectElementalSpawnPoint, this);
+            characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
 
         public void OnCastEarthSpecialElemental()

@@ -34,7 +34,7 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Inflicted damage on every enemy touched by elemental hit box.
         /// </summary>
-        void InflictedDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity);
+        void InflictedElementalDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity);
 
         /// <summary>
         /// Check if state of the elemental in the scene need to be changed.
@@ -44,6 +44,6 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Inflict damage to the collider if this is an enemy. Work only one time.
         /// </summary>
-        void InflictedDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false);
+        void InflictedElementalDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false);
     }
 }

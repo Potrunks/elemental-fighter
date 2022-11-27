@@ -45,12 +45,12 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Check what kind of object is touching by the attack and apply the good treatment.
         /// </summary>
-        void CheckObjectTouchByMeleeAttack(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false);
+        void InflictedMeleeDamageAfterHitBoxContact(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false);
 
         /// <summary>
         /// Inflict damage to the enemy.
         /// </summary>
-        void InflictedMeleeAttackDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
+        void InflictedMeleeDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
 
         /// <summary>
         /// Push an elemental power depending of this layer.

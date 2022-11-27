@@ -114,7 +114,7 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
-        public void CheckObjectTouchByMeleeAttack(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false)
+        public void InflictedMeleeDamageAfterHitBoxContact(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false)
         {
             Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] {"Player"}));
 
@@ -122,12 +122,12 @@ namespace Assets.Script.Business.Implementation
             {
                 foreach (Collider2D enemyCollider in enemyColliderArray)
                 {
-                    InflictedMeleeAttackDamage(enemyCollider.GetComponent<PlayableCharacterController>(), caster, isPushingAtk);
+                    InflictedMeleeDamage(enemyCollider.GetComponent<PlayableCharacterController>(), caster, isPushingAtk);
                 }
             }
         }
 
-        public void InflictedMeleeAttackDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
+        public void InflictedMeleeDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
         {
             if (isPushingAtk)
             {
