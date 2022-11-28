@@ -6,6 +6,10 @@ namespace Assets.Script.Controller
 {
     public class EarthPlayableCharacterController : PlayableCharacterController
     {
+        [Header("InGame Data")]
+        [SerializeField]
+        private GameObject _wallRockAlreadyInTheScene;
+
         #region MonoBehaviour Method
         private void Start()
         {
@@ -36,8 +40,14 @@ namespace Assets.Script.Controller
 
         public void OnCastEarthSpecialElemental()
         {
+            if (_wallRockAlreadyInTheScene != null)
+            {
+                PowerController power = _wallRockAlreadyInTheScene.GetComponent<PowerController>();
+                power._selfDestructTimer = 1f;
+                power._destroyLimitTimer = Time.time + power._selfDestructTimer;
+            }
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Special, out GameObject specialElementalToCast);
-            elementalBusiness.InstantiateStaticElemental(specialElementalToCast, gameObjectElementalSpawnPoint, this);
+            _wallRockAlreadyInTheScene = elementalBusiness.InstantiateStaticElemental(specialElementalToCast, gameObjectElementalSpawnPoint, this);
         }
         #endregion
     }

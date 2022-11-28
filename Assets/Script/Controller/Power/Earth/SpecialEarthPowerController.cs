@@ -12,7 +12,6 @@ namespace Assets.Script.Controller
         float _hitBoxAtkRadius;
 
         #region MonoBehaviour Method
-
         private void Start()
         {
             _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
@@ -20,17 +19,14 @@ namespace Assets.Script.Controller
             currentState = new SpecialEarthCastState();
             currentState.OnEnter(this);
         }
-
         #endregion
 
         #region Gizmos
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_hitBoxAtk.transform.position, _hitBoxAtkRadius);
         }
-
         #endregion
     }
 }

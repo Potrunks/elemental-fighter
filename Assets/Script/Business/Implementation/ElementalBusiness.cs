@@ -25,7 +25,7 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
-        public void InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
+        public GameObject InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
         {
             if (!caster.isLeftFlip)
             {
@@ -38,7 +38,7 @@ namespace Assets.Script.Business.Implementation
 
             elementalToCast.GetComponent<PowerController>()._casterV2 = caster;
 
-            GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            return GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
         }
 
         public void PrepareCastElemental(PowerEntity powerToCast, GameObject spawnPoint, MovePlayer caster)

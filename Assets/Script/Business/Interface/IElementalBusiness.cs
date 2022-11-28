@@ -29,7 +29,7 @@ namespace Assets.Script.Business.Interface
         /// <summary>
         /// Instantiate a static elemental in the scene. Without considering input rotation.
         /// </summary>
-        void InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster);
+        GameObject InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster);
 
         /// <summary>
         /// Inflicted damage on every enemy touched by elemental hit box.

@@ -140,7 +140,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!95 &7228407284451920481
 Animator:
   serializedVersion: 4
@@ -174,12 +174,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _powerEntity: {fileID: 11400000, guid: ced7a176f338e2044bd95aa6ee77b301, type: 2}
-  _selfDestructTimer: 10
+  _selfDestructTimer: 0
   _caster: {fileID: 0}
   _casterV2: {fileID: 0}
   _spawnPoint: {fileID: 0}
   _rigidbody: {fileID: 0}
   _animator: {fileID: 0}
+  _collider: {fileID: 0}
+  _willBeDestroyed: 0
+  _destroyLimitTimer: 0
   _hitBoxAtk: {fileID: 2156854121814365733}
   _hitBoxAtkRadius: 0.45
 --- !u!61 &5597880848873010906
