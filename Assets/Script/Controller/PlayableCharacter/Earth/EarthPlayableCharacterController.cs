@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data.Reference;
+﻿using Assets.Script.Business;
+using Assets.Script.Data.Reference;
 using Assets.Script.FiniteStateMachine;
 using UnityEngine;
 
@@ -42,9 +43,7 @@ namespace Assets.Script.Controller
         {
             if (_wallRockAlreadyInTheScene != null)
             {
-                PowerController power = _wallRockAlreadyInTheScene.GetComponent<PowerController>();
-                power._selfDestructTimer = 1f;
-                power._destroyLimitTimer = Time.time + power._selfDestructTimer;
+                _wallRockAlreadyInTheScene.GetComponent<PowerController>().TriggerSelfDestruct(1f);
             }
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Special, out GameObject specialElementalToCast);
             _wallRockAlreadyInTheScene = elementalBusiness.InstantiateStaticElemental(specialElementalToCast, gameObjectElementalSpawnPoint, this);

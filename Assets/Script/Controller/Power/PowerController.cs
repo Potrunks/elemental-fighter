@@ -47,7 +47,7 @@ public class PowerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _willBeDestroyed = this.isTimeToBeDestruct();
+        _willBeDestroyed = this.IsTimeToBeDestruct();
     }
 
     private void Update()
