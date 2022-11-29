@@ -162,22 +162,23 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
-        public void InflictedElementalDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false)
+        public void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool isPushingAtk = false)
         {
-            if (!powerController._willBeDestroyed)
+            if (!powerControllerCasted._willBeDestroyed)
             {
+                powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
                 PlayableCharacterController enemy = colliderTouched.GetComponent<PlayableCharacterController>();
                 if (enemy != null)
                 {
                     if (enemy != caster)
                     {
-                        InflictedElementalDamage(isPushingAtk, caster, enemy, powerController._powerEntity);
-                        powerController._willBeDestroyed = true;
+                        InflictedElementalDamage(isPushingAtk, caster, enemy, powerControllerCasted._powerEntity);
+                        powerControllerCasted._willBeDestroyed = true;
                     }
                 }
                 else
                 {
-                    powerController._willBeDestroyed = true;
+                    powerControllerCasted._willBeDestroyed = true;
                 }
             }
         }

@@ -146,7 +146,7 @@ namespace Assets.Script.Business.Implementation
             enemy._isTouchingByAttack = true;
         }
 
-        public void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null)
+        public void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, float selfDestructTimer, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null)
         {
             Collider2D[] elementalColliderListTouched = Physics2D.OverlapCircleAll(pusher._hitBoxAtk.transform.position, pusher._hitBoxAtkRadius, LayerMask.GetMask(new string[] { elementalLayerName }));
 
@@ -157,6 +157,7 @@ namespace Assets.Script.Business.Implementation
                     PowerController elemental = elementalCollider.GetComponent<PowerController>();
                     if (elemental != null && elemental._casterV2.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
                     {
+                        elemental.TriggerSelfDestruct(selfDestructTimer);
                         elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);
                         elemental.transform.rotation = elemental._rigidbody.constraints.HasFlag(RigidbodyConstraints2D.FreezeRotation) ? elemental.transform.rotation : pusher.gameObjectElementalSpawnPoint.transform.rotation;
                         elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2), ForceMode2D.Impulse);

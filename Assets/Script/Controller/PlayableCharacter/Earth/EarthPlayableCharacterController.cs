@@ -29,7 +29,7 @@ namespace Assets.Script.Controller
 
         public void OnThrowMediumAtk()
         {
-            characterBusiness.PushElemental(this, "ElementalProjectile", new List<PowerLevelReference> { PowerLevelReference.Medium });
+            characterBusiness.PushElemental(this, "ElementalProjectile", new List<PowerLevelReference> { PowerLevelReference.Medium }, 5f);
             characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
 
@@ -52,7 +52,7 @@ namespace Assets.Script.Controller
 
         public void OnThrowSpecialAtk2()
         {
-            characterBusiness.PushElemental(this, "ElementalProjectile", new List<PowerLevelReference> { PowerLevelReference.Special }, new List<RigidbodyConstraints2D> { RigidbodyConstraints2D.FreezePositionY, RigidbodyConstraints2D.FreezeRotation });
+            characterBusiness.PushElemental(this, "ElementalProjectile", new List<PowerLevelReference> { PowerLevelReference.Special }, 5f, rigidbodyConstraints2DList: new List<RigidbodyConstraints2D> { RigidbodyConstraints2D.FreezePositionY, RigidbodyConstraints2D.FreezeRotation });
             characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
         #endregion

@@ -42,8 +42,13 @@ namespace Assets.Script.Business.Interface
         void CheckElementalStateChange(PowerController controller);
 
         /// <summary>
-        /// Inflict damage to the collider if this is an enemy. Work only one time.
+        /// Inflicted damage to the target after collision
         /// </summary>
-        void InflictedElementalDamageAfterColliderCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerController, bool isPushingAtk = false);
+        /// <param name="colliderTouched">Collider touched by the elemental power</param>
+        /// <param name="caster">PlayableCharacterController of the caster</param>
+        /// <param name="powerControllerCasted">PowerController of the elemental power casted</param>
+        /// <param name="isTriggerAfterCollision">The collider of the elemental power casted is trigger or not after collision</param>
+        /// <param name="isPushingAtk">The elemental power can push the enemy touched by the attack. False by default</param>
+        void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool isPushingAtk = false);
     }
 }

@@ -55,10 +55,13 @@ namespace Assets.Script.Business.Interface
         void InflictedMeleeDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
 
         /// <summary>
-        /// Push an elemental power depending of this layer. Rigidbody constraint 2D is none by default.
-        /// The only rigidbody constraint 2D available is PositionX, PositionY and Rotation.
+        /// Push an elemental power.
         /// </summary>
-        /// <param name="elementalLayerName">Layer name of the target elemental to push.</param>
-        void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null);
+        /// <param name="pusher">Character who push the elemental power</param>
+        /// <param name="elementalLayerName">Layer name of the elemental able to be pushed by the atk of the pusher</param>
+        /// <param name="powerLevelToPushList">List of power level able to be push by the atk of the pusher</param>
+        /// <param name="selfDestructTimer">Time for destruct the elemental power gameobject after pushing. If 0, the object never destruct</param>
+        /// <param name="rigidbodyConstraints2DList">List of rigibody constraint 2D to apply to the elemental power gameobject. Only freeze PositionX, PositionY and Rotation is available. By default is null so the constraint is None</param>
+        void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, float selfDestructTimer, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null);
     }
 }
