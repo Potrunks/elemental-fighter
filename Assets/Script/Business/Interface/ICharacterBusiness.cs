@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Script.Business.Interface
 {
@@ -53,9 +54,10 @@ namespace Assets.Script.Business.Interface
         void InflictedMeleeDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk);
 
         /// <summary>
-        /// Push an elemental power depending of this layer.
+        /// Push an elemental power depending of this layer. Rigidbody constraint 2D is none by default.
+        /// The only rigidbody constraint 2D available is PositionX, PositionY and Rotation.
         /// </summary>
         /// <param name="elementalLayerName">Layer name of the target elemental to push.</param>
-        void PushElemental(PlayableCharacterController pusher, string elementalLayerName);
+        void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null);
     }
 }

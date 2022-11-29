@@ -52,6 +52,7 @@ public class PlayableCharacterController : MonoBehaviour
     IInputDeviceBusiness inputDeviceBusiness;
     public ICharacterBusiness characterBusiness;
     public IElementalBusiness elementalBusiness;
+    public IPhysicsBusiness _physicsBusiness;
 
     #region MonoBehaviour Method
 
@@ -74,6 +75,7 @@ public class PlayableCharacterController : MonoBehaviour
         inputDeviceBusiness = new InputDeviceBusiness();
         characterBusiness = new CharacterBusiness();
         elementalBusiness = new ElementalBusiness();
+        _physicsBusiness = new PhysicsBusiness();
 
         isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
         playableCharacterMoveSpeed = playableCharacter.MoveSpeed;

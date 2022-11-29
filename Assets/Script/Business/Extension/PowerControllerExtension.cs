@@ -21,7 +21,7 @@ namespace Assets.Script.Business
         /// </summary>
         public static void TriggerSelfDestruct(this PowerController power, float selfDestructTimer)
         {
-            power._selfDestructTimer = 1f;
+            power._selfDestructTimer = selfDestructTimer;
             power._destroyLimitTimer = Time.time + power._selfDestructTimer;
         }
     }

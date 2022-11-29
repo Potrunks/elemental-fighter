@@ -56,7 +56,7 @@ namespace Assets.Script.FiniteStateMachine
                     nextState = new EarthSpecialAtkPlayableCharacterState();
                     break;
                 case PlayableCharacterActionReference.SpecialAtk2:
-                    nextState = new EarthMediumAtk2PlayableCharacterState();
+                    nextState = new EarthSpecialAtk2PlayableCharacterState();
                     break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);

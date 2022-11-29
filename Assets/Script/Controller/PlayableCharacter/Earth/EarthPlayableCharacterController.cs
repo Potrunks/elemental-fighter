@@ -1,13 +1,14 @@
 ﻿using Assets.Script.Business;
 using Assets.Script.Data.Reference;
 using Assets.Script.FiniteStateMachine;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.Controller
 {
     public class EarthPlayableCharacterController : PlayableCharacterController
     {
-        [Header("InGame Data")]
+        [Header("InGame Data Supplementary")]
         [SerializeField]
         private GameObject _wallRockAlreadyInTheScene;
 
@@ -47,6 +48,12 @@ namespace Assets.Script.Controller
             }
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Special, out GameObject specialElementalToCast);
             _wallRockAlreadyInTheScene = elementalBusiness.InstantiateStaticElemental(specialElementalToCast, gameObjectElementalSpawnPoint, this);
+        }
+
+        public void OnThrowSpecialAtk2()
+        {
+            characterBusiness.PushElemental(this, "EarthElemental", new List<RigidbodyConstraints2D> { RigidbodyConstraints2D.FreezePositionY });
+            characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
         #endregion
     }

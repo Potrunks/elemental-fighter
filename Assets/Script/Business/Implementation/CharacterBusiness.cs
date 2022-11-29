@@ -145,7 +145,7 @@ namespace Assets.Script.Business.Implementation
             enemy._isTouchingByAttack = true;
         }
 
-        public void PushElemental(PlayableCharacterController pusher, string elementalLayerName)
+        public void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null)
         {
             Collider2D[] elementalColliderListTouched = Physics2D.OverlapCircleAll(pusher._hitBoxAtk.transform.position, pusher._hitBoxAtkRadius, LayerMask.GetMask(new string[] { elementalLayerName }));
 
@@ -157,6 +157,10 @@ namespace Assets.Script.Business.Implementation
                     if (elemental != null && elemental._casterV2.Equals(pusher))
                     {
                         elemental.transform.rotation = pusher.gameObjectElementalSpawnPoint.transform.rotation;
+
+                        // rigidbody constraint
+                        elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);
+
                         elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2), ForceMode2D.Impulse);
                         elemental._collider.isTrigger = true;
                     }
