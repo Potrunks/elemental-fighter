@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Script.Data.Reference;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.Business.Interface
@@ -58,6 +59,6 @@ namespace Assets.Script.Business.Interface
         /// The only rigidbody constraint 2D available is PositionX, PositionY and Rotation.
         /// </summary>
         /// <param name="elementalLayerName">Layer name of the target elemental to push.</param>
-        void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null);
+        void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null);
     }
 }
