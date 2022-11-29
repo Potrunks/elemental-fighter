@@ -11,22 +11,23 @@ namespace Assets.Script.FiniteStateMachine
         {
             if (playableCharacterController._isTouchingByAttack)
             {
-                return new EarthHurtPlayableCharacterState();
+                return nextState = new EarthHurtPlayableCharacterState();
+            }
+
+            if (playableCharacterController.isGrounding)
+            {
+                return nextState = new EarthIdlePlayableCharacterState();
             }
 
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityHighThreshold)
                 {
-                    nextState = new EarthJumpPlayableCharacterState();
+                    return nextState = new EarthJumpPlayableCharacterState();
                 }
                 if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
                 {
-                    nextState = new EarthFallPlayableCharacterState();
-                }
-                if (playableCharacterController.isGrounding)
-                {
-                    return new EarthIdlePlayableCharacterState();
+                    return nextState = new EarthFallPlayableCharacterState();
                 }
             }
 
