@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class JumpCharacterState : CharacterState
+public class JumpCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private System.Random random = new System.Random();
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.isHurting == false)
         {

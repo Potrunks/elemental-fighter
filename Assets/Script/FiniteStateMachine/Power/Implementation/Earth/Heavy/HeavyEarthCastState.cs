@@ -1,27 +1,27 @@
 ﻿using Assets.Script.Controller;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Script.FiniteStateMachine
 {
-    public class EarthCastState : PowerState
+    public class HeavyEarthCastState : PowerState
     {
         public override IPowerState CheckingStateModification(PowerController powerController)
         {
-            throw new NotImplementedException();
+            if (powerController._willBeDestroyed)
+            {
+                return nextState = new HeavyEarthDestroyState();
+            }
+
+            return nextState;
         }
 
         public override void OnEnter(PowerController powerController)
         {
-            powerController.elementalBusiness.RockOutOfGround(powerController);
+            powerController._animator.Play("Throwing");
         }
 
         public override void OnExit(PowerController powerController)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

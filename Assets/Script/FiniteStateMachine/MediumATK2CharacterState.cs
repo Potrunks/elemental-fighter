@@ -1,9 +1,9 @@
-public class MediumATK2CharacterState : CharacterState
+public class MediumATK2CharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private System.Random random = new System.Random();
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // hurt state
         if (player.isHurting == true)

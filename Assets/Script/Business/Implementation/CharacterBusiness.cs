@@ -1,5 +1,8 @@
 ﻿using Assets.Script.Business.Interface;
+using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -20,11 +23,40 @@ namespace Assets.Script.Business.Implementation
             playerslot.transform.DOPunchPosition(Vector3.down * 3, .3f, 10, 1);
         }
 
+        public void CheckFlipCharacterModel(PlayableCharacterController controller)
+        {
+            if (controller.isDeviceUsed)
+            {
+                if (controller.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold
+                    && !controller.isLeftFlip)
+                {
+                    controller.transform.Rotate(0f, 180f, 0f);
+                    controller.isLeftFlip = true;
+                }
+                if (controller.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
+                    && controller.isLeftFlip)
+                {
+                    controller.transform.Rotate(0f, 180f, 0f);
+                    controller.isLeftFlip = false;
+                }
+            }
+        }
+
         public GameObject GetRandomCharacter()
         {
             List<CharacterPreview> characterPreviewListWoRandom = SelectCharacterManager.instance.characterPreviewList.Where(cp => cp.characterPrefab != null).ToList();
             int randomInt = random.Next(characterPreviewListWoRandom.Count);
             return characterPreviewListWoRandom.ElementAt(randomInt).characterPrefab;
+        }
+
+        public Vector2 MoveCharacter(Vector2 inputMoveValue, float moveSpeed, Rigidbody2D rigidbodyToMove, float smoothTime)
+        {
+            Vector3 reference = Vector3.zero;
+            float horizontalMovement = inputMoveValue.x * moveSpeed * Time.deltaTime;
+            return Vector3.SmoothDamp(rigidbodyToMove.velocity,
+                                      new Vector2(horizontalMovement, rigidbodyToMove.velocity.y),
+                                      ref reference,
+                                      smoothTime);
         }
 
         public void SetSpriteRendererColorByIndexPlayer(int playerIndex, SpriteRenderer spriteRenderer)
@@ -69,6 +101,69 @@ namespace Assets.Script.Business.Implementation
                 s.Append(playerSlotImageTransform.DOLocalMoveX(0, 0.05f).SetEase(Ease.OutCubic));
                 TextMeshProUGUI characterUnderPlayerCursorText = characterUnderPlayerCursor.transform.Find("Name").GetComponent<TextMeshProUGUI>();
                 playerSlotCharacterName.text = characterUnderPlayerCursorText.text;
+            }
+        }
+
+        public void CheckCharacterStateChange(PlayableCharacterController controller)
+        {
+            controller.nextState = controller.currentState.CheckingStateModification(controller);
+            if (controller.nextState != null)
+            {
+                controller.currentState.OnExit(controller);
+                controller.currentState = controller.nextState;
+                controller.currentState.OnEnter(controller);
+            }
+        }
+
+        public void InflictedMeleeDamageAfterHitBoxContact(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false)
+        {
+            Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] {"Player"}));
+
+            if (enemyColliderArray.Any())
+            {
+                foreach (Collider2D enemyCollider in enemyColliderArray)
+                {
+                    InflictedMeleeDamage(enemyCollider.GetComponent<PlayableCharacterController>(), caster, isPushingAtk);
+                }
+            }
+        }
+
+        public void InflictedMeleeDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
+        {
+            if (isPushingAtk)
+            {
+                if (caster.isLeftFlip)
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.left * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.right * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                }
+            }
+            enemy._currentHealth -= caster.playableCharacter.AttackForce;
+            enemy._lastTouchedBy = caster;
+            enemy._isTouchingByAttack = true;
+        }
+
+        public void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, float selfDestructTimer, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null)
+        {
+            Collider2D[] elementalColliderListTouched = Physics2D.OverlapCircleAll(pusher._hitBoxAtk.transform.position, pusher._hitBoxAtkRadius, LayerMask.GetMask(new string[] { elementalLayerName }));
+
+            if (elementalColliderListTouched.Any())
+            {
+                foreach (Collider2D elementalCollider in elementalColliderListTouched)
+                {
+                    PowerController elemental = elementalCollider.GetComponent<PowerController>();
+                    if (elemental != null && elemental._casterV2.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
+                    {
+                        elemental.TriggerSelfDestruct(selfDestructTimer);
+                        elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);
+                        elemental.transform.rotation = elemental._rigidbody.constraints.HasFlag(RigidbodyConstraints2D.FreezeRotation) ? elemental.transform.rotation : pusher.gameObjectElementalSpawnPoint.transform.rotation;
+                        elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2), ForceMode2D.Impulse);
+                        elemental._collider.isTrigger = true;
+                    }
+                }
             }
         }
     }

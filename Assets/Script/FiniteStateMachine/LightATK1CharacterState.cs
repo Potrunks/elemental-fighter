@@ -1,11 +1,11 @@
 using System;
 
-public class LightATK1CharacterState : CharacterState
+public class LightATK1CharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private Random random = new Random();
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // hurt state
         if (player.isHurting == true)

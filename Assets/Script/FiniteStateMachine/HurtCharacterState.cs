@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class HurtCharacterState : CharacterState
+public class HurtCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private System.Random random = new System.Random();
     private float heavyATKPushForce = 50f;
 
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // When damage is taken, go to Idle State
         if (player.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)

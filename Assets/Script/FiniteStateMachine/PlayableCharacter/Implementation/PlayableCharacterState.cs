@@ -1,6 +1,6 @@
-public abstract class CharacterState : ICharacterState
+public abstract class PlayableCharacterState : IPlayableCharacterState
 {
-    public abstract ICharacterState CheckingStateModification(MovePlayer player);
+    public abstract IPlayableCharacterState CheckingStateModification(MovePlayer player);
 
     public abstract void OnEnter(MovePlayer player);
 

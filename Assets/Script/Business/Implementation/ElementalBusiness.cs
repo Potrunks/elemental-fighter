@@ -4,12 +4,43 @@ using Assets.Script.Data;
 using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
 using System.Data;
+using System.Linq;
 using UnityEngine;
+using static Pathfinding.Util.RetainedGizmos;
 
 namespace Assets.Script.Business.Implementation
 {
     public class ElementalBusiness : IElementalBusiness
     {
+        public void InflictedElementalDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity)
+        {
+            Collider2D[] playerColliderTouchedArray = Physics2D.OverlapCircleAll(hitBoxAtk.transform.position, hitBoxAtkRadius, LayerMask.GetMask(new string[] { "Player" }));
+            if (playerColliderTouchedArray.Any())
+            {
+                foreach (Collider2D collider in playerColliderTouchedArray)
+                {
+                    PlayableCharacterController enemy = collider.GetComponent<PlayableCharacterController>();
+                    InflictedElementalDamage(isPushingAtk, caster, enemy, powerEntity);
+                }
+            }
+        }
+
+        public GameObject InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
+        {
+            if (!caster.isLeftFlip)
+            {
+                spawnPoint.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+            else
+            {
+                spawnPoint.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+
+            elementalToCast.GetComponent<PowerController>()._casterV2 = caster;
+
+            return GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        }
+
         public void PrepareCastElemental(PowerEntity powerToCast, GameObject spawnPoint, MovePlayer caster)
         {
             if (powerToCast == null)
@@ -25,16 +56,21 @@ namespace Assets.Script.Business.Implementation
             spawnPoint.transform.rotation = SetAngleOfSpawnPoint(spawnPoint.transform.rotation, powerToCast.powerLevel, powerToCast.powerType);
 
             PowerController powerController = powerToCast.powerModel.GetComponent<PowerController>();
-            powerController.caster = caster;
-            powerController.elementalSpawnPointTransform = spawnPoint.transform;
+            powerController._caster = caster;
+            powerController._spawnPoint = spawnPoint.transform;
+        }
+
+        public void PushMediumElemental(PlayableCharacterController pusher)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void RockOutOfGround(PowerController rockPowerControllerInstantiated)
         {
-            MovePlayer caster = rockPowerControllerInstantiated.caster;
-            PowerEntity rockEntity = rockPowerControllerInstantiated.powerEntity;
-            Rigidbody2D rigidbodyOfRock = rockPowerControllerInstantiated.rb;
-            Transform spawnPoint = rockPowerControllerInstantiated.elementalSpawnPointTransform;
+            MovePlayer caster = rockPowerControllerInstantiated._caster;
+            PowerEntity rockEntity = rockPowerControllerInstantiated._powerEntity;
+            Rigidbody2D rigidbodyOfRock = rockPowerControllerInstantiated._rigidbody;
+            Transform spawnPoint = rockPowerControllerInstantiated._spawnPoint;
             int playerIndex = caster.playerIndex;
             AudioSource audioSource = rockEntity.powerSound.audioSource;
 
@@ -76,6 +112,22 @@ namespace Assets.Script.Business.Implementation
             }
         }
 
+        public void InstantiateElementalUpperOrientation(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
+        {
+            if (caster.isLeftFlip)
+            {
+                spawnPoint.transform.rotation = Quaternion.Euler(spawnPoint.transform.rotation.x, spawnPoint.transform.rotation.y, 100);
+            }
+            else
+            {
+                spawnPoint.transform.rotation = Quaternion.Euler(spawnPoint.transform.rotation.x, spawnPoint.transform.rotation.y, 80);
+            }
+
+            elementalToCast.GetComponent<PowerController>()._casterV2 = caster;
+
+            GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        }
+
         /// <summary>
         /// Calculate the angle for the elemental spawn point depending on elemental type and level.
         /// </summary>
@@ -97,6 +149,56 @@ namespace Assets.Script.Business.Implementation
             }
 
             return quaternion;
+        }
+
+        public void CheckElementalStateChange(PowerController controller)
+        {
+            controller.nextState = controller.currentState.CheckingStateModification(controller);
+            if (controller.nextState != null)
+            {
+                controller.currentState.OnExit(controller);
+                controller.currentState = controller.nextState;
+                controller.currentState.OnEnter(controller);
+            }
+        }
+
+        public void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool isPushingAtk = false)
+        {
+            if (!powerControllerCasted._willBeDestroyed)
+            {
+                powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
+                PlayableCharacterController enemy = colliderTouched.GetComponent<PlayableCharacterController>();
+                if (enemy != null)
+                {
+                    if (enemy != caster)
+                    {
+                        InflictedElementalDamage(isPushingAtk, caster, enemy, powerControllerCasted._powerEntity);
+                        powerControllerCasted._willBeDestroyed = true;
+                    }
+                }
+                else
+                {
+                    powerControllerCasted._willBeDestroyed = true;
+                }
+            }
+        }
+
+        private void InflictedElementalDamage(bool isPushingAtk, PlayableCharacterController caster, PlayableCharacterController enemy, PowerEntity powerEntity)
+        {
+            if (isPushingAtk)
+            {
+                if (caster.isLeftFlip)
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.left * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                }
+                else
+                {
+                    enemy.playableCharacterRigidbody.AddForce(Vector2.right * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                }
+            }
+            enemy._currentHealth -= powerEntity.powerDamage;
+            enemy._lastTouchedBy = caster;
+            enemy._isTouchingByAttack = true;
         }
     }
 }

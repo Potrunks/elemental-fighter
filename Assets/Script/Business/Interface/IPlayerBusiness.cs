@@ -58,5 +58,10 @@ namespace Assets.Script.Business.Interface
         /// </summary>
         /// <param name="inputDeviceByPlayerIndex">All device by player index connected</param>
         void ReactivateAllDevice(IDictionary<int, InputDevice> inputDeviceByPlayerIndex);
+
+        /// <summary>
+        /// Calculate the shoot angle of the player.
+        /// </summary>
+        Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice);
     }
 }

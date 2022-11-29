@@ -1,8 +1,8 @@
-public class MediumATK1TransitionCharacterState : CharacterState
+public class MediumATK1TransitionCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
+    private IPlayableCharacterState nextState;
     private bool isAirTransition = false;
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         if (player.isHurting == true)
         {

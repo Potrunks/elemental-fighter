@@ -1,3 +1,4 @@
+using Assets.Script.Business;
 using Assets.Script.Business.Implementation;
 using Assets.Script.Business.Interface;
 using Assets.Script.Entities;
@@ -6,23 +7,52 @@ using UnityEngine;
 
 public class PowerController : MonoBehaviour
 {
-    public PowerEntity powerEntity;
-    public float selfDestructTimer;
-    public MovePlayer caster;
-    public Transform elementalSpawnPointTransform;
-    public Rigidbody2D rb;
+    [Header("Elemental Parameter")]
+    public PowerEntity _powerEntity;
+    public float _selfDestructTimer;
 
-    public IElementalBusiness elementalBusiness;
-    public IPowerState powerState;
+    [Header("Caster Parameter")]
+    public MovePlayer _caster;
+    public PlayableCharacterController _casterV2;
 
+    [Header("Component")]
+    public Transform _spawnPoint;
+    public Rigidbody2D _rigidbody;
+    public Animator _animator;
+    public Collider2D _collider;
+
+    [Header("InGame Value")]
+    public bool _willBeDestroyed;
+    public float _destroyLimitTimer;
+
+    public IElementalBusiness _elementalBusiness;
+    public ICharacterBusiness _characterBusiness;
+
+    public IPowerState currentState;
+    public IPowerState nextState;
+
+    #region MonoBehaviour Method
     private void Awake()
     {
-        elementalBusiness = new ElementalBusiness();
-        rb = this.gameObject.GetComponent<Rigidbody2D>();
+        _elementalBusiness = new ElementalBusiness();
+        _characterBusiness = new CharacterBusiness();
 
-        if (selfDestructTimer != 0)
-        {
-            Destroy(this.gameObject, selfDestructTimer);
-        }
+        _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
+
+        _willBeDestroyed = false;
+        _destroyLimitTimer = Time.time + _selfDestructTimer;
     }
+
+    private void FixedUpdate()
+    {
+        _willBeDestroyed = this.IsTimeToBeDestruct();
+    }
+
+    private void Update()
+    {
+        _elementalBusiness.CheckElementalStateChange(this);
+    }
+    #endregion
 }

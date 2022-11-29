@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3589561464219092967}
   - component: {fileID: 4046094238725781947}
   - component: {fileID: 4895508893699378515}
-  - component: {fileID: 5625705088686958778}
   - component: {fileID: 7228407284451920481}
-  - component: {fileID: 178775526293121983}
-  m_Layer: 0
+  - component: {fileID: 2493842955487208671}
+  - component: {fileID: 5597880848873010906}
+  m_Layer: 10
   m_Name: WallRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7715265300492422884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.384494, y: 6.8794756, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,24 +108,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 4
---- !u!114 &5625705088686958778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7715265300492422884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4cbf8f025808904886daa0af9b909da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerEntity: {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
-  selfDestructTimer: 10
-  caster: {fileID: 0}
-  elementalSpawnPointTransform: {fileID: 0}
-  rb: {fileID: 0}
+  m_Constraints: 5
 --- !u!95 &7228407284451920481
 Animator:
   serializedVersion: 4
@@ -146,8 +129,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!70 &178775526293121983
-CapsuleCollider2D:
+--- !u!114 &2493842955487208671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7715265300492422884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee268b7c18ce3d48b16f565c1bfdd11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _powerEntity: {fileID: 11400000, guid: ced7a176f338e2044bd95aa6ee77b301, type: 2}
+  _selfDestructTimer: 0
+  _caster: {fileID: 0}
+  _casterV2: {fileID: 0}
+  _spawnPoint: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  _animator: {fileID: 0}
+  _collider: {fileID: 0}
+  _willBeDestroyed: 0
+  _destroyLimitTimer: 0
+  _hitBoxAtk: {fileID: 0}
+  _hitBoxAtkRadius: 0.45
+--- !u!61 &5597880848873010906
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,6 +166,16 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.005}
-  m_Size: {x: 0.21, y: 0.07}
-  m_Direction: 1
+  m_Offset: {x: 0.025884826, y: 0.0142127015}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.22, y: 0.28}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.109582715, y: 0.21055251}
+  m_EdgeRadius: 0

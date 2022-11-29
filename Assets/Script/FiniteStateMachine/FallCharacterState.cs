@@ -1,7 +1,7 @@
-public class FallCharacterState : CharacterState
+public class FallCharacterState : PlayableCharacterState
 {
-    private ICharacterState nextState;
-    public override ICharacterState CheckingStateModification(MovePlayer player)
+    private IPlayableCharacterState nextState;
+    public override IPlayableCharacterState CheckingStateModification(MovePlayer player)
     {
         // hurt state
         if (player.isHurting == true)
