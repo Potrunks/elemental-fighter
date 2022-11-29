@@ -157,8 +157,8 @@ namespace Assets.Script.Business.Implementation
                     PowerController elemental = elementalCollider.GetComponent<PowerController>();
                     if (elemental != null && elemental._casterV2.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
                     {
-                        elemental.transform.rotation = pusher.gameObjectElementalSpawnPoint.transform.rotation;
                         elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);
+                        elemental.transform.rotation = elemental._rigidbody.constraints.HasFlag(RigidbodyConstraints2D.FreezeRotation) ? elemental.transform.rotation : pusher.gameObjectElementalSpawnPoint.transform.rotation;
                         elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2), ForceMode2D.Impulse);
                         elemental._collider.isTrigger = true;
                     }
