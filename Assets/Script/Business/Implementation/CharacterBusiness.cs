@@ -166,5 +166,11 @@ namespace Assets.Script.Business.Implementation
                 }
             }
         }
+
+        public void RespawnPlayer(PlayableCharacterController characterToRespawn)
+        {
+            characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint.transform.position;
+            characterToRespawn.TriggerInvincibility(3f);
+        }
     }
 }

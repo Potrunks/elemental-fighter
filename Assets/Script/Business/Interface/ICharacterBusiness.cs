@@ -63,5 +63,10 @@ namespace Assets.Script.Business.Interface
         /// <param name="selfDestructTimer">Time for destruct the elemental power gameobject after pushing. If 0, the object never destruct</param>
         /// <param name="rigidbodyConstraints2DList">List of rigibody constraint 2D to apply to the elemental power gameobject. Only freeze PositionX, PositionY and Rotation is available. By default is null so the constraint is None</param>
         void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, float selfDestructTimer, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null);
+
+        /// <summary>
+        /// Respawn the character on his own character spawn point.
+        /// </summary>
+        void RespawnPlayer(PlayableCharacterController characterToRespawn);
     }
 }
