@@ -22,8 +22,9 @@ public class PlayableCharacterController : MonoBehaviour
     public IDictionary<PowerLevelReference, GameObject> kvpPowerModelByPowerLevel;
     public int _currentHealth;
 
-    [Header("Animation")]
+    [Header("Model Component")]
     public Animator playableCharacterAnimator;
+    public SpriteRenderer _spriteRenderer;
 
     [Header("Move Parameter")]
     [SerializeField]
@@ -44,6 +45,11 @@ public class PlayableCharacterController : MonoBehaviour
     public int _playerIndex;
     public PlayableCharacterController _lastTouchedBy;
     public bool _isTouchingByAttack;
+    public SpawnPlayer _spawnPlayerPoint;
+
+    [Header("Invincible State")]
+    public bool _isInvincible;
+    public float _invincibleLimitTimer;
 
     public IPlayableCharacterStateV2 currentState;
     public IPlayableCharacterStateV2 nextState;
@@ -81,6 +87,7 @@ public class PlayableCharacterController : MonoBehaviour
         playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
         isLeftFlip = false;
         _isTouchingByAttack = false;
+        _isInvincible = false;
         kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
         _currentHealth = playableCharacter.MaxHealth;
 
@@ -88,6 +95,8 @@ public class PlayableCharacterController : MonoBehaviour
         _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
         playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     #endregion
