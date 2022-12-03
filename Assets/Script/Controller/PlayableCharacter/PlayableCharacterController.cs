@@ -67,6 +67,7 @@ public class PlayableCharacterController : MonoBehaviour
         playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
         characterBusiness.CheckFlipCharacterModel(this);
         gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, isLeftFlip, isDeviceUsed);
+        _isInvincible = this.CheckInvincibleEndTime();
     }
 
     private void Update()
