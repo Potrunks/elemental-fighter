@@ -46,6 +46,7 @@ public class PlayableCharacterController : MonoBehaviour
     public PlayableCharacterController _lastTouchedBy;
     public bool _isTouchingByAttack;
     public SpawnPlayer _spawnPlayerPoint;
+    public ScorePlayer _scorePlayer;
 
     [Header("Invincible State")]
     public bool _isInvincible;
@@ -96,6 +97,7 @@ public class PlayableCharacterController : MonoBehaviour
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
         playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
         _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
+        _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     #endregion
