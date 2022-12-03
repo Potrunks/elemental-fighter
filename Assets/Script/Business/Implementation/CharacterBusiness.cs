@@ -172,7 +172,9 @@ namespace Assets.Script.Business.Implementation
 
         public void RespawnPlayer(PlayableCharacterController characterToRespawn)
         {
+            Debug.Log("The player " + (characterToRespawn._playerIndex + 1) + " respawn !!!");
             characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint.transform.position;
+            characterToRespawn._currentHealth = characterToRespawn.playableCharacter.MaxHealth;
             characterToRespawn.TriggerInvincibility(3f);
         }
     }
