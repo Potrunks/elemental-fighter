@@ -37,5 +37,20 @@ namespace Assets.Script.Business
             }
             return true;
         }
+
+        /// <summary>
+        /// Update score of the player who just died by a fall or zero health.
+        /// </summary>
+        public static void UpdateScoreAfterDeath(this PlayableCharacterController characterToUpdateScore)
+        {
+            if (characterToUpdateScore._lastTouchedBy == null)
+            {
+                characterToUpdateScore._scorePlayer.Suicide();
+            }
+            else
+            {
+                characterToUpdateScore._lastTouchedBy._scorePlayer.UpdateScore();
+            }
+        }
     }
 }
