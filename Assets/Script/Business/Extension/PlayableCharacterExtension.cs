@@ -19,5 +19,22 @@ namespace Assets.Script.Business
                                                                                             0.25f
                                                                                         );
         }
+
+        /// <summary>
+        /// Check if the player stay invincible or not.
+        /// </summary>
+        public static void CheckInvincibleEndTime(this PlayableCharacterController character)
+        {
+            if (character._isInvincible && Time.time > character._invincibleLimitTimer)
+            {
+                character._isInvincible = false;
+                character._spriteRenderer.material.color = new Color(
+                                                                        character._spriteRenderer.material.color.r,
+                                                                        character._spriteRenderer.material.color.g,
+                                                                        character._spriteRenderer.material.color.b,
+                                                                        1f
+                                                                    );
+            }
+        }
     }
 }
