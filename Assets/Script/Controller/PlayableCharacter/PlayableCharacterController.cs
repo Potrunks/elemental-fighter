@@ -61,7 +61,6 @@ public class PlayableCharacterController : MonoBehaviour
     public IPhysicsBusiness _physicsBusiness;
 
     #region MonoBehaviour Method
-
     private void FixedUpdate()
     {
         isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
@@ -98,22 +97,18 @@ public class PlayableCharacterController : MonoBehaviour
         _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
-
     #endregion
 
     #region Gizmos
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.transform.position, groundCheckRadius);
         Gizmos.DrawWireSphere(_hitBoxAtk.transform.position, _hitBoxAtkRadius);
     }
-
     #endregion
 
     #region Action
-
     public void OnInputMove(InputAction.CallbackContext context)
     {
         isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context, isDeviceUsed);
