@@ -130,20 +130,23 @@ namespace Assets.Script.Business.Implementation
 
         public void InflictedMeleeDamage(PlayableCharacterController enemy, PlayableCharacterController caster, bool isPushingAtk)
         {
-            if (isPushingAtk)
+            if (!enemy._isInvincible)
             {
-                if (caster.isLeftFlip)
+                if (isPushingAtk)
                 {
-                    enemy.playableCharacterRigidbody.AddForce(Vector2.left * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                    if (caster.isLeftFlip)
+                    {
+                        enemy.playableCharacterRigidbody.AddForce(Vector2.left * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                    }
+                    else
+                    {
+                        enemy.playableCharacterRigidbody.AddForce(Vector2.right * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
+                    }
                 }
-                else
-                {
-                    enemy.playableCharacterRigidbody.AddForce(Vector2.right * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
-                }
+                enemy._currentHealth -= caster.playableCharacter.AttackForce;
+                enemy._lastTouchedBy = caster;
+                enemy._isTouchingByAttack = true;
             }
-            enemy._currentHealth -= caster.playableCharacter.AttackForce;
-            enemy._lastTouchedBy = caster;
-            enemy._isTouchingByAttack = true;
         }
 
         public void PushElemental(PlayableCharacterController pusher, string elementalLayerName, IEnumerable<PowerLevelReference> powerLevelToPushList, float selfDestructTimer, IEnumerable<RigidbodyConstraints2D> rigidbodyConstraints2DList = null)
@@ -165,6 +168,14 @@ namespace Assets.Script.Business.Implementation
                     }
                 }
             }
+        }
+
+        public void RespawnPlayer(PlayableCharacterController characterToRespawn)
+        {
+            Debug.Log("The player " + (characterToRespawn._playerIndex + 1) + " respawn !!!");
+            characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint.transform.position;
+            characterToRespawn._currentHealth = characterToRespawn.playableCharacter.MaxHealth;
+            characterToRespawn.TriggerInvincibility(3f);
         }
     }
 }

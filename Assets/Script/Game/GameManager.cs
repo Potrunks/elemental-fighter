@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Displaying endgame results...");
 
-        ScorePlayer[] scorePlayerArray = GameObject.FindObjectsOfType<ScorePlayer>();
+        ScorePlayer[] scorePlayerArray = FindObjectsOfType<ScorePlayer>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<ScorePlayerResult> scorePlayerResultList = new List<ScorePlayerResult>();
 

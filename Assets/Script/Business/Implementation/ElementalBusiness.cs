@@ -185,20 +185,23 @@ namespace Assets.Script.Business.Implementation
 
         private void InflictedElementalDamage(bool isPushingAtk, PlayableCharacterController caster, PlayableCharacterController enemy, PowerEntity powerEntity)
         {
-            if (isPushingAtk)
+            if (!enemy._isInvincible)
             {
-                if (caster.isLeftFlip)
+                if (isPushingAtk)
                 {
-                    enemy.playableCharacterRigidbody.AddForce(Vector2.left * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                    if (caster.isLeftFlip)
+                    {
+                        enemy.playableCharacterRigidbody.AddForce(Vector2.left * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                    }
+                    else
+                    {
+                        enemy.playableCharacterRigidbody.AddForce(Vector2.right * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
+                    }
                 }
-                else
-                {
-                    enemy.playableCharacterRigidbody.AddForce(Vector2.right * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
-                }
+                enemy._currentHealth -= powerEntity.powerDamage;
+                enemy._lastTouchedBy = caster;
+                enemy._isTouchingByAttack = true;
             }
-            enemy._currentHealth -= powerEntity.powerDamage;
-            enemy._lastTouchedBy = caster;
-            enemy._isTouchingByAttack = true;
         }
     }
 }

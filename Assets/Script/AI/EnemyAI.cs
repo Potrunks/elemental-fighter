@@ -2,6 +2,7 @@ using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
 using System;
+using Assets.Script.Data.Reference;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -26,26 +27,24 @@ public class EnemyAI : MonoBehaviour
     private int currentWaypoint = 0;
     private Seeker seeker;
     private Rigidbody2D rb;
-    private MovePlayer movePlayer;
+    private PlayableCharacterController _playableCharacterController;
     private System.Random probability = new System.Random();
 
     private void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-        movePlayer = GetComponent<MovePlayer>();
-        movePlayer.jumpForce = 600;
-        movePlayer.normalMoveSpeed = 225;
-        MovePlayer[] allPlayers = FindObjectsOfType<MovePlayer>();
-        List<Transform> allPlayersList = new List<Transform>();
-        foreach (MovePlayer player in allPlayers)
+        _playableCharacterController = GetComponent<PlayableCharacterController>();
+        PlayableCharacterController[] allPlayers = FindObjectsOfType<PlayableCharacterController>();
+        List<Transform> allTransformPlayers = new List<Transform>();
+        foreach (PlayableCharacterController player in allPlayers)
         {
-            if (player.playerIndex != this.movePlayer.playerIndex)
+            if (player._playerIndex != _playableCharacterController._playerIndex)
             {
-                allPlayersList.Add(player.transform);
+                allTransformPlayers.Add(player.transform);
             }
         }
-        targets = allPlayersList.ToArray();
+        targets = allTransformPlayers.ToArray();
         InvokeRepeating("UpdatePath", 0f, pathUpdateSeconds);
     }
 
@@ -104,28 +103,28 @@ public class EnemyAI : MonoBehaviour
 
     private void PathFollow()
     {
-        movePlayer.isUsingJoystick = true;
+        _playableCharacterController.isDeviceUsed = true;
         if (currentTarget != null)
         {
             FightStrategy(CalculateDistancePlayerEnemy(currentTarget));
         }
         if (path == null)
         {
-            movePlayer.isUsingJoystick = false;
+            _playableCharacterController.isDeviceUsed = false;
             return;
         }
 
         // Reached end of path
         if (currentWaypoint >= path.vectorPath.Count)
         {
-            movePlayer.isUsingJoystick = false;
+            _playableCharacterController.isDeviceUsed = false;
             return;
         }
 
         // Direction Calculation
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         // Vector2 force = direction * speed * Time.deltaTime;
-        movePlayer.horizontalMovementV2 = direction;
+        _playableCharacterController.inputMoveValue = direction;
 
         // Movement
         //rb.AddForce(force);
@@ -133,7 +132,7 @@ public class EnemyAI : MonoBehaviour
         // Jump
         if (direction.y > jumpNodeHeightRequirement)
         {
-            movePlayer.currentState.PerformingInput("Jumping");
+            _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.Jump);
         }
 
         // Next Waypoint
@@ -160,10 +159,10 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("AI is long range mode");
             if (probability.NextDouble() * 100 <= 1)
             {
-                movePlayer.currentState.PerformingInput("MediumATK");
+                _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.MediumAtk);
                 if (probability.NextDouble() * 100 <= 25)
                 {
-                    movePlayer.currentState.PerformingInput("HeavyATK");
+                    _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.HeavyAtk);
                 }
             }
         }
@@ -172,11 +171,11 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("AI is mid range mode");
             if (probability.NextDouble() * 100 <= 1)
             {
-                movePlayer.currentState.PerformingInput("MediumATK");
+                _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.MediumAtk);
             }
             if (probability.NextDouble() * 100 <= 1)
             {
-                movePlayer.currentState.PerformingInput("Dash");
+                _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.SpecialAtk);
             }
         }
         if (distanceWithEnemy <= shortRangeDistanceRequirement)
@@ -184,13 +183,13 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("AI is short range mode");
             if (probability.NextDouble() * 100 <= 1)
             {
-                movePlayer.currentState.PerformingInput("LightATK");
+                _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.LightAtk);
                 if (probability.NextDouble() * 100 <= 25)
                 {
-                    movePlayer.currentState.PerformingInput("MediumATK");
+                    _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.MediumAtk);
                     if (probability.NextDouble() * 100 <= 10)
                     {
-                        movePlayer.currentState.PerformingInput("HeavyATK");
+                        _playableCharacterController.currentState.PerformingInput(PlayableCharacterActionReference.HeavyAtk);
                     }
                 }
             }

@@ -6,6 +6,7 @@ public class ScorePlayer : MonoBehaviour
     private TextMeshProUGUI textScore;
     public int playerIndex;
     public int victoryPoint;
+
     void Start()
     {
         textScore = GetComponent<TextMeshProUGUI>();

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4152062391814938596}
   - component: {fileID: 4152062391814938598}
   - component: {fileID: 1463338797390480162}
+  - component: {fileID: 1766690604846548335}
+  - component: {fileID: 1637498464579896501}
   m_Layer: 3
   m_Name: EarthWarriorV2
   m_TagString: Player
@@ -326,6 +328,7 @@ MonoBehaviour:
   playableCharacter: {fileID: 11400000, guid: dc0c8977fb72f2c49bdc06479c979c80, type: 2}
   _currentHealth: 0
   playableCharacterAnimator: {fileID: 0}
+  _spriteRenderer: {fileID: 0}
   inputMoveValue: {x: 0, y: 0}
   playableCharacterRigidbody: {fileID: 0}
   playableCharacterMoveSpeed: 0
@@ -337,7 +340,59 @@ MonoBehaviour:
   _playerIndex: 0
   _lastTouchedBy: {fileID: 0}
   _isTouchingByAttack: 0
+  _spawnPlayerPoint: {fileID: 0}
+  _scorePlayer: {fileID: 0}
+  _isInvincible: 0
+  _invincibleLimitTimer: 0
   _wallRockAlreadyInTheScene: {fileID: 0}
+--- !u!114 &1766690604846548335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152062391814938593}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a36be3948a9e82049a44c867a54fbe7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentTarget: {fileID: 0}
+  targets: []
+  pathUpdateSeconds: 0.5
+  nextWaypointDistance: 1
+  jumpNodeHeightRequirement: 0.8
+  longRangeDistanceRequirement: 10
+  shortRangeDistanceRequirement: 2
+  followEnabled: 1
+--- !u!114 &1637498464579896501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4152062391814938593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: 2147483647
 --- !u!1 &4152062392735839210
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,16 +56,16 @@ public class DamageCommand : MonoBehaviour
         if (isInvincible == false)
         {
             if (GetComponent<MovePlayer>().isBlockingAttack == true)
-        {
-            currentHealth -= damage / 5;
-            GetComponent<MovePlayer>().isHurting = true;
-        }
-        else
-        {
-            currentHealth -= damage;
-            GetComponent<MovePlayer>().isHurting = true;
-        }
-        UpdateBleedingState();
+            {
+                currentHealth -= damage / 5;
+                GetComponent<MovePlayer>().isHurting = true;
+            }
+            else
+            {
+                currentHealth -= damage;
+                GetComponent<MovePlayer>().isHurting = true;
+            }
+            UpdateBleedingState();
         }
     }
 

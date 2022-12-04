@@ -22,12 +22,12 @@ public class PlayableCharacterController : MonoBehaviour
     public IDictionary<PowerLevelReference, GameObject> kvpPowerModelByPowerLevel;
     public int _currentHealth;
 
-    [Header("Animation")]
+    [Header("Model Component")]
     public Animator playableCharacterAnimator;
+    public SpriteRenderer _spriteRenderer;
 
     [Header("Move Parameter")]
-    [SerializeField]
-    Vector2 inputMoveValue;
+    public Vector2 inputMoveValue;
     public Rigidbody2D playableCharacterRigidbody;
     public float playableCharacterMoveSpeed;
     public bool isDeviceUsed;
@@ -44,6 +44,12 @@ public class PlayableCharacterController : MonoBehaviour
     public int _playerIndex;
     public PlayableCharacterController _lastTouchedBy;
     public bool _isTouchingByAttack;
+    public SpawnPlayer _spawnPlayerPoint;
+    public ScorePlayer _scorePlayer;
+
+    [Header("Invincible State")]
+    public bool _isInvincible;
+    public float _invincibleLimitTimer;
 
     public IPlayableCharacterStateV2 currentState;
     public IPlayableCharacterStateV2 nextState;
@@ -55,13 +61,13 @@ public class PlayableCharacterController : MonoBehaviour
     public IPhysicsBusiness _physicsBusiness;
 
     #region MonoBehaviour Method
-
     private void FixedUpdate()
     {
         isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
         playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
         characterBusiness.CheckFlipCharacterModel(this);
         gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, isLeftFlip, isDeviceUsed);
+        _isInvincible = this.CheckInvincibleEndTime();
     }
 
     private void Update()
@@ -81,6 +87,7 @@ public class PlayableCharacterController : MonoBehaviour
         playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
         isLeftFlip = false;
         _isTouchingByAttack = false;
+        _isInvincible = false;
         kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
         _currentHealth = playableCharacter.MaxHealth;
 
@@ -88,23 +95,25 @@ public class PlayableCharacterController : MonoBehaviour
         _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
         playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
+        if (_spawnPlayerPoint != null )
+        {
+            _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
+        }
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
-
     #endregion
 
     #region Gizmos
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.transform.position, groundCheckRadius);
         Gizmos.DrawWireSphere(_hitBoxAtk.transform.position, _hitBoxAtkRadius);
     }
-
     #endregion
 
     #region Action
-
     public void OnInputMove(InputAction.CallbackContext context)
     {
         isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context, isDeviceUsed);
