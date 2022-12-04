@@ -27,8 +27,7 @@ public class PlayableCharacterController : MonoBehaviour
     public SpriteRenderer _spriteRenderer;
 
     [Header("Move Parameter")]
-    [SerializeField]
-    Vector2 inputMoveValue;
+    public Vector2 inputMoveValue;
     public Rigidbody2D playableCharacterRigidbody;
     public float playableCharacterMoveSpeed;
     public bool isDeviceUsed;
@@ -97,7 +96,10 @@ public class PlayableCharacterController : MonoBehaviour
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
         playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
         _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
-        _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
+        if (_spawnPlayerPoint != null )
+        {
+            _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
+        }
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     #endregion
