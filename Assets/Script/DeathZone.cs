@@ -17,8 +17,8 @@ public class DeathZone : MonoBehaviour
         PlayableCharacterController playerFell = other.GetComponent<PlayableCharacterController>();
         if (playerFell != null)
         {
-            playerFell.UpdateScoreAfterDeath();
-            if (playerFell._lastTouchedBy._scorePlayer.victoryPoint == GameManager.instance.victoryPointCondition)
+            playerFell.UpdateScoreAfterFell();
+            if (playerFell._enemy._scorePlayer.victoryPoint == GameManager.instance.victoryPointCondition)
             {
                 GameManager.instance.DisplayEndgameResults();
             }

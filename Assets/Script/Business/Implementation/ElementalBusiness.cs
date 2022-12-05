@@ -199,7 +199,7 @@ namespace Assets.Script.Business.Implementation
                     }
                 }
                 enemy._currentHealth -= powerEntity.powerDamage;
-                enemy._lastTouchedBy = caster;
+                enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
             }
         }

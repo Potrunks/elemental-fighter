@@ -68,5 +68,17 @@ namespace Assets.Script.Business.Interface
         /// Respawn the character on his own character spawn point.
         /// </summary>
         void RespawnPlayer(PlayableCharacterController characterToRespawn);
+
+        /// <summary>
+        /// Reset character after died. Update score enemy and check if end game or not.
+        /// </summary>
+        /// <returns>Return TRUE if the game is over because the enemy, of the character died, win the game.</returns>
+        bool ResetCharacterAfterDeath(PlayableCharacterController characterDied);
+
+        /// <summary>
+        /// Update the victory point of the selected character. Can choose the number of victory point to add (1 by default).
+        /// </summary>
+        /// <returns>Return TRUE if the player win the game.</returns>
+        bool UpdateCharacterScore(ScorePlayer scorePlayerToUpdate, int pointWon = 1);
     }
 }

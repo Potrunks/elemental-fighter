@@ -144,7 +144,7 @@ namespace Assets.Script.Business.Implementation
                     }
                 }
                 enemy._currentHealth -= caster.playableCharacter.AttackForce;
-                enemy._lastTouchedBy = caster;
+                enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
             }
         }
@@ -176,6 +176,36 @@ namespace Assets.Script.Business.Implementation
             characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint.transform.position;
             characterToRespawn._currentHealth = characterToRespawn.playableCharacter.MaxHealth;
             characterToRespawn.TriggerInvincibility(3f);
+        }
+
+        public bool ResetCharacterAfterDeath(PlayableCharacterController characterDied)
+        {
+            Debug.Log("The player " + (characterDied._playerIndex + 1) + " just died... Reset character in progress...");
+            bool hasEnemyWon = UpdateCharacterScore(characterDied._enemy._scorePlayer);
+            if (hasEnemyWon)
+            {
+                GameManager.instance.DisplayEndgameResults();
+            }
+            else
+            {
+                RespawnPlayer(characterDied);
+            }
+            return hasEnemyWon;
+        }
+
+        public bool UpdateCharacterScore(ScorePlayer scorePlayerToUpdate, int pointWon = 1)
+        {
+            Debug.Log("The player " + (scorePlayerToUpdate.playerIndex + 1) + " win " + pointWon + " point(s)");
+            scorePlayerToUpdate.victoryPoint += pointWon;
+            scorePlayerToUpdate.DisplayScore();
+            if (scorePlayerToUpdate.victoryPoint == GameManager.instance.victoryPointCondition)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

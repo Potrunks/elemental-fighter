@@ -19,7 +19,10 @@ public class SpawnPlayer : MonoBehaviour
     void Start()
     {
         selectedCharacter = playerBusiness.GetCharacterSelectedByIndex(playerIndex, GameManager.instance.deviceAndCharacterPlayerByIndex);
-        _playableCharacterControllerSelected = selectedCharacter.GetComponent<PlayableCharacterController>();
+        if (selectedCharacter != null)
+        {
+            _playableCharacterControllerSelected = selectedCharacter.GetComponent<PlayableCharacterController>();
+        }
         if (selectedCharacter == null)
         {
             Destroy(scorePlayer);

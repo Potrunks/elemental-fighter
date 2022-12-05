@@ -42,7 +42,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     [Header("InGame Data")]
     public int _playerIndex;
-    public PlayableCharacterController _lastTouchedBy;
+    public PlayableCharacterController _enemy;
     public bool _isTouchingByAttack;
     public SpawnPlayer _spawnPlayerPoint;
     public ScorePlayer _scorePlayer;

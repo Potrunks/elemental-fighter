@@ -1,39 +1,32 @@
 ﻿using Assets.Script.Data.Reference;
-using DG.Tweening;
 
 namespace Assets.Script.FiniteStateMachine
 {
-    public class EarthHurtPlayableCharacterState : PlayableCharacterStateV2
+    public class EarthDiePlayableCharacterState : PlayableCharacterStateV2
     {
-        IPlayableCharacterStateV2 nextState;
+        private IPlayableCharacterStateV2 nextState;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
-                if (playableCharacterController._currentHealth <= 0)
+                bool gameIsOver = playableCharacterController.characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
+                if (!gameIsOver)
                 {
-                    return nextState = new EarthDiePlayableCharacterState();
+                    return nextState = new EarthIdlePlayableCharacterState();
                 }
-                return nextState = new EarthIdlePlayableCharacterState();
             }
-
-            if (playableCharacterController._isTouchingByAttack)
-            {
-                return nextState = new EarthHurtPlayableCharacterState();
-            }
-
             return nextState;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
+            playableCharacterController.playableCharacterAnimator.Play("Die");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController._isTouchingByAttack = false;
+            
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

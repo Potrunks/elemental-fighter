@@ -25,31 +25,35 @@ namespace Assets.Script.Business
         /// </summary>
         public static bool CheckInvincibleEndTime(this PlayableCharacterController character)
         {
-            if (character._isInvincible && Time.time > character._invincibleLimitTimer)
+            if (character._isInvincible)
             {
-                character._spriteRenderer.material.color = new Color(
+                if (Time.time > character._invincibleLimitTimer)
+                {
+                    character._spriteRenderer.material.color = new Color(
                                                                         character._spriteRenderer.material.color.r,
                                                                         character._spriteRenderer.material.color.g,
                                                                         character._spriteRenderer.material.color.b,
                                                                         1f
                                                                     );
-                return false;
+                    return false;
+                }
+                return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
         /// Update score of the player who just died by a fall or zero health.
         /// </summary>
-        public static void UpdateScoreAfterDeath(this PlayableCharacterController characterToUpdateScore)
+        public static void UpdateScoreAfterFell(this PlayableCharacterController characterToUpdateScore)
         {
-            if (characterToUpdateScore._lastTouchedBy == null)
+            if (characterToUpdateScore._enemy == null)
             {
                 characterToUpdateScore._scorePlayer.Suicide();
             }
             else
             {
-                characterToUpdateScore._lastTouchedBy._scorePlayer.UpdateScore();
+                characterToUpdateScore._enemy._scorePlayer.UpdateScore();
             }
         }
     }
