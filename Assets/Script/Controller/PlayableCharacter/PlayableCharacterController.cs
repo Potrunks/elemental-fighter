@@ -87,6 +87,7 @@ public class PlayableCharacterController : MonoBehaviour
         _isInvincible = false;
         kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
         _currentHealth = playableCharacter.MaxHealth;
+        MultipleTargetCamFollow.instance.players.Add(transform);
 
         gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
         _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;

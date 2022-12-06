@@ -13,14 +13,17 @@ public class MultipleTargetCamFollow : MonoBehaviour
     public float zoomLimiter;
     private Camera cam;
     public static MultipleTargetCamFollow instance;
+
     private void Awake()
     {
         instance = this;
     }
+
     private void Start()
     {
         cam = GetComponent<Camera>();
     }
+
     private void LateUpdate()
     {
         if (players.Count == 0)

@@ -16,7 +16,7 @@ public class DeathZone : MonoBehaviour
         if (playerFell != null)
         {
             playerFell.UpdateScoreAfterFell();
-            if (playerFell._enemy._scorePlayer.victoryPoint == GameManager.instance.victoryPointCondition)
+            if (playerFell._enemy != null && playerFell._enemy._scorePlayer.victoryPoint == GameManager.instance.victoryPointCondition)
             {
                 GameManager.instance.DisplayEndgameResults();
             }
