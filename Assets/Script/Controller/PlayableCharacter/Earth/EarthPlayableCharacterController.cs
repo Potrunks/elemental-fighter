@@ -1,5 +1,5 @@
 ﻿using Assets.Script.Business;
-using Assets.Script.Data.Reference;
+using Assets.Script.Data;
 using Assets.Script.FiniteStateMachine;
 using System.Collections.Generic;
 using UnityEngine;

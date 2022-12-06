@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface IPlayerBusiness
+    public interface IPlayerBusiness
     {
         /// <summary>
         /// Create new Player in order to select character

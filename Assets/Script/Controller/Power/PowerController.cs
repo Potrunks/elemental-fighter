@@ -1,6 +1,4 @@
 using Assets.Script.Business;
-using Assets.Script.Business.Implementation;
-using Assets.Script.Business.Interface;
 using Assets.Script.Entities;
 using Assets.Script.FiniteStateMachine;
 using UnityEngine;
@@ -12,8 +10,7 @@ public class PowerController : MonoBehaviour
     public float _selfDestructTimer;
 
     [Header("Caster Parameter")]
-    public MovePlayer _caster;
-    public PlayableCharacterController _casterV2;
+    public PlayableCharacterController _caster;
 
     [Header("Component")]
     public Transform _spawnPoint;

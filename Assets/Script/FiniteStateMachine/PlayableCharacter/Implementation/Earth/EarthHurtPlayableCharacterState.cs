@@ -1,5 +1,4 @@
-﻿using Assets.Script.Data.Reference;
-using DG.Tweening;
+﻿using Assets.Script.Data;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -9,14 +8,18 @@ namespace Assets.Script.FiniteStateMachine
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
+            if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                if (playableCharacterController._currentHealth <= 0)
+                {
+                    return nextState = new EarthDiePlayableCharacterState();
+                }
+                return nextState = new EarthIdlePlayableCharacterState();
+            }
+
             if (playableCharacterController._isTouchingByAttack)
             {
                 return nextState = new EarthHurtPlayableCharacterState();
-            }
-
-            if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
-            {
-                return nextState = new EarthIdlePlayableCharacterState();
             }
 
             return nextState;

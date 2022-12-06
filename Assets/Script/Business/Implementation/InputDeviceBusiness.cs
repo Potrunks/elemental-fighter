@@ -1,12 +1,10 @@
-﻿using Assets.Script.Business.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class InputDeviceBusiness : IInputDeviceBusiness
+    public class InputDeviceBusiness : IInputDeviceBusiness
     {
         public bool CheckPlayerUsingDevice(InputAction.CallbackContext context, bool playerUsedDeviceBool)
         {

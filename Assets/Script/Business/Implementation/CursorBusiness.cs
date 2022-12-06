@@ -1,9 +1,8 @@
-﻿using Assets.Script.Business.Interface;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class CursorBusiness : ICursorBusiness
+    public class CursorBusiness : ICursorBusiness
     {
         public void SetAsLastSiblingAllCursor(GameObject[] cursorArray)
         {

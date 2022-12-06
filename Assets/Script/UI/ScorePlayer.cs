@@ -19,7 +19,7 @@ public class ScorePlayer : MonoBehaviour
         DisplayScore();
     }
 
-    private void DisplayScore()
+    public void DisplayScore()
     {
         textScore.text = "Player " + (playerIndex + 1) + " : " + victoryPoint;
     }

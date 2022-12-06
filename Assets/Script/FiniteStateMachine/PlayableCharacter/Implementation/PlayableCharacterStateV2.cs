@@ -1,4 +1,4 @@
-using Assets.Script.Data.Reference;
+using Assets.Script.Data;
 
 public abstract class PlayableCharacterStateV2 : IPlayableCharacterStateV2
 {

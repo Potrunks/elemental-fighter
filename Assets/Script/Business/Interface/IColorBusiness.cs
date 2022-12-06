@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface IColorBusiness
+    public interface IColorBusiness
     {
         /// <summary>
         /// Set the color text of cursor and token during selection character by player index

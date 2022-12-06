@@ -1,6 +1,4 @@
 ﻿using Assets.Script.Data;
-using Assets.Script.Data.ConstraintException;
-using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine

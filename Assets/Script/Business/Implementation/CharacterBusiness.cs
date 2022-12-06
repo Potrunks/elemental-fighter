@@ -1,6 +1,4 @@
-﻿using Assets.Script.Business.Interface;
-using Assets.Script.Data;
-using Assets.Script.Data.Reference;
+﻿using Assets.Script.Data;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -9,9 +7,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class CharacterBusiness : ICharacterBusiness
+    public class CharacterBusiness : ICharacterBusiness
     {
         private static readonly System.Random random = new System.Random();
 
@@ -144,7 +142,7 @@ namespace Assets.Script.Business.Implementation
                     }
                 }
                 enemy._currentHealth -= caster.playableCharacter.AttackForce;
-                enemy._lastTouchedBy = caster;
+                enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
             }
         }
@@ -158,7 +156,7 @@ namespace Assets.Script.Business.Implementation
                 foreach (Collider2D elementalCollider in elementalColliderListTouched)
                 {
                     PowerController elemental = elementalCollider.GetComponent<PowerController>();
-                    if (elemental != null && elemental._casterV2.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
+                    if (elemental != null && elemental._caster.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
                     {
                         elemental.TriggerSelfDestruct(selfDestructTimer);
                         elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);
@@ -176,6 +174,36 @@ namespace Assets.Script.Business.Implementation
             characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint.transform.position;
             characterToRespawn._currentHealth = characterToRespawn.playableCharacter.MaxHealth;
             characterToRespawn.TriggerInvincibility(3f);
+        }
+
+        public bool ResetCharacterAfterDeath(PlayableCharacterController characterDied)
+        {
+            Debug.Log("The player " + (characterDied._playerIndex + 1) + " just died... Reset character in progress...");
+            bool hasEnemyWon = UpdateCharacterScore(characterDied._enemy._scorePlayer);
+            if (hasEnemyWon)
+            {
+                GameManager.instance.DisplayEndgameResults();
+            }
+            else
+            {
+                RespawnPlayer(characterDied);
+            }
+            return hasEnemyWon;
+        }
+
+        public bool UpdateCharacterScore(ScorePlayer scorePlayerToUpdate, int pointWon = 1)
+        {
+            Debug.Log("The player " + (scorePlayerToUpdate.playerIndex + 1) + " win " + pointWon + " point(s)");
+            scorePlayerToUpdate.victoryPoint += pointWon;
+            scorePlayerToUpdate.DisplayScore();
+            if (scorePlayerToUpdate.victoryPoint == GameManager.instance.victoryPointCondition)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   powerType: 0
   powerLevel: 2
   powerSpeed: 7
-  powerDamage: 100
+  powerDamage: 333
   powerModel: {fileID: 7715265300492422884, guid: d44141a64337be74f89d3b9342a62b5f, type: 3}
   powerSound:
     name: 

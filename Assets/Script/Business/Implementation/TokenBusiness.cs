@@ -1,14 +1,8 @@
-﻿using Assets.Script.Business.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class TokenBusiness : ITokenBusiness
+    public class TokenBusiness : ITokenBusiness
     {
         public void FollowCursor(bool cursorHasToken, GameObject token, GameObject cursor)
         {

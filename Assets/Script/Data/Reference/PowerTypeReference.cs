@@ -1,4 +1,4 @@
-﻿namespace Assets.Script.Data.Reference
+﻿namespace Assets.Script.Data
 {
     public enum PowerTypeReference
     {

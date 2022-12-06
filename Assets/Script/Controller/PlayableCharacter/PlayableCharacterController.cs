@@ -1,8 +1,5 @@
 using Assets.Script.Business;
-using Assets.Script.Business.Implementation;
-using Assets.Script.Business.Interface;
 using Assets.Script.Data;
-using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +39,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     [Header("InGame Data")]
     public int _playerIndex;
-    public PlayableCharacterController _lastTouchedBy;
+    public PlayableCharacterController _enemy;
     public bool _isTouchingByAttack;
     public SpawnPlayer _spawnPlayerPoint;
     public ScorePlayer _scorePlayer;
@@ -90,6 +87,7 @@ public class PlayableCharacterController : MonoBehaviour
         _isInvincible = false;
         kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
         _currentHealth = playableCharacter.MaxHealth;
+        MultipleTargetCamFollow.instance.players.Add(transform);
 
         gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
         _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;

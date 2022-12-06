@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface ITokenBusiness
+    public interface ITokenBusiness
     {
         /// <summary>
         /// The token of the player follow the cursor if the bool is true

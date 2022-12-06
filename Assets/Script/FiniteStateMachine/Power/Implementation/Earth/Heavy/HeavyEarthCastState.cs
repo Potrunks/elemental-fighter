@@ -1,6 +1,4 @@
-﻿using Assets.Script.Controller;
-
-namespace Assets.Script.FiniteStateMachine
+﻿namespace Assets.Script.FiniteStateMachine
 {
     public class HeavyEarthCastState : PowerState
     {

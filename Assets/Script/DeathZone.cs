@@ -1,6 +1,4 @@
 using Assets.Script.Business;
-using Assets.Script.Business.Implementation;
-using Assets.Script.Business.Interface;
 using UnityEngine;
 
 public class DeathZone : MonoBehaviour
@@ -17,8 +15,8 @@ public class DeathZone : MonoBehaviour
         PlayableCharacterController playerFell = other.GetComponent<PlayableCharacterController>();
         if (playerFell != null)
         {
-            playerFell.UpdateScoreAfterDeath();
-            if (playerFell._lastTouchedBy._scorePlayer.victoryPoint == GameManager.instance.victoryPointCondition)
+            playerFell.UpdateScoreAfterFell();
+            if (playerFell._enemy != null && playerFell._enemy._scorePlayer.victoryPoint == GameManager.instance.victoryPointCondition)
             {
                 GameManager.instance.DisplayEndgameResults();
             }
