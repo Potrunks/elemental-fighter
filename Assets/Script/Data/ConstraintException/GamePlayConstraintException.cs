@@ -1,4 +1,4 @@
-﻿namespace Assets.Script.Data.ConstraintException
+﻿namespace Assets.Script.Data
 {
     public static class GamePlayConstraintException
     {

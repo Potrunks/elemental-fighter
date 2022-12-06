@@ -1,12 +1,10 @@
+using Assets.Script.Business;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections.Generic;
-using Assets.Script.Business.Interface;
-using Assets.Script.Business.Implementation;
-using UnityEngine.InputSystem;
-using System.Linq;
 
 public class PauseMenu : MonoBehaviour
 {

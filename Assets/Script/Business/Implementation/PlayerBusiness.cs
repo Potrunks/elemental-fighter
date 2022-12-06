@@ -1,14 +1,13 @@
-﻿using Assets.Script.Business.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class PlayerBusiness : IPlayerBusiness
+    public class PlayerBusiness : IPlayerBusiness
     {
         public Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice)
         {

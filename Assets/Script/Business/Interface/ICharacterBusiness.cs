@@ -1,8 +1,8 @@
-﻿using Assets.Script.Data.Reference;
+﻿using Assets.Script.Data;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
     public interface ICharacterBusiness
     {

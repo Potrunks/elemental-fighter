@@ -1,7 +1,5 @@
 ﻿using Assets.Script.FiniteStateMachine;
-using System.Linq;
 using UnityEngine;
-using static Pathfinding.Util.RetainedGizmos;
 
 namespace Assets.Script.Controller
 {
@@ -34,7 +32,7 @@ namespace Assets.Script.Controller
         #region Action
         public void OnThrowHeavyEarthElemental()
         {
-            _elementalBusiness.InflictedElementalDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, true, _casterV2, _powerEntity);
+            _elementalBusiness.InflictedElementalDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, true, _caster, _powerEntity);
         }
         #endregion
     }

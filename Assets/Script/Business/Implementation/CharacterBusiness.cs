@@ -1,6 +1,4 @@
-﻿using Assets.Script.Business.Interface;
-using Assets.Script.Data;
-using Assets.Script.Data.Reference;
+﻿using Assets.Script.Data;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -9,9 +7,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class CharacterBusiness : ICharacterBusiness
+    public class CharacterBusiness : ICharacterBusiness
     {
         private static readonly System.Random random = new System.Random();
 
@@ -158,7 +156,7 @@ namespace Assets.Script.Business.Implementation
                 foreach (Collider2D elementalCollider in elementalColliderListTouched)
                 {
                     PowerController elemental = elementalCollider.GetComponent<PowerController>();
-                    if (elemental != null && elemental._casterV2.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
+                    if (elemental != null && elemental._caster.Equals(pusher) && powerLevelToPushList.Contains(elemental._powerEntity.powerLevel))
                     {
                         elemental.TriggerSelfDestruct(selfDestructTimer);
                         elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);

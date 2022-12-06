@@ -1,5 +1,4 @@
-﻿using Assets.Script.Data.Reference;
-using DG.Tweening;
+﻿using Assets.Script.Data;
 
 namespace Assets.Script.FiniteStateMachine
 {

@@ -1,8 +1,7 @@
-using UnityEngine;
+using Assets.Script.Data;
 using Pathfinding;
 using System.Collections.Generic;
-using System;
-using Assets.Script.Data.Reference;
+using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {

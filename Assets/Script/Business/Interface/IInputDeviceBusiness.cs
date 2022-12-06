@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface IInputDeviceBusiness
+    public interface IInputDeviceBusiness
     {
         /// <summary>
         /// Get all GamePad and KeyBoard devices connected to the game

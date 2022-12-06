@@ -1,8 +1,7 @@
-﻿using Assets.Script.Controller;
-using Assets.Script.Entities;
+﻿using Assets.Script.Entities;
 using UnityEngine;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
     public interface IElementalBusiness
     {
@@ -10,16 +9,6 @@ namespace Assets.Script.Business.Interface
         /// Change the color of the elemental power depending on the index of the player.
         /// </summary>
         void SetElementalColorByPlayerIndex(GameObject elementalGameObject, int casterPlayerIndex);
-
-        /// <summary>
-        /// Allow to jump, from the ground, a earth elemental.
-        /// </summary>
-        void RockOutOfGround(PowerController rockPowerControllerInstantiated);
-
-        /// <summary>
-        /// Allow the player to cast an element.
-        /// </summary>
-        void PrepareCastElemental(PowerEntity powerToCast, GameObject spawnPoint, MovePlayer caster);
 
         /// <summary>
         /// Instantiate an elemental in the scene with an upper orientation.

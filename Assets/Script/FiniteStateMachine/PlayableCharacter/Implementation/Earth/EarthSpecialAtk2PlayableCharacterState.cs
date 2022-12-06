@@ -1,4 +1,4 @@
-﻿using Assets.Script.Data.Reference;
+﻿using Assets.Script.Data;
 
 namespace Assets.Script.FiniteStateMachine
 {

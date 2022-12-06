@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface ICursorBusiness
+    public interface ICursorBusiness
     {
         void SetAsLastSiblingAllCursor(GameObject[] cursorArray);
     }

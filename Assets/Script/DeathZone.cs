@@ -1,6 +1,4 @@
 using Assets.Script.Business;
-using Assets.Script.Business.Implementation;
-using Assets.Script.Business.Interface;
 using UnityEngine;
 
 public class DeathZone : MonoBehaviour

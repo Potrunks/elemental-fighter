@@ -1,14 +1,9 @@
-﻿using Assets.Script.Business.Interface;
-using Assets.Script.Controller;
-using Assets.Script.Data;
-using Assets.Script.Data.Reference;
+﻿using Assets.Script.Data;
 using Assets.Script.Entities;
-using System.Data;
 using System.Linq;
 using UnityEngine;
-using static Pathfinding.Util.RetainedGizmos;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
     public class ElementalBusiness : IElementalBusiness
     {
@@ -36,57 +31,14 @@ namespace Assets.Script.Business.Implementation
                 spawnPoint.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
 
-            elementalToCast.GetComponent<PowerController>()._casterV2 = caster;
+            elementalToCast.GetComponent<PowerController>()._caster = caster;
 
             return GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        }
-
-        public void PrepareCastElemental(PowerEntity powerToCast, GameObject spawnPoint, MovePlayer caster)
-        {
-            if (powerToCast == null)
-            {
-                throw new ConstraintException(ElementalConstraintException.NoPowerToCast);
-            }
-
-            if (spawnPoint == null)
-            {
-                throw new ConstraintException(ElementalConstraintException.NoSpawnPoint);
-            }
-
-            spawnPoint.transform.rotation = SetAngleOfSpawnPoint(spawnPoint.transform.rotation, powerToCast.powerLevel, powerToCast.powerType);
-
-            PowerController powerController = powerToCast.powerModel.GetComponent<PowerController>();
-            powerController._caster = caster;
-            powerController._spawnPoint = spawnPoint.transform;
         }
 
         public void PushMediumElemental(PlayableCharacterController pusher)
         {
             throw new System.NotImplementedException();
-        }
-
-        public void RockOutOfGround(PowerController rockPowerControllerInstantiated)
-        {
-            MovePlayer caster = rockPowerControllerInstantiated._caster;
-            PowerEntity rockEntity = rockPowerControllerInstantiated._powerEntity;
-            Rigidbody2D rigidbodyOfRock = rockPowerControllerInstantiated._rigidbody;
-            Transform spawnPoint = rockPowerControllerInstantiated._spawnPoint;
-            int playerIndex = caster.playerIndex;
-            AudioSource audioSource = rockEntity.powerSound.audioSource;
-
-            if (rockEntity.powerType != PowerTypeReference.Earth)
-            {
-                throw new ConstraintException(ElementalConstraintException.ElementalTypeError);
-            }
-
-            SetElementalColorByPlayerIndex(rockEntity.powerModel, playerIndex);
-            rigidbodyOfRock.AddForce(spawnPoint.right * rockEntity.powerSpeed, ForceMode2D.Impulse);
-            if (audioSource != null)
-            {
-                audioSource.Play();
-            }
-
-            Debug.Log("The player " + playerIndex + " take out of the ground a earth elemental");
         }
 
         public void SetElementalColorByPlayerIndex(GameObject elementalGameObject, int casterPlayerIndex)
@@ -123,7 +75,7 @@ namespace Assets.Script.Business.Implementation
                 spawnPoint.transform.rotation = Quaternion.Euler(spawnPoint.transform.rotation.x, spawnPoint.transform.rotation.y, 80);
             }
 
-            elementalToCast.GetComponent<PowerController>()._casterV2 = caster;
+            elementalToCast.GetComponent<PowerController>()._caster = caster;
 
             GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
         }
