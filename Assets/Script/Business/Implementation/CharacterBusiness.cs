@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Assets.Script.Business
 {
@@ -130,15 +131,7 @@ namespace Assets.Script.Business
         {
             if (!enemy._isInvincible)
             {
-                enemy.transform.DOShakePosition(0.1f, strength: 0.2f)
-                               .SetEase(Ease.OutExpo)
-                               .OnComplete(() =>
-                               {
-                                   if (isPushingAtk)
-                                   {
-                                        enemy.playableCharacterRigidbody.AddForce((caster.isLeftFlip ? Vector2.left : Vector2.right) * caster.playableCharacter.AttackForce / 8, ForceMode2D.Impulse);
-                                   }
-                               });
+                RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster.isLeftFlip, caster.playableCharacter.AttackForce);
 
                 enemy._currentHealth -= caster.playableCharacter.AttackForce;
                 enemy._enemy = caster;
@@ -203,6 +196,19 @@ namespace Assets.Script.Business
             {
                 return false;
             }
+        }
+
+        public void RumbleCharacterAfterAtk(PlayableCharacterController characterToRumble, float rumbleDuration, float rumbleStrength, Ease easeStyle, bool isPushingAtk, bool casterIsFlipLeft, int atkPower)
+        {
+            characterToRumble.transform.DOShakePosition(rumbleDuration, strength: rumbleStrength)
+                               .SetEase(easeStyle)
+                               .OnComplete(() =>
+                               {
+                                   if (isPushingAtk)
+                                   {
+                                       characterToRumble.playableCharacterRigidbody.AddForce((casterIsFlipLeft ? Vector2.left : Vector2.right) * atkPower / 8, ForceMode2D.Impulse);
+                                   }
+                               });
         }
     }
 }

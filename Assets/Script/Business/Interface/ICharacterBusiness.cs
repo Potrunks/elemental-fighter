@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -80,5 +81,7 @@ namespace Assets.Script.Business
         /// </summary>
         /// <returns>Return TRUE if the player win the game.</returns>
         bool UpdateCharacterScore(ScorePlayer scorePlayerToUpdate, int pointWon = 1);
+
+        void RumbleCharacterAfterAtk(PlayableCharacterController characterToRumble, float rumbleDuration, float rumbleStrength, Ease easeStyle, bool isPushingAtk, bool casterIsFlipLeft, int atkPower);
     }
 }
