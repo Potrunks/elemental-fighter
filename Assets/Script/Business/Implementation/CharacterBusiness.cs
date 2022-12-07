@@ -130,17 +130,16 @@ namespace Assets.Script.Business
         {
             if (!enemy._isInvincible)
             {
-                if (isPushingAtk)
-                {
-                    if (caster.isLeftFlip)
-                    {
-                        enemy.playableCharacterRigidbody.AddForce(Vector2.left * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
-                    }
-                    else
-                    {
-                        enemy.playableCharacterRigidbody.AddForce(Vector2.right * caster.playableCharacter.AttackForce / 16, ForceMode2D.Impulse);
-                    }
-                }
+                enemy.transform.DOShakePosition(0.1f, strength: 0.2f)
+                               .SetEase(Ease.OutExpo)
+                               .OnComplete(() =>
+                               {
+                                   if (isPushingAtk)
+                                   {
+                                        enemy.playableCharacterRigidbody.AddForce((caster.isLeftFlip ? Vector2.left : Vector2.right) * caster.playableCharacter.AttackForce / 8, ForceMode2D.Impulse);
+                                   }
+                               });
+
                 enemy._currentHealth -= caster.playableCharacter.AttackForce;
                 enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
