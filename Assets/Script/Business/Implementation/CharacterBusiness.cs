@@ -132,7 +132,6 @@ namespace Assets.Script.Business
             if (!enemy._isInvincible)
             {
                 RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster.isLeftFlip, caster.playableCharacter.AttackForce);
-
                 enemy._currentHealth -= caster.playableCharacter.AttackForce;
                 enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
