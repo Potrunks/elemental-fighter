@@ -1,5 +1,6 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Entities;
+using DG.Tweening;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace Assets.Script.Business
 {
     public class ElementalBusiness : IElementalBusiness
     {
+        private ICharacterBusiness _characterBusiness = new CharacterBusiness();
+
         public void InflictedElementalDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity)
         {
             Collider2D[] playerColliderTouchedArray = Physics2D.OverlapCircleAll(hitBoxAtk.transform.position, hitBoxAtkRadius, LayerMask.GetMask(new string[] { "Player" }));
@@ -139,17 +142,7 @@ namespace Assets.Script.Business
         {
             if (!enemy._isInvincible)
             {
-                if (isPushingAtk)
-                {
-                    if (caster.isLeftFlip)
-                    {
-                        enemy.playableCharacterRigidbody.AddForce(Vector2.left * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
-                    }
-                    else
-                    {
-                        enemy.playableCharacterRigidbody.AddForce(Vector2.right * powerEntity.powerDamage / 16, ForceMode2D.Impulse);
-                    }
-                }
+                _characterBusiness.RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster.isLeftFlip, powerEntity.powerDamage);
                 enemy._currentHealth -= powerEntity.powerDamage;
                 enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
