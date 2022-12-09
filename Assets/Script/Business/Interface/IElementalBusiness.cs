@@ -38,6 +38,6 @@ namespace Assets.Script.Business
         /// <param name="powerControllerCasted">PowerController of the elemental power casted</param>
         /// <param name="isTriggerAfterCollision">The collider of the elemental power casted is trigger or not after collision</param>
         /// <param name="isPushingAtk">The elemental power can push the enemy touched by the attack. False by default</param>
-        void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool isPushingAtk = false);
+        void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool destructPowerAfterNoEnemyCollision = true, bool isPushingAtk = false);
     }
 }

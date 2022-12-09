@@ -104,7 +104,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 49e5fa1f421c79c489aa94c85fe113ec, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -144,15 +144,12 @@ MonoBehaviour:
   _powerEntity: {fileID: 11400000, guid: ced7a176f338e2044bd95aa6ee77b301, type: 2}
   _selfDestructTimer: 0
   _caster: {fileID: 0}
-  _casterV2: {fileID: 0}
   _spawnPoint: {fileID: 0}
   _rigidbody: {fileID: 0}
   _animator: {fileID: 0}
   _collider: {fileID: 0}
   _willBeDestroyed: 0
   _destroyLimitTimer: 0
-  _hitBoxAtk: {fileID: 0}
-  _hitBoxAtkRadius: 0.45
 --- !u!61 &5597880848873010906
 BoxCollider2D:
   m_ObjectHideFlags: 0

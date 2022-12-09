@@ -11,6 +11,8 @@ namespace Assets.Script.Controller
         [Header("InGame Data Supplementary")]
         [SerializeField]
         private GameObject _wallRockAlreadyInTheScene;
+        [SerializeField]
+        private GameObject _groundLineAlreadyInTheScene;
 
         #region MonoBehaviour Method
         private void Start()
@@ -35,8 +37,12 @@ namespace Assets.Script.Controller
 
         public void OnCastHeavyAtk()
         {
+            if (_groundLineAlreadyInTheScene != null)
+            {
+                _groundLineAlreadyInTheScene.GetComponent<PowerController>().TriggerSelfDestruct(0.5f);
+            }
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Heavy, out GameObject heavyElementalToCast);
-            elementalBusiness.InstantiateStaticElemental(heavyElementalToCast, gameObjectElementalSpawnPoint, this);
+            _groundLineAlreadyInTheScene = elementalBusiness.InstantiateStaticElemental(heavyElementalToCast, gameObjectElementalSpawnPoint, this);
             characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
 
@@ -44,7 +50,7 @@ namespace Assets.Script.Controller
         {
             if (_wallRockAlreadyInTheScene != null)
             {
-                _wallRockAlreadyInTheScene.GetComponent<PowerController>().TriggerSelfDestruct(1f);
+                _wallRockAlreadyInTheScene.GetComponent<PowerController>().TriggerSelfDestruct(0.5f);
             }
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Special, out GameObject specialElementalToCast);
             _wallRockAlreadyInTheScene = elementalBusiness.InstantiateStaticElemental(specialElementalToCast, gameObjectElementalSpawnPoint, this);
