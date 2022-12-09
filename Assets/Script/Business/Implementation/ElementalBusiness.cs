@@ -117,13 +117,12 @@ namespace Assets.Script.Business
             }
         }
 
-        public void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool isPushingAtk = false)
+        public void InflictedDamageAfterCollision(Collider2D colliderTouched, PlayableCharacterController caster, PowerController powerControllerCasted, bool isTriggerAfterCollision, bool destructPowerAfterNoEnemyCollision = true, bool isPushingAtk = false)
         {
             if (!powerControllerCasted._willBeDestroyed)
             {
                 powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
-                PlayableCharacterController enemy = colliderTouched.GetComponent<PlayableCharacterController>();
-                if (enemy != null)
+                if (colliderTouched.TryGetComponent<PlayableCharacterController>(out PlayableCharacterController enemy))
                 {
                     if (enemy != caster)
                     {
@@ -133,7 +132,7 @@ namespace Assets.Script.Business
                 }
                 else
                 {
-                    powerControllerCasted._willBeDestroyed = true;
+                    powerControllerCasted._willBeDestroyed = destructPowerAfterNoEnemyCollision;
                 }
             }
         }
