@@ -102,6 +102,7 @@ public class PlayableCharacterController : MonoBehaviour
             _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
         }
         _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
     }
     #endregion
 

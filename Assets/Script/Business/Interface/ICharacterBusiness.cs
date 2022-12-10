@@ -21,13 +21,6 @@ namespace Assets.Script.Business
         /// <param name="characterUnderPlayerCursor">Character under the cursor to display in player slot</param>
         void ShowCharacterInPlayerSlot(GameObject playerSlot, GameObject characterUnderPlayerCursor);
 
-        /// <summary>
-        /// Change color of character sprite selected by the player
-        /// </summary>
-        /// <param name="playerIndex">Index of the player</param>
-        /// <param name="spriteRenderer">SpriteRenderer of the character selected by the player</param>
-        void SetSpriteRendererColorByIndexPlayer(int playerIndex, SpriteRenderer spriteRenderer);
-
         GameObject GetRandomCharacter();
 
         /// <summary>

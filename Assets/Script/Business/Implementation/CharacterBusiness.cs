@@ -57,28 +57,6 @@ namespace Assets.Script.Business
                                       smoothTime);
         }
 
-        public void SetSpriteRendererColorByIndexPlayer(int playerIndex, SpriteRenderer spriteRenderer)
-        {
-            switch (playerIndex)
-            {
-                case 1:
-                    spriteRenderer.material.color = new Color32(133, 136, 253, 255);
-                    break;
-
-                case 2:
-                    spriteRenderer.material.color = new Color32(141, 253, 134, 255);
-                    break;
-
-                case 3:
-                    spriteRenderer.material.color = new Color32(245, 253, 133, 255);
-                    break;
-
-                default:
-                    spriteRenderer.material.color = Color.white;
-                    break;
-            }
-        }
-
         public void ShowCharacterInPlayerSlot(GameObject playerSlot, GameObject characterUnderPlayerCursor)
         {
             Transform playerSlotImageTransform = playerSlot.transform.Find("Image");
