@@ -6,11 +6,6 @@ namespace Assets.Script.Business
     public interface IElementalBusiness
     {
         /// <summary>
-        /// Change the color of the elemental power depending on the index of the player.
-        /// </summary>
-        void SetElementalColorByPlayerIndex(GameObject elementalGameObject, int casterPlayerIndex);
-
-        /// <summary>
         /// Instantiate an elemental in the scene with an upper orientation.
         /// </summary>
         void InstantiateElementalUpperOrientation(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster);

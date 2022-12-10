@@ -17,6 +17,8 @@ public class PowerController : MonoBehaviour
     public Rigidbody2D _rigidbody;
     public Animator _animator;
     public Collider2D _collider;
+    [SerializeField]
+    private SpriteRenderer _spriteRenderer;
 
     [Header("InGame Value")]
     public bool _willBeDestroyed;
@@ -37,9 +39,11 @@ public class PowerController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _willBeDestroyed = false;
         _destroyLimitTimer = Time.time + _selfDestructTimer;
+        _spriteRenderer.ChangeColorByIndexPlayer(_caster._playerIndex);
     }
 
     private void FixedUpdate()
