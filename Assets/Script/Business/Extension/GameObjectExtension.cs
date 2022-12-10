@@ -9,7 +9,12 @@ namespace Assets.Script.Business
         /// </summary>
         public static bool isTouchingLayer(this GameObject gameObject, float circleRadius, LayerMask layer)
         {
-            return Physics2D.OverlapCircle(gameObject.transform.position, circleRadius, layer);
+            if (Physics2D.OverlapCircle(gameObject.transform.position, circleRadius, layer))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7228407284451920481}
   - component: {fileID: 2493842955487208671}
   - component: {fileID: 5597880848873010906}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: WallRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}

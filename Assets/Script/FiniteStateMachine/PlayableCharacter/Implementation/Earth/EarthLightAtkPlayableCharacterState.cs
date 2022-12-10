@@ -10,12 +10,12 @@ namespace Assets.Script.FiniteStateMachine
         {
             if (playableCharacterController._isTouchingByAttack)
             {
-                return new EarthHurtPlayableCharacterState();
+                return nextState = new EarthHurtPlayableCharacterState();
             }
 
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
-                return new EarthLightAtkTransitionPlayableCharacterState();
+                return nextState = new EarthLightAtkTransitionPlayableCharacterState();
             }
 
             return nextState;
