@@ -321,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 12352
   groundCheckRadius: 0.2
   isGrounding: 0
   groundCheck: {fileID: 4152062392815420814}
@@ -338,13 +338,14 @@ MonoBehaviour:
   _hitBoxAtk: {fileID: 4152062393142088505}
   _hitBoxAtkRadius: 0.36
   _playerIndex: 0
-  _lastTouchedBy: {fileID: 0}
+  _enemy: {fileID: 0}
   _isTouchingByAttack: 0
   _spawnPlayerPoint: {fileID: 0}
   _scorePlayer: {fileID: 0}
   _isInvincible: 0
   _invincibleLimitTimer: 0
   _wallRockAlreadyInTheScene: {fileID: 0}
+  _groundLineAlreadyInTheScene: {fileID: 0}
 --- !u!114 &1766690604846548335
 MonoBehaviour:
   m_ObjectHideFlags: 0
