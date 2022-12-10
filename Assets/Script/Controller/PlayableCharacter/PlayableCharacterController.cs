@@ -23,6 +23,12 @@ public class PlayableCharacterController : MonoBehaviour
     public Animator playableCharacterAnimator;
     public SpriteRenderer _spriteRenderer;
 
+    [Header("Blood effect component")]
+    [SerializeField]
+    private ParticleSystem _bloodEffectForDamage;
+    [SerializeField]
+    private ParticleSystem _bloodEffectForCurrentHealth;
+
     [Header("Move Parameter")]
     public Vector2 inputMoveValue;
     public Rigidbody2D playableCharacterRigidbody;
@@ -80,6 +86,17 @@ public class PlayableCharacterController : MonoBehaviour
         elementalBusiness = new ElementalBusiness();
         _physicsBusiness = new PhysicsBusiness();
 
+        playableCharacterAnimator = gameObject.GetComponent<Animator>();
+        playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
+        if (_spawnPlayerPoint != null)
+        {
+            _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
+        }
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
+        _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
+
         isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
         playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
         isLeftFlip = false;
@@ -91,17 +108,6 @@ public class PlayableCharacterController : MonoBehaviour
         {
             MultipleTargetCamFollow.instance.players.Add(transform);
         }
-
-        gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
-        _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
-        playableCharacterAnimator = gameObject.GetComponent<Animator>();
-        playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
-        if (_spawnPlayerPoint != null )
-        {
-            _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
-        }
-        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
     }
     #endregion
