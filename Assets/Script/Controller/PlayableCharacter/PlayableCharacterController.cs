@@ -24,8 +24,7 @@ public class PlayableCharacterController : MonoBehaviour
     public SpriteRenderer _spriteRenderer;
 
     [Header("Blood effect component")]
-    [SerializeField]
-    private ParticleSystem _bloodEffectForDamage;
+    public ParticleSystem _bloodEffectForDamage;
     [SerializeField]
     private ParticleSystem _bloodEffectForCurrentHealth;
 

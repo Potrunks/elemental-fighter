@@ -5,10 +5,18 @@ namespace Assets.Script.FiniteStateMachine
     public class EarthHurtPlayableCharacterState : PlayableCharacterStateV2
     {
         IPlayableCharacterStateV2 nextState;
+        private float? _normalizedTimeOfAnimation = null;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            _normalizedTimeOfAnimation = playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if (_normalizedTimeOfAnimation == 0f)
+            {
+                playableCharacterController._bloodEffectForDamage.Play();
+            }
+
+            if (_normalizedTimeOfAnimation >= 1f)
             {
                 if (playableCharacterController._currentHealth <= 0)
                 {
