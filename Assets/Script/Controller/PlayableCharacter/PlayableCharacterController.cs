@@ -1,6 +1,10 @@
 using Assets.Script.Business;
+using Assets.Script.Business.Extension;
 using Assets.Script.Data;
+using Assets.Script.Data.ConstraintException;
+using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,6 +31,7 @@ public class PlayableCharacterController : MonoBehaviour
     public ParticleSystem _bloodEffectForDamage;
     [SerializeField]
     private ParticleSystem _bloodEffectForCurrentHealth;
+    private float? _nextBleedingTime;
 
     [Header("Move Parameter")]
     public Vector2 inputMoveValue;
@@ -70,6 +75,40 @@ public class PlayableCharacterController : MonoBehaviour
         characterBusiness.CheckFlipCharacterModel(this);
         gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, isLeftFlip, isDeviceUsed);
         _isInvincible = this.CheckInvincibleEndTime();
+
+        /* BLEEDING LOGIC
+         * 
+         * Check if character need to bleed
+         * if yes, bleed effect and calculate next time to bleed
+         */
+
+        if (_nextBleedingTime == null && _currentHealth <= playableCharacter.MaxHealth.PercentageOf(GamePlayValueReference.START_PERCENTAGE_BLEEDING))
+        {
+            // connaitre le pourcentage de vie restante
+            float percentageCurrentHealth = _currentHealth.ToPercentage(playableCharacter.MaxHealth);
+            // set le next time bleeding en consequence
+            switch (percentageCurrentHealth)
+            {
+                case >= 60f:
+                    _nextBleedingTime = Time.time + 4f;
+                    break;
+                case >= 40f:
+                    _nextBleedingTime = Time.time + 3f;
+                    break;
+                case >= 20f:
+                    _nextBleedingTime = Time.time + 2f;
+                    break;
+                case > 0f:
+                    _nextBleedingTime = Time.time + 1f;
+                    break;
+            }
+        }
+
+        if (_nextBleedingTime != null && Time.time > _nextBleedingTime)
+        {
+            _bloodEffectForCurrentHealth.Play();
+            _nextBleedingTime = null;
+        }
     }
 
     private void Update()
@@ -108,6 +147,7 @@ public class PlayableCharacterController : MonoBehaviour
             MultipleTargetCamFollow.instance.players.Add(transform);
         }
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
+        _nextBleedingTime = null;
     }
     #endregion
 

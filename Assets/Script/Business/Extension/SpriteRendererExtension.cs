@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data.ConstraintException;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.Business
@@ -26,7 +27,7 @@ namespace Assets.Script.Business
                     break;
 
                 default:
-                    throw new IndexPlayerConstraintException(indexPlayer);
+                    throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.PLAYER_INDEX, indexPlayer);
             }
         }
     }
