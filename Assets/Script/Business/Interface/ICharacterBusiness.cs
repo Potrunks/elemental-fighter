@@ -78,5 +78,10 @@ namespace Assets.Script.Business
         /// Rumble the character transform of the player hitted. Possibility to push the character touched by the attack.
         /// </summary>
         void RumbleCharacterAfterAtk(PlayableCharacterController characterToRumble, float rumbleDuration, float rumbleStrength, Ease easeStyle, bool isPushingAtk, bool casterIsFlipLeft, int atkPower);
+
+        /// <summary>
+        /// Play the bleeding effect of the character depending of the amount of damage taken.
+        /// </summary>
+        float? DoBleedingEffect(int currentHealth, int maxHealth, float? nextBleedingTime, ParticleSystem bleedingEffectParticle);
     }
 }

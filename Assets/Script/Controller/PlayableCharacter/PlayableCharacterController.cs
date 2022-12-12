@@ -75,40 +75,7 @@ public class PlayableCharacterController : MonoBehaviour
         characterBusiness.CheckFlipCharacterModel(this);
         gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, isLeftFlip, isDeviceUsed);
         _isInvincible = this.CheckInvincibleEndTime();
-
-        /* BLEEDING LOGIC
-         * 
-         * Check if character need to bleed
-         * if yes, bleed effect and calculate next time to bleed
-         */
-
-        if (_nextBleedingTime == null && _currentHealth <= playableCharacter.MaxHealth.PercentageOf(GamePlayValueReference.START_PERCENTAGE_BLEEDING))
-        {
-            // connaitre le pourcentage de vie restante
-            float percentageCurrentHealth = _currentHealth.ToPercentage(playableCharacter.MaxHealth);
-            // set le next time bleeding en consequence
-            switch (percentageCurrentHealth)
-            {
-                case >= 60f:
-                    _nextBleedingTime = Time.time + 4f;
-                    break;
-                case >= 40f:
-                    _nextBleedingTime = Time.time + 3f;
-                    break;
-                case >= 20f:
-                    _nextBleedingTime = Time.time + 2f;
-                    break;
-                case > 0f:
-                    _nextBleedingTime = Time.time + 1f;
-                    break;
-            }
-        }
-
-        if (_nextBleedingTime != null && Time.time > _nextBleedingTime)
-        {
-            _bloodEffectForCurrentHealth.Play();
-            _nextBleedingTime = null;
-        }
+        _nextBleedingTime = characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _nextBleedingTime, _bloodEffectForCurrentHealth);
     }
 
     private void Update()

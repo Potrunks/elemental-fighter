@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Business.Extension;
+using Assets.Script.Data;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -185,6 +186,51 @@ namespace Assets.Script.Business
                                        characterToRumble.playableCharacterRigidbody.AddForce((casterIsFlipLeft ? Vector2.left : Vector2.right) * atkPower / 8, ForceMode2D.Impulse);
                                    }
                                });
+        }
+
+        public float? DoBleedingEffect(int currentHealth, int maxHealth, float? nextBleedingTime, ParticleSystem bleedingEffectParticle)
+        {
+            if (nextBleedingTime == null && currentHealth <= maxHealth.PercentageOf(GamePlayValueReference.START_PERCENTAGE_BLEEDING))
+            {
+                return PrepareNextBleedingTime(currentHealth, maxHealth, nextBleedingTime);
+            }
+
+            if (nextBleedingTime != null && Time.time > nextBleedingTime)
+            {
+                return PlayBleedingEffect(bleedingEffectParticle);
+            }
+
+            return nextBleedingTime;
+        }
+
+        private float? PrepareNextBleedingTime(int currentHealth, int maxHealth, float? nextBleedingTime)
+        {
+            float percentageCurrentHealth = currentHealth.ToPercentage(maxHealth);
+
+            switch (percentageCurrentHealth)
+            {
+                case >= 60f:
+                    nextBleedingTime = Time.time + 4f;
+                    break;
+                case >= 40f:
+                    nextBleedingTime = Time.time + 3f;
+                    break;
+                case >= 20f:
+                    nextBleedingTime = Time.time + 2f;
+                    break;
+                case > 0f:
+                    nextBleedingTime = Time.time + 1f;
+                    break;
+            }
+
+            return nextBleedingTime;
+        }
+
+        private float? PlayBleedingEffect(ParticleSystem bleedingEffectParticle)
+        {
+            bleedingEffectParticle.Play();
+
+            return null;
         }
     }
 }
