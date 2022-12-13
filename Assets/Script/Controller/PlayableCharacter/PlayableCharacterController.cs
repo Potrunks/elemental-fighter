@@ -29,8 +29,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     [Header("Blood effect component")]
     public ParticleSystem _bloodEffectForDamage;
-    [SerializeField]
-    private ParticleSystem _bloodEffectForCurrentHealth;
+    public ParticleSystem _bloodEffectForCurrentHealth;
     private float? _nextBleedingTime;
 
     [Header("Move Parameter")]
