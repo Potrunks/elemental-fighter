@@ -1,6 +1,10 @@
 using Assets.Script.Business;
+using Assets.Script.Business.Extension;
 using Assets.Script.Data;
+using Assets.Script.Data.ConstraintException;
+using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,6 +26,11 @@ public class PlayableCharacterController : MonoBehaviour
     [Header("Model Component")]
     public Animator playableCharacterAnimator;
     public SpriteRenderer _spriteRenderer;
+
+    [Header("Blood effect component")]
+    public ParticleSystem _bloodEffectForDamage;
+    public ParticleSystem _bloodEffectForCurrentHealth;
+    private float? _nextBleedingTime;
 
     [Header("Move Parameter")]
     public Vector2 inputMoveValue;
@@ -65,6 +74,7 @@ public class PlayableCharacterController : MonoBehaviour
         characterBusiness.CheckFlipCharacterModel(this);
         gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, isLeftFlip, isDeviceUsed);
         _isInvincible = this.CheckInvincibleEndTime();
+        _nextBleedingTime = characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _nextBleedingTime, _bloodEffectForCurrentHealth);
     }
 
     private void Update()
@@ -80,6 +90,17 @@ public class PlayableCharacterController : MonoBehaviour
         elementalBusiness = new ElementalBusiness();
         _physicsBusiness = new PhysicsBusiness();
 
+        playableCharacterAnimator = gameObject.GetComponent<Animator>();
+        playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
+        _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
+        if (_spawnPlayerPoint != null)
+        {
+            _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
+        }
+        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
+        _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
+
         isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
         playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
         isLeftFlip = false;
@@ -91,18 +112,8 @@ public class PlayableCharacterController : MonoBehaviour
         {
             MultipleTargetCamFollow.instance.players.Add(transform);
         }
-
-        gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
-        _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
-        playableCharacterAnimator = gameObject.GetComponent<Animator>();
-        playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
-        _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
-        if (_spawnPlayerPoint != null )
-        {
-            _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
-        }
-        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
+        _nextBleedingTime = null;
     }
     #endregion
 
