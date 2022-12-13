@@ -27,16 +27,16 @@ namespace Assets.Script.Business
             if (controller.isDeviceUsed)
             {
                 if (controller.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold
-                    && !controller.isLeftFlip)
+                    && !controller._isLeftFlip)
                 {
                     controller.transform.Rotate(0f, 180f, 0f);
-                    controller.isLeftFlip = true;
+                    controller._isLeftFlip = true;
                 }
                 if (controller.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
-                    && controller.isLeftFlip)
+                    && controller._isLeftFlip)
                 {
                     controller.transform.Rotate(0f, 180f, 0f);
-                    controller.isLeftFlip = false;
+                    controller._isLeftFlip = false;
                 }
             }
         }
@@ -109,7 +109,7 @@ namespace Assets.Script.Business
         {
             if (!enemy._isInvincible)
             {
-                RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster.isLeftFlip, caster.playableCharacter.AttackForce);
+                RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster._isLeftFlip, caster.playableCharacter.AttackForce);
                 enemy._currentHealth -= caster.playableCharacter.AttackForce;
                 enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;

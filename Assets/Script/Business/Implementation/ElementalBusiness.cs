@@ -25,7 +25,7 @@ namespace Assets.Script.Business
 
         public GameObject InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
         {
-            if (!caster.isLeftFlip)
+            if (!caster._isLeftFlip)
             {
                 spawnPoint.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
@@ -46,7 +46,7 @@ namespace Assets.Script.Business
 
         public void InstantiateElementalUpperOrientation(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
         {
-            if (caster.isLeftFlip)
+            if (caster._isLeftFlip)
             {
                 spawnPoint.transform.rotation = Quaternion.Euler(spawnPoint.transform.rotation.x, spawnPoint.transform.rotation.y, 100);
             }
@@ -118,7 +118,7 @@ namespace Assets.Script.Business
         {
             if (!enemy._isInvincible)
             {
-                _characterBusiness.RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster.isLeftFlip, powerEntity.powerDamage);
+                _characterBusiness.RumbleCharacterAfterAtk(enemy, 0.1f, 0.2f, Ease.OutExpo, isPushingAtk, caster._isLeftFlip, powerEntity.powerDamage);
                 enemy._currentHealth -= powerEntity.powerDamage;
                 enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
