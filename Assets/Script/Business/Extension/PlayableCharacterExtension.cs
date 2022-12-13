@@ -56,5 +56,13 @@ namespace Assets.Script.Business
                 characterToUpdateScore._enemy._scorePlayer.UpdateScore();
             }
         }
+
+        /// <summary>
+        /// Return true if the character is flip left.
+        /// </summary>
+        public static bool IsFlipLeft(this PlayableCharacterController character)
+        {
+            return character.transform.rotation.y == - 1 ? true : false;
+        }
     }
 }

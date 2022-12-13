@@ -37,7 +37,7 @@ public class PlayableCharacterController : MonoBehaviour
     public Rigidbody2D playableCharacterRigidbody;
     public float playableCharacterMoveSpeed;
     public bool isDeviceUsed;
-    public bool isLeftFlip;
+    public bool _isLeftFlip;
 
     [Header("Elemental Spawn")]
     public GameObject gameObjectElementalSpawnPoint;
@@ -72,7 +72,7 @@ public class PlayableCharacterController : MonoBehaviour
         isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
         playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
         characterBusiness.CheckFlipCharacterModel(this);
-        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, isLeftFlip, isDeviceUsed);
+        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed);
         _isInvincible = this.CheckInvincibleEndTime();
         _nextBleedingTime = characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _nextBleedingTime, _bloodEffectForCurrentHealth);
     }
@@ -103,7 +103,7 @@ public class PlayableCharacterController : MonoBehaviour
 
         isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
         playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
-        isLeftFlip = false;
+        _isLeftFlip = this.IsFlipLeft();
         _isTouchingByAttack = false;
         _isInvincible = false;
         kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
