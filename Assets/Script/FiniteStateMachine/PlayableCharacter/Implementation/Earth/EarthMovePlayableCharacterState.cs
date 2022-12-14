@@ -34,17 +34,6 @@ namespace Assets.Script.FiniteStateMachine
             playableCharacterController
                 .playableCharacterAnimator
                 .Play("Run");
-
-            if (playableCharacterController.playableCharacter.SoundEffectList.Any())
-            {
-                soundEffect = playableCharacterController
-                .playableCharacter
-                .SoundEffectList
-                .First(sound => sound.name == "MoveForward")
-                .audioSource;
-
-                soundEffect.Play();
-            }
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

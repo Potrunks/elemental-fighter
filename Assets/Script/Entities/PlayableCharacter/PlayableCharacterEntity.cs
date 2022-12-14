@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Script.Entities.Audio;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.Entities
@@ -16,7 +17,7 @@ namespace Assets.Script.Entities
         public float JumpForce { get; private set; }
 
         [field: SerializeField]
-        public List<Sound> SoundEffectList { get; private set; }
+        public List<SoundEffect> SoundEffectList { get; private set; }
 
         [field: SerializeField]
         public List<PowerEntity> PowerEntityList { get; private set; }
