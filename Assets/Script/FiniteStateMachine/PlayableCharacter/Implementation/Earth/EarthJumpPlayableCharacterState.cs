@@ -30,8 +30,7 @@ namespace Assets.Script.FiniteStateMachine
 
             playableCharacterController.playableCharacterAnimator.Play("Jump");
 
-            List<AudioSource> audioSourceList = playableCharacterController._soundEffectListByType != null ? playableCharacterController._soundEffectListByType[SoundEffectType.JUMPING] : null;
-            playableCharacterController._audioBusiness.PlayRandomAudioSource(audioSourceList);
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.JUMPING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

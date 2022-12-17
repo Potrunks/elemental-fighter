@@ -39,7 +39,7 @@ namespace Assets.Script.Business.Implementation
             return audioSourceListByType;
         }
 
-        public void PlayRandomAudioSource(List<AudioSource> audioSourceList)
+        private void PlayRandomAudioSource(List<AudioSource> audioSourceList)
         {
             if (audioSourceList != null && audioSourceList.Any())
             {
@@ -48,6 +48,12 @@ namespace Assets.Script.Business.Implementation
                 AudioSource randomAudioSource = audioSourceList[randomInteger];
                 randomAudioSource.Play();
             }
+        }
+
+        public void PlayRandomSoundEffect(SoundEffectType soundEffectTypeToPlay, IDictionary<SoundEffectType, List<AudioSource>> soundEffectListByType)
+        {
+            List<AudioSource> audioSourceList = soundEffectListByType != null ? soundEffectListByType[soundEffectTypeToPlay] : null;
+            PlayRandomAudioSource(audioSourceList);
         }
     }
 }
