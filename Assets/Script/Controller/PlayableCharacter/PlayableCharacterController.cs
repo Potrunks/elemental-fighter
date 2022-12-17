@@ -61,7 +61,7 @@ public class PlayableCharacterController : MonoBehaviour
     public float _invincibleLimitTimer;
 
     [Header("Audio")]
-    private IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
+    public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
 
     public IPlayableCharacterStateV2 currentState;
     public IPlayableCharacterStateV2 nextState;
@@ -71,7 +71,7 @@ public class PlayableCharacterController : MonoBehaviour
     public ICharacterBusiness characterBusiness;
     public IElementalBusiness elementalBusiness;
     public IPhysicsBusiness _physicsBusiness;
-    private IAudioBusiness _audioBusiness;
+    public IAudioBusiness _audioBusiness;
 
     #region MonoBehaviour Method
     private void FixedUpdate()

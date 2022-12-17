@@ -13,5 +13,7 @@ namespace Assets.Script.Business.Interface
         /// The dictionary created is return.
         /// </summary>
         public IDictionary<SoundEffectType, List<AudioSource>> CreateAudioSourceListBySoundEffectType(List<SoundEffect> soundEffectList, GameObject gameObjectToAddAudioSource);
+
+        public void PlayRandomAudioSource(List<AudioSource> audioSourceList);
     }
 }

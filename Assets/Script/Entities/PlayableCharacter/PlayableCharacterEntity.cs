@@ -8,6 +8,9 @@ namespace Assets.Script.Entities
     public  class PlayableCharacterEntity : ScriptableObject
     {
         [field: SerializeField]
+        public string Name { get; set; }
+
+        [field: SerializeField]
         public GameObject Model { get; private set; }
 
         [field: SerializeField]

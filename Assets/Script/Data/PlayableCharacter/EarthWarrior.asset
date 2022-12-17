@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2844163388c54194c8cf977b422626f0, type: 3}
   m_Name: EarthWarrior
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Baptiste
   <Model>k__BackingField: {fileID: 4152062391814938593, guid: 0624744d6edc6f4458beb6081fa1a908, type: 3}
   <MoveSpeed>k__BackingField: 350
   <JumpForce>k__BackingField: 500
-  <SoundEffectList>k__BackingField: []
+  <SoundEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 5c2343966924a3e4d8ef47abbabb0120, type: 2}
   <PowerEntityList>k__BackingField:
   - {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
   - {fileID: 11400000, guid: f42020075b1159242ab36755096817de, type: 2}

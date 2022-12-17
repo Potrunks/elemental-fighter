@@ -1,4 +1,6 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
@@ -26,9 +28,10 @@ namespace Assets.Script.FiniteStateMachine
         {
             playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(0f, playableCharacterController.playableCharacter.JumpForce));
 
-            playableCharacterController
-                .playableCharacterAnimator
-                .Play("Jump");
+            playableCharacterController.playableCharacterAnimator.Play("Jump");
+
+            List<AudioSource> audioSourceList = playableCharacterController._soundEffectListByType != null ? playableCharacterController._soundEffectListByType[SoundEffectType.JUMPING] : null;
+            playableCharacterController._audioBusiness.PlayRandomAudioSource(audioSourceList);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

@@ -11,11 +11,14 @@ namespace Assets.Script.Business.Implementation
     {
         public IDictionary<SoundEffectType, List<AudioSource>> CreateAudioSourceListBySoundEffectType(List<SoundEffect> soundEffectList, GameObject gameObjectToAddAudioSource)
         {
+            Debug.Log("Start of -> Class : " + nameof(AudioBusiness) + " -> Method : " + nameof(AudioBusiness.CreateAudioSourceListBySoundEffectType));
+            Debug.Log(soundEffectList.Count() + " sound effect in total");
             IDictionary<SoundEffectType, List<AudioSource>> audioSourceListByType = null;
             if (soundEffectList.Any())
             {
                 audioSourceListByType = new Dictionary<SoundEffectType, List<AudioSource>>();
                 IEnumerable<SoundEffectType> existingSoundEffectTypeList = soundEffectList.Select(sound => sound.Type).Distinct();
+                Debug.Log(existingSoundEffectTypeList.Count() + " sound effect type existing in sound effect list");
                 foreach (SoundEffectType type in existingSoundEffectTypeList)
                 {
                     audioSourceListByType.Add(type, new List<AudioSource>());
@@ -23,15 +26,28 @@ namespace Assets.Script.Business.Implementation
                     {
                         AudioSource audioSource = gameObjectToAddAudioSource.AddComponent<AudioSource>();
                         audioSource.clip = sound.File;
-                        audioSource.volume = GameManager.instance.volumeMainTheme * sound.AmplifyVolumeValue;
+                        audioSource.volume = (GameManager.instance != null ? GameManager.instance.volumeMainTheme : 0.5f) * sound.AmplifyVolumeValue;
                         audioSource.pitch = sound.Speed;
                         audioSource.loop = sound.IsLooping;
                         audioSource.time = sound.StartedTime;
                         audioSourceListByType[type].Add(audioSource);
                     }
                 }
+                Debug.Log(audioSourceListByType.Keys.Count() + " sound effect type in the dictionnary and " + audioSourceListByType.Values.Count() + " sound effect in the dictionnary");
             }
+            Debug.Log("End of -> Class : " + nameof(AudioBusiness) + " -> Method : " + nameof(AudioBusiness.CreateAudioSourceListBySoundEffectType));
             return audioSourceListByType;
+        }
+
+        public void PlayRandomAudioSource(List<AudioSource> audioSourceList)
+        {
+            if (audioSourceList != null && audioSourceList.Any())
+            {
+                System.Random random = new System.Random();
+                int randomInteger = random.Next(0, audioSourceList.Count);
+                AudioSource randomAudioSource = audioSourceList[randomInteger];
+                randomAudioSource.Play();
+            }
         }
     }
 }
