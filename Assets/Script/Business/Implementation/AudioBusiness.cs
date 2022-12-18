@@ -39,21 +39,24 @@ namespace Assets.Script.Business.Implementation
             return audioSourceListByType;
         }
 
-        private void PlayRandomAudioSource(List<AudioSource> audioSourceList)
+        private AudioSource PlayRandomAudioSource(List<AudioSource> audioSourceList)
         {
+            AudioSource randomAudioSource = null;
             if (audioSourceList != null && audioSourceList.Any())
             {
                 System.Random random = new System.Random();
                 int randomInteger = random.Next(0, audioSourceList.Count);
-                AudioSource randomAudioSource = audioSourceList[randomInteger];
+                randomAudioSource = audioSourceList[randomInteger];
                 randomAudioSource.Play();
             }
+            return randomAudioSource;
         }
 
-        public void PlayRandomSoundEffect(SoundEffectType soundEffectTypeToPlay, IDictionary<SoundEffectType, List<AudioSource>> soundEffectListByType)
+        public AudioSource PlayRandomSoundEffect(SoundEffectType soundEffectTypeToPlay, IDictionary<SoundEffectType, List<AudioSource>> soundEffectListByType)
         {
             List<AudioSource> audioSourceList = soundEffectListByType != null ? soundEffectListByType[soundEffectTypeToPlay] : null;
-            PlayRandomAudioSource(audioSourceList);
+            AudioSource audioSourcePlayed = PlayRandomAudioSource(audioSourceList);
+            return audioSourcePlayed;
         }
     }
 }

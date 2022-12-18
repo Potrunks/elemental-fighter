@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -36,6 +37,7 @@ namespace Assets.Script.FiniteStateMachine
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
             playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

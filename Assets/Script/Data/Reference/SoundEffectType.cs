@@ -2,10 +2,11 @@
 {
     public enum SoundEffectType
     {
-        ATTACKING,
+        MELEE_ATTACKING,
         JUMPING,
         MOVING,
         LANDING,
-        HURTING
+        HURTING,
+        SWORD_ATTACKING
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using System.Linq;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Assets.Script.FiniteStateMachine
     public class EarthMovePlayableCharacterState : PlayableCharacterStateV2
     {
         IPlayableCharacterStateV2 nextState;
-        private AudioSource soundEffect;
+        private AudioSource moveSoundEffect;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
@@ -31,16 +32,15 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController
-                .playableCharacterAnimator
-                .Play("Run");
+            playableCharacterController.playableCharacterAnimator.Play("Run");
+            moveSoundEffect = playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MOVING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            if (soundEffect != null)
+            if (moveSoundEffect != null)
             {
-                soundEffect.Stop();
+                moveSoundEffect.Stop();
             }
         }
 

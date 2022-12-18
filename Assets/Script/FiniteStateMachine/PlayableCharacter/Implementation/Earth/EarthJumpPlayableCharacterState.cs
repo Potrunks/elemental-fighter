@@ -26,11 +26,11 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.JUMPING, playableCharacterController._soundEffectListByType);
+
             playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(0f, playableCharacterController.playableCharacter.JumpForce));
 
             playableCharacterController.playableCharacterAnimator.Play("Jump");
-
-            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.JUMPING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

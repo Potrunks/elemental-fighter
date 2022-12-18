@@ -18,6 +18,10 @@ MonoBehaviour:
   <JumpForce>k__BackingField: 500
   <SoundEffectList>k__BackingField:
   - {fileID: 11400000, guid: 5c2343966924a3e4d8ef47abbabb0120, type: 2}
+  - {fileID: 11400000, guid: 7ed1d37d261aa24448fded3ae5e0acfc, type: 2}
+  - {fileID: 11400000, guid: 2587cbc52cfcfaa4cb167f7dc34fccf9, type: 2}
+  - {fileID: 11400000, guid: d4bf6906926a89a46983e1a9e990c147, type: 2}
+  - {fileID: 11400000, guid: 04201ab5d5615d3408e7019b92e6b140, type: 2}
   <PowerEntityList>k__BackingField:
   - {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
   - {fileID: 11400000, guid: f42020075b1159242ab36755096817de, type: 2}

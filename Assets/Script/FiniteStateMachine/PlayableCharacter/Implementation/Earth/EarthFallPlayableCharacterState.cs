@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
@@ -16,6 +17,7 @@ namespace Assets.Script.FiniteStateMachine
 
             if (playableCharacterController.isGrounding)
             {
+                playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.LANDING, playableCharacterController._soundEffectListByType);
                 return new EarthIdlePlayableCharacterState();
             }
 
