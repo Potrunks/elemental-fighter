@@ -1,6 +1,10 @@
 using Assets.Script.Business;
+using Assets.Script.Business.Implementation;
+using Assets.Script.Business.Interface;
+using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
 using Assets.Script.FiniteStateMachine;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerController : MonoBehaviour
@@ -24,8 +28,11 @@ public class PowerController : MonoBehaviour
     public bool _willBeDestroyed;
     public float _destroyLimitTimer;
 
+    public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectByType;
+
     public IElementalBusiness _elementalBusiness;
     public ICharacterBusiness _characterBusiness;
+    public IAudioBusiness _audioBusiness;
 
     public IPowerState currentState;
     public IPowerState nextState;
@@ -35,6 +42,7 @@ public class PowerController : MonoBehaviour
     {
         _elementalBusiness = new ElementalBusiness();
         _characterBusiness = new CharacterBusiness();
+        _audioBusiness = new AudioBusiness();
 
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -44,6 +52,7 @@ public class PowerController : MonoBehaviour
         _willBeDestroyed = false;
         _destroyLimitTimer = Time.time + _selfDestructTimer;
         _spriteRenderer.ChangeColorByIndexPlayer(_caster._playerIndex);
+        _soundEffectByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(_powerEntity.SoundEffectList, gameObject);
     }
 
     private void FixedUpdate()

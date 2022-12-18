@@ -7,6 +7,8 @@
         MOVING,
         LANDING,
         HURTING,
-        SWORD_ATTACKING
+        SWORD_ATTACKING,
+        ELEMENTAL_CASTING,
+        ELEMENTAL_DESTROYING
     }
 }

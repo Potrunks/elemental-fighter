@@ -1,5 +1,7 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Entities.Audio;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.Entities
@@ -15,6 +17,8 @@ namespace Assets.Script.Entities
         public float powerSpeed;
         public int powerDamage;
         public GameObject powerModel;
-        public Sound powerSound;
+
+        [field: SerializeField]
+        public List<SoundEffect> SoundEffectList { get; private set; }
     }
 }

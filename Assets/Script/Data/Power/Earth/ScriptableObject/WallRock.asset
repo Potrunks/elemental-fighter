@@ -19,11 +19,6 @@ MonoBehaviour:
   powerSpeed: 7
   powerDamage: 333
   powerModel: {fileID: 7715265300492422884, guid: d44141a64337be74f89d3b9342a62b5f, type: 3}
-  powerSound:
-    name: 
-    audioClip: {fileID: 0}
-    pitch: 0
-    loop: 0
-    audioSource: {fileID: 0}
-    time: 0
-    amplifyValue: 0
+  <SoundEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 1845d1fd452be7943ae806443c3ecc36, type: 2}
+  - {fileID: 11400000, guid: 111ad0bde710b1e4d90ef24229553402, type: 2}
