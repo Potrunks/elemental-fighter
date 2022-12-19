@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -25,6 +26,7 @@ namespace Assets.Script.FiniteStateMachine
         {
             playableCharacterController.playableCharacterMoveSpeed = 0f;
             playableCharacterController.playableCharacterAnimator.Play("SpecialATK1");
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

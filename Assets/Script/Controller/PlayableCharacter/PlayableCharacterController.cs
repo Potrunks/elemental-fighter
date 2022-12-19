@@ -1,9 +1,12 @@
 using Assets.Script.Business;
 using Assets.Script.Business.Extension;
+using Assets.Script.Business.Implementation;
+using Assets.Script.Business.Interface;
 using Assets.Script.Data;
 using Assets.Script.Data.ConstraintException;
 using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
+using Assets.Script.Entities.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +60,9 @@ public class PlayableCharacterController : MonoBehaviour
     public bool _isInvincible;
     public float _invincibleLimitTimer;
 
+    [Header("Audio")]
+    public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
+
     public IPlayableCharacterStateV2 currentState;
     public IPlayableCharacterStateV2 nextState;
 
@@ -65,6 +71,7 @@ public class PlayableCharacterController : MonoBehaviour
     public ICharacterBusiness characterBusiness;
     public IElementalBusiness elementalBusiness;
     public IPhysicsBusiness _physicsBusiness;
+    public IAudioBusiness _audioBusiness;
 
     #region MonoBehaviour Method
     private void FixedUpdate()
@@ -89,6 +96,7 @@ public class PlayableCharacterController : MonoBehaviour
         characterBusiness = new CharacterBusiness();
         elementalBusiness = new ElementalBusiness();
         _physicsBusiness = new PhysicsBusiness();
+        _audioBusiness = new AudioBusiness();
 
         playableCharacterAnimator = gameObject.GetComponent<Animator>();
         playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
@@ -114,6 +122,7 @@ public class PlayableCharacterController : MonoBehaviour
         }
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
         _nextBleedingTime = null;
+        _soundEffectListByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(playableCharacter.SoundEffectList, gameObject);
     }
     #endregion
 

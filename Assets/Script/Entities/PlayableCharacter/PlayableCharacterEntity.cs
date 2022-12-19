@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Script.Entities.Audio;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.Entities
@@ -6,6 +7,9 @@ namespace Assets.Script.Entities
     [CreateAssetMenu(menuName = "Playable Character/New")]
     public  class PlayableCharacterEntity : ScriptableObject
     {
+        [field: SerializeField]
+        public string Name { get; set; }
+
         [field: SerializeField]
         public GameObject Model { get; private set; }
 
@@ -16,7 +20,7 @@ namespace Assets.Script.Entities
         public float JumpForce { get; private set; }
 
         [field: SerializeField]
-        public List<Sound> SoundEffectList { get; private set; }
+        public List<SoundEffect> SoundEffectList { get; private set; }
 
         [field: SerializeField]
         public List<PowerEntity> PowerEntityList { get; private set; }

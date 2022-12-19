@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using DG.Tweening;
 
 namespace Assets.Script.FiniteStateMachine
@@ -27,6 +28,7 @@ namespace Assets.Script.FiniteStateMachine
             playableCharacterController.playableCharacterMoveSpeed = 0f;
             playableCharacterController.playableCharacterAnimator.Play("MediumATK1");
             playableCharacterController.transform.DOShakePosition(0.4f, strength: 0.1f);
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

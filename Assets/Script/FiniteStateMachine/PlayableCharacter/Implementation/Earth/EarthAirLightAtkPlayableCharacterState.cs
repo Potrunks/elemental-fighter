@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -24,6 +25,7 @@ namespace Assets.Script.FiniteStateMachine
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
             playableCharacterController.playableCharacterAnimator.Play("AirAttack1");
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Script.Data.Reference;
+using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -22,6 +23,7 @@ namespace Assets.Script.FiniteStateMachine
         public override void OnEnter(PowerController powerController)
         {
             powerController._animator.Play("Throwing");
+            powerController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_CASTING, powerController._soundEffectByType);
         }
 
         public override void OnExit(PowerController powerController)
