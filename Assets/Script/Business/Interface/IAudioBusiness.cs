@@ -14,6 +14,9 @@ namespace Assets.Script.Business.Interface
         /// </summary>
         public IDictionary<SoundEffectType, List<AudioSource>> CreateAudioSourceListBySoundEffectType(List<SoundEffect> soundEffectList, GameObject gameObjectToAddAudioSource);
 
+        /// <summary>
+        /// Play a sound effect audio source depending of the type given.
+        /// </summary>
         public AudioSource PlayRandomSoundEffect(SoundEffectType soundEffectTypeToPlay, IDictionary<SoundEffectType, List<AudioSource>> soundEffectListByType);
     }
 }
