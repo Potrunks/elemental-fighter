@@ -27,6 +27,7 @@ public class PowerController : MonoBehaviour
     [Header("InGame Value")]
     public bool _willBeDestroyed;
     public float _destroyLimitTimer;
+    public bool _isDestroyedAfterDestructiveCollision;
 
     public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectByType;
 
@@ -50,6 +51,7 @@ public class PowerController : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         _willBeDestroyed = false;
+        _isDestroyedAfterDestructiveCollision = false;
         _destroyLimitTimer = Time.time + _selfDestructTimer;
         _spriteRenderer.ChangeColorByIndexPlayer(_caster._playerIndex);
         _soundEffectByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(_powerEntity.SoundEffectList, gameObject);

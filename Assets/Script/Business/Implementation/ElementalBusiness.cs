@@ -99,17 +99,19 @@ namespace Assets.Script.Business
             if (!powerControllerCasted._willBeDestroyed)
             {
                 powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
-                if (colliderTouched.TryGetComponent<PlayableCharacterController>(out PlayableCharacterController enemy))
+                if (colliderTouched.TryGetComponent(out PlayableCharacterController enemy))
                 {
                     if (enemy != caster)
                     {
                         InflictedElementalDamage(isPushingAtk, caster, enemy, powerControllerCasted._powerEntity);
                         powerControllerCasted._willBeDestroyed = true;
+                        powerControllerCasted._isDestroyedAfterDestructiveCollision = true;
                     }
                 }
                 else
                 {
                     powerControllerCasted._willBeDestroyed = destructPowerAfterNoEnemyCollision;
+                    powerControllerCasted._isDestroyedAfterDestructiveCollision = destructPowerAfterNoEnemyCollision;
                 }
             }
         }

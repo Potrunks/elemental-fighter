@@ -19,7 +19,10 @@ namespace Assets.Script.FiniteStateMachine
         public override void OnEnter(PowerController powerController)
         {
             powerController._animator.Play("Destroying");
-            powerController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_DESTROYING, powerController._soundEffectByType);
+            if (powerController._isDestroyedAfterDestructiveCollision)
+            {
+                powerController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_DESTROYING, powerController._soundEffectByType);
+            }
         }
 
         public override void OnExit(PowerController powerController)
