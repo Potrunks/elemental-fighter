@@ -251,7 +251,7 @@ MonoBehaviour:
   maxPlayer: 4
   indexPlayerConnectedArray: 
   characterPreviewList:
-  - {fileID: 11400000, guid: 9d6b77c5bf39f1c41bb208dbbae7e1f5, type: 2}
+  - {fileID: 11400000, guid: e600a771c16bf12449a7affeec1a81de, type: 2}
   - {fileID: 11400000, guid: aa863401ce47ea543886ed00879a2d70, type: 2}
   cursorDetectionList: []
 --- !u!114 &365260276

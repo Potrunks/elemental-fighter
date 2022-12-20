@@ -1,5 +1,4 @@
-using Assets.Script.Business.Implementation;
-using Assets.Script.Business.Interface;
+using Assets.Script.Business;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;

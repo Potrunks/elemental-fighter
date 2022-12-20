@@ -1,6 +1,4 @@
-using Assets.Script.Business.Implementation;
-using Assets.Script.Business.Interface;
-using System.Linq;
+using Assets.Script.Business;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,19 +10,24 @@ public class SpawnPlayer : MonoBehaviour
     private ScorePlayer scorePlayerScript;
     private bool playersIsActivated = false;
     private PlayerInput playerInput;
+    private PlayableCharacterController _playableCharacterControllerSelected;
 
     private IPlayerBusiness playerBusiness = new PlayerBusiness();
 
     void Start()
     {
         selectedCharacter = playerBusiness.GetCharacterSelectedByIndex(playerIndex, GameManager.instance.deviceAndCharacterPlayerByIndex);
+        if (selectedCharacter != null)
+        {
+            _playableCharacterControllerSelected = selectedCharacter.GetComponent<PlayableCharacterController>();
+        }
         if (selectedCharacter == null)
         {
             Destroy(scorePlayer);
             Destroy(this.gameObject);
             return;
         }
-        selectedCharacter.GetComponent<MovePlayer>().playerIndex = playerIndex;
+        _playableCharacterControllerSelected._playerIndex = playerIndex;
         Instantiate(selectedCharacter, this.transform.position, Quaternion.identity, this.transform);
         scorePlayerScript = scorePlayer.GetComponent<ScorePlayer>();
         scorePlayerScript.playerIndex = playerIndex;
@@ -40,12 +43,12 @@ public class SpawnPlayer : MonoBehaviour
             {
                 if (GameManager.instance.selectedMode[playerIndex])
                 {
-                    Debug.Log("Activation of AI mode for player " + (GetComponentInChildren<MovePlayer>().playerIndex + 1));
+                    Debug.Log("Activation of AI mode for player " + (_playableCharacterControllerSelected._playerIndex + 1));
                     GetComponentInChildren<EnemyAI>().enabled = true;
                 }
                 else
                 {
-                    Debug.Log("Activation of Player mode for player " + (GetComponentInChildren<MovePlayer>().playerIndex + 1));
+                    Debug.Log("Activation of Player mode for player " + (_playableCharacterControllerSelected._playerIndex + 1));
                     playerInput.enabled = true;
                     PauseMenu.instance.inputDeviceByPlayerIndex.Add(playerIndex, playerInput.devices[0]);
                 }

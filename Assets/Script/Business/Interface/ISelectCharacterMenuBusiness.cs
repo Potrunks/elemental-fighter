@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface ISelectCharacterMenuBusiness
+    public interface ISelectCharacterMenuBusiness
     {
         /// <summary>
         /// Verify if all players have confirmed the player choice. If all player have confirmed his choice, a ready panel appear

@@ -1,11 +1,10 @@
-﻿using Assets.Script.Business.Interface;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class VFXBusiness : IVFXBusiness
+    public class VFXBusiness : IVFXBusiness
     {
         public void ClearTweenEffectOfImageComponent(GameObject gameObjectParent, string nameChildGameObjectWithImageComponent)
         {

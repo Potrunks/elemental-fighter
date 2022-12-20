@@ -1,7 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine.InputSystem;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Displaying endgame results...");
 
-        ScorePlayer[] scorePlayerArray = GameObject.FindObjectsOfType<ScorePlayer>();
+        ScorePlayer[] scorePlayerArray = FindObjectsOfType<ScorePlayer>();
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         List<ScorePlayerResult> scorePlayerResultList = new List<ScorePlayerResult>();
 

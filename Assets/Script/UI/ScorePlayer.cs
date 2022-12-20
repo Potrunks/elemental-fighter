@@ -6,6 +6,7 @@ public class ScorePlayer : MonoBehaviour
     private TextMeshProUGUI textScore;
     public int playerIndex;
     public int victoryPoint;
+
     void Start()
     {
         textScore = GetComponent<TextMeshProUGUI>();
@@ -18,7 +19,7 @@ public class ScorePlayer : MonoBehaviour
         DisplayScore();
     }
 
-    private void DisplayScore()
+    public void DisplayScore()
     {
         textScore.text = "Player " + (playerIndex + 1) + " : " + victoryPoint;
     }

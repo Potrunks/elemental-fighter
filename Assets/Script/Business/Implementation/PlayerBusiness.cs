@@ -1,15 +1,23 @@
-﻿using Assets.Script.Business.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class PlayerBusiness : IPlayerBusiness
+    public class PlayerBusiness : IPlayerBusiness
     {
+        public Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice)
+        {
+            int xVector2Modificator = characterIsFlipLeft && !playerIsUsingDevice ? -1 : 1;
+            int zDegreeModificator = characterIsFlipLeft && playerIsUsingDevice ? -1 : 1;
+            float xDegreeModificator = characterIsFlipLeft ? 180f : 0f;
+
+            return Quaternion.Euler(xDegreeModificator, 0, Mathf.Atan2(vector2.y, vector2.x * xVector2Modificator) * Mathf.Rad2Deg * zDegreeModificator);
+        }
+
         public void CreateNewPlayer(GameObject playerSelectionPreviewPrefab, GameObject tokenPrefab, GameObject cursorPrefab, Transform currentTransform, Transform playerSelectionGridTransform, List<CursorDetection> cursorDetectionList, IColorBusiness colorBusiness, InputDevice device, IDictionary<InputDevice, List<GameObject>> playerSelectGameObjectByDevice, int indexPlayer)
         {
             GameObject newPlayerSelectionPreview = GameObject.Instantiate(playerSelectionPreviewPrefab, playerSelectionGridTransform);
