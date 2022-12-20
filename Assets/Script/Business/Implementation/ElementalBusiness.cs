@@ -98,11 +98,11 @@ namespace Assets.Script.Business
         {
             if (!powerControllerCasted._willBeDestroyed)
             {
-                powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
                 if (colliderTouched.TryGetComponent(out PlayableCharacterController enemy))
                 {
                     if (enemy != caster)
                     {
+                        powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
                         InflictedElementalDamage(isPushingAtk, caster, enemy, powerControllerCasted._powerEntity);
                         powerControllerCasted._willBeDestroyed = true;
                         powerControllerCasted._isDestroyedAfterDestructiveCollision = true;
