@@ -2,25 +2,25 @@
 using Assets.Script.Data.Reference;
 using UnityEngine;
 
-namespace Assets.Script.FiniteStateMachine
+namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class EarthJumpPlayableCharacterState : PlayableCharacterStateV2
+    public class FireWarriorJumpState : PlayableCharacterStateV2
     {
-        IPlayableCharacterStateV2 nextState;
+        private IPlayableCharacterStateV2 nextState;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController._isTouchingByAttack)
+            if (nextState != null)
             {
-                return new EarthHurtPlayableCharacterState();
+                return nextState;
             }
 
             if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
-                return new EarthFallPlayableCharacterState();
+                return new FireWarriorFallState();
             }
 
-            return nextState;
+            return null;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
@@ -37,16 +37,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            switch (action)
-            {
-                case PlayableCharacterActionReference.LightAtk:
-                    nextState = new EarthAirLightAtkPlayableCharacterState();
-                    break;
-                default:
-                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
-                    nextState = null;
-                    break;
-            }
+            
         }
     }
 }

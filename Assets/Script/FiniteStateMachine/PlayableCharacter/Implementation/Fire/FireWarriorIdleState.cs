@@ -1,26 +1,27 @@
 ﻿using Assets.Script.Data;
 using UnityEngine;
 
-namespace Assets.Script.FiniteStateMachine
+namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class EarthIdlePlayableCharacterState : PlayableCharacterStateV2
+    public class FireWarriorIdleState : PlayableCharacterStateV2
     {
-        IPlayableCharacterStateV2 nextState;
+        private IPlayableCharacterStateV2 nextState;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController._isTouchingByAttack)
+            if (nextState != null)
             {
-                return new EarthHurtPlayableCharacterState();
+                return nextState;
             }
 
             if (playableCharacterController.isDeviceUsed
                 && (playableCharacterController.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
                     || playableCharacterController.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold))
             {
-                return new EarthMovePlayableCharacterState();
+                return new FireWarriorMoveState();
             }
-            return nextState;
+
+            return null;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
@@ -31,7 +32,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-
+            
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
@@ -39,22 +40,7 @@ namespace Assets.Script.FiniteStateMachine
             switch (action)
             {
                 case PlayableCharacterActionReference.Jump:
-                    nextState = new EarthJumpPlayableCharacterState();
-                    break;
-                case PlayableCharacterActionReference.MediumAtk:
-                    nextState = new EarthMediumAtkPlayableCharacterState();
-                    break;
-                case PlayableCharacterActionReference.LightAtk:
-                    nextState = new EarthLightAtkPlayableCharacterState();
-                    break;
-                case PlayableCharacterActionReference.HeavyAtk:
-                    nextState = new EarthHeavyAtkPlayableCharacterState();
-                    break;
-                case PlayableCharacterActionReference.SpecialAtk:
-                    nextState = new EarthSpecialAtkPlayableCharacterState();
-                    break;
-                case PlayableCharacterActionReference.SpecialAtk2:
-                    nextState = new EarthSpecialAtk2PlayableCharacterState();
+                    nextState = new FireWarriorJumpState();
                     break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
