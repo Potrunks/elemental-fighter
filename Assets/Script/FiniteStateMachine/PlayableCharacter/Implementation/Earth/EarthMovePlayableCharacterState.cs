@@ -1,6 +1,5 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine

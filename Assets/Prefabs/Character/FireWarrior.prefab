@@ -183,9 +183,9 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: OnMove
+      - m_Target: {fileID: 528090407413492179}
+        m_TargetAssemblyTypeName: PlayableCharacterController, Assembly-CSharp
+        m_MethodName: OnInputMove
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -199,9 +199,9 @@ MonoBehaviour:
     m_ActionName: Gameplay/Movement[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: OnJump
+      - m_Target: {fileID: 528090407413492179}
+        m_TargetAssemblyTypeName: PlayableCharacterController, Assembly-CSharp
+        m_MethodName: OnInputJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
