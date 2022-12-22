@@ -9,18 +9,13 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (nextState != null)
-            {
-                return nextState;
-            }
-
             if (playableCharacterController.isGrounding)
             {
                 playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.LANDING, playableCharacterController._soundEffectListByType);
                 return new FireWarriorIdleState();
             }
 
-            return null;
+            return nextState;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)

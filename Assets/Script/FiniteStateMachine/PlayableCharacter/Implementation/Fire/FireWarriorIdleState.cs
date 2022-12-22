@@ -9,9 +9,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (nextState != null)
+            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
-                return nextState;
+                return new FireWarriorFallState();
             }
 
             if (playableCharacterController.isDeviceUsed
@@ -21,7 +21,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 return new FireWarriorMoveState();
             }
 
-            return null;
+            return nextState;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)

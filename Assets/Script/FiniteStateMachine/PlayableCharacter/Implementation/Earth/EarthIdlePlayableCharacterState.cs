@@ -14,6 +14,11 @@ namespace Assets.Script.FiniteStateMachine
                 return new EarthHurtPlayableCharacterState();
             }
 
+            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
+            {
+                return new EarthFallPlayableCharacterState();
+            }
+
             if (playableCharacterController.isDeviceUsed
                 && (playableCharacterController.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
                     || playableCharacterController.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold))

@@ -10,17 +10,12 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (nextState != null)
-            {
-                return nextState;
-            }
-
             if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
                 return new FireWarriorFallState();
             }
 
-            return null;
+            return nextState;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
