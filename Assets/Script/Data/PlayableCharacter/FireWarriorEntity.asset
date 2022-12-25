@@ -16,7 +16,9 @@ MonoBehaviour:
   <Model>k__BackingField: {fileID: 0}
   <MoveSpeed>k__BackingField: 350
   <JumpForce>k__BackingField: 500
-  <SoundEffectList>k__BackingField: []
+  <SoundEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 7b5847953c269a74e86229c5d20b01df, type: 2}
+  - {fileID: 11400000, guid: b762df1ee22eff146b550bdc14756a11, type: 2}
   <PowerEntityList>k__BackingField: []
   <AttackForce>k__BackingField: 42
   <MaxHealth>k__BackingField: 1000

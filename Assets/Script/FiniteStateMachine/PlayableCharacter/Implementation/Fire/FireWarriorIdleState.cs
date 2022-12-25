@@ -42,6 +42,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 case PlayableCharacterActionReference.Jump:
                     nextState = new FireWarriorJumpState();
                     break;
+                case PlayableCharacterActionReference.LightAtk:
+                    nextState = new FireWarriorFirstSwordAttackState();
+                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;
