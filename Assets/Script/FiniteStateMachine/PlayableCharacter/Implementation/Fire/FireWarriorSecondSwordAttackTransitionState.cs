@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    internal class FireWarriorFirstSwordAttackTransitionState : PlayableCharacterStateV2
+    public class FireWarriorSecondSwordAttackTransitionState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -19,7 +19,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("LightATK1Transition");
+            playableCharacterController.playableCharacterAnimator.Play("LightATK2Transition");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
@@ -31,9 +31,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.LightAtk:
-                    nextState = new FireWarriorSecondSwordAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

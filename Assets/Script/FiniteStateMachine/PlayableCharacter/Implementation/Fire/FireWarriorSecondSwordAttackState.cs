@@ -1,9 +1,10 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    internal class FireWarriorFirstSwordAttackTransitionState : PlayableCharacterStateV2
+    public class FireWarriorSecondSwordAttackState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -11,7 +12,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                return new FireWarriorIdleState();
+                return new FireWarriorSecondSwordAttackTransitionState();
             }
 
             return nextState;
@@ -19,7 +20,8 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("LightATK1Transition");
+            playableCharacterController.playableCharacterAnimator.Play("LightATK2");
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.SWORD_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
@@ -31,9 +33,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.LightAtk:
-                    nextState = new FireWarriorSecondSwordAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;
