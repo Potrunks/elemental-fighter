@@ -19,6 +19,10 @@ MonoBehaviour:
   <SoundEffectList>k__BackingField:
   - {fileID: 11400000, guid: 7b5847953c269a74e86229c5d20b01df, type: 2}
   - {fileID: 11400000, guid: b762df1ee22eff146b550bdc14756a11, type: 2}
+  - {fileID: 11400000, guid: 04201ab5d5615d3408e7019b92e6b140, type: 2}
+  - {fileID: 11400000, guid: 5c2343966924a3e4d8ef47abbabb0120, type: 2}
+  - {fileID: 11400000, guid: 7ed1d37d261aa24448fded3ae5e0acfc, type: 2}
+  - {fileID: 11400000, guid: d4bf6906926a89a46983e1a9e990c147, type: 2}
   <PowerEntityList>k__BackingField: []
   <AttackForce>k__BackingField: 42
   <MaxHealth>k__BackingField: 1000
