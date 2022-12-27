@@ -4,15 +4,20 @@ using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorJumpState : PlayableCharacterStateV2
+    public class FireWarriorFirstAirSwordAttackState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
+            if (playableCharacterController.isGrounding)
             {
-                return new FireWarriorFallState();
+                return new FireWarriorIdleState();
+            }
+
+            if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                return new FireWarriorFirstAirSwordAttackTransitionState();
             }
 
             return nextState;
@@ -20,9 +25,8 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.JUMPING, playableCharacterController._soundEffectListByType);
-            playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(0f, playableCharacterController.playableCharacter.JumpForce));
-            playableCharacterController.playableCharacterAnimator.Play("Jump");
+            playableCharacterController.playableCharacterAnimator.Play("AirAttack1");
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.SWORD_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
@@ -34,9 +38,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.LightAtk:
-                    nextState = new FireWarriorFirstAirSwordAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

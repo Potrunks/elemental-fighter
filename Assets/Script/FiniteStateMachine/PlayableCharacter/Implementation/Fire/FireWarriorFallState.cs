@@ -1,5 +1,6 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
+using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
@@ -30,7 +31,16 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            
+            switch (action)
+            {
+                case PlayableCharacterActionReference.LightAtk:
+                    nextState = new FireWarriorFirstAirSwordAttackState();
+                    break;
+                default:
+                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
+                    nextState = null;
+                    break;
+            }
         }
     }
 }
