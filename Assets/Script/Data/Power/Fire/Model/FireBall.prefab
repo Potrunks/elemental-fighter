@@ -13,10 +13,8 @@ GameObject:
   - component: {fileID: 2507130926299519030}
   - component: {fileID: 700630413020397782}
   - component: {fileID: 8946962537644913565}
-  - component: {fileID: 5071982651829158621}
-  - component: {fileID: 3187957571775180045}
   m_Layer: 0
-  m_Name: MediumFireElemental
+  m_Name: FireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3712065554095806988}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -90,7 +89,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!95 &2507130926299519030
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -103,6 +102,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -141,37 +141,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.23765299, y: -0.19155684}
+  m_Offset: {x: 0.21745238, y: -0.15788911}
   serializedVersion: 2
-  m_Radius: 0.10832307
---- !u!114 &5071982651829158621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3712065554095806988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0625820a88548804da79986f32632f94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 7
-  mediumFireElementalDamage: 20
-  rb: {fileID: 700630413020397782}
-  mediumFireElementalImpactEffect: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
-  target: {fileID: 0}
-  caster: {fileID: 0}
---- !u!114 &3187957571775180045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3712065554095806988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c89067105e5b04c969d04cf0499be0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfdestruct_in: 10
+  m_Radius: 0.2093263
