@@ -215,9 +215,9 @@ MonoBehaviour:
     m_ActionName: Gameplay/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: OnLightATK
+      - m_Target: {fileID: 528090407413492179}
+        m_TargetAssemblyTypeName: PlayableCharacterController, Assembly-CSharp
+        m_MethodName: OnInputLightAtk
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -385,7 +385,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 12352
-  groundCheckRadius: 0.35
+  groundCheckRadius: 0.3
   isGrounding: 0
   groundCheck: {fileID: 4152062392815420814}
   playableCharacter: {fileID: 11400000, guid: df6b8d1bc723ee14e91d1929d1d7df6f, type: 2}
@@ -401,7 +401,7 @@ MonoBehaviour:
   _isLeftFlip: 0
   gameObjectElementalSpawnPoint: {fileID: 0}
   _hitBoxAtk: {fileID: 4152062393142088505}
-  _hitBoxAtkRadius: 0.36
+  _hitBoxAtkRadius: 1.15
   _playerIndex: 0
   _enemy: {fileID: 0}
   _isTouchingByAttack: 0
@@ -526,7 +526,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4152062392815420814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.016, y: -0.754, z: 0}
+  m_LocalPosition: {x: -0.008, y: -0.825, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5369,7 +5369,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4152062393142088505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.636, y: 0.118, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

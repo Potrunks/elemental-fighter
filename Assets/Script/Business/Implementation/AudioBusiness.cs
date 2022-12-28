@@ -54,7 +54,7 @@ namespace Assets.Script.Business.Implementation
 
         public AudioSource PlayRandomSoundEffect(SoundEffectType soundEffectTypeToPlay, IDictionary<SoundEffectType, List<AudioSource>> soundEffectListByType)
         {
-            List<AudioSource> audioSourceList = soundEffectListByType != null ? soundEffectListByType[soundEffectTypeToPlay] : null;
+            List<AudioSource> audioSourceList = soundEffectListByType.ContainsKey(soundEffectTypeToPlay) ? soundEffectListByType[soundEffectTypeToPlay] : null;
             AudioSource audioSourcePlayed = PlayRandomAudioSource(audioSourceList);
             return audioSourcePlayed;
         }

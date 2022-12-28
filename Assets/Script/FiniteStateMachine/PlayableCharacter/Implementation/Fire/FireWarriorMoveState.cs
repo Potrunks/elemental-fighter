@@ -11,9 +11,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (nextState != null)
+            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
-                return nextState;
+                return new FireWarriorFallState();
             }
 
             if (playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityHighThreshold
@@ -22,7 +22,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 return new FireWarriorIdleState();
             }
 
-            return null;
+            return nextState;
         }
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
@@ -45,6 +45,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             {
                 case PlayableCharacterActionReference.Jump:
                     nextState = new FireWarriorJumpState();
+                    break;
+                case PlayableCharacterActionReference.LightAtk:
+                    nextState = new FireWarriorFirstSwordAttackState();
                     break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
