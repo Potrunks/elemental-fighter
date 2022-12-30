@@ -23,6 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c2343966924a3e4d8ef47abbabb0120, type: 2}
   - {fileID: 11400000, guid: 7ed1d37d261aa24448fded3ae5e0acfc, type: 2}
   - {fileID: 11400000, guid: d4bf6906926a89a46983e1a9e990c147, type: 2}
-  <PowerEntityList>k__BackingField: []
+  - {fileID: 11400000, guid: 2587cbc52cfcfaa4cb167f7dc34fccf9, type: 2}
+  <PowerEntityList>k__BackingField:
+  - {fileID: 11400000, guid: eadf04051dab3de4dafdc8d93adeed21, type: 2}
   <AttackForce>k__BackingField: 42
   <MaxHealth>k__BackingField: 1000

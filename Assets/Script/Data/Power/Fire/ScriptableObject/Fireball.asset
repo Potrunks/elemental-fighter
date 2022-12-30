@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62ca0eafb65927459b70ea950dac89b, type: 3}
+  m_Name: Fireball
+  m_EditorClassIdentifier: 
+  powerName: Fireball
+  powerDescription: Simple fireball
+  powerType: 1
+  powerLevel: 0
+  powerSpeed: 7
+  powerDamage: 83
+  powerModel: {fileID: 3712065554095806988, guid: 2c7bd6e0d206a1f49aab30443550dede, type: 3}
+  <SoundEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 37e844d55626e674caab1c4daa5b060f, type: 2}
+  - {fileID: 11400000, guid: fc6d5e652ee349941bb9f4161537d301, type: 2}

@@ -16,6 +16,11 @@ namespace Assets.Script.Business
         GameObject InstantiateStaticElemental(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster);
 
         /// <summary>
+        /// Instantiate a power elemental.
+        /// </summary>
+        GameObject InstantiateElemental(GameObject elementalToInstantiate, GameObject spawnPoint, PlayableCharacterController caster);
+
+        /// <summary>
         /// Inflicted damage on every enemy touched by elemental hit box.
         /// </summary>
         void InflictedElementalDamageAfterHitBoxContact(GameObject hitBoxAtk, float hitBoxAtkRadius, bool isPushingAtk, PlayableCharacterController caster, PowerEntity powerEntity);

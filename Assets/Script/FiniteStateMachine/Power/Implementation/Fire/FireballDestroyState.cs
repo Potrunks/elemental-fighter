@@ -1,17 +1,26 @@
 ﻿using Assets.Script.Data.Reference;
-using System;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.Power.Implementation.Fire
 {
     public class FireballDestroyState : PowerState
     {
+        private AudioSource destroySoundPlayed;
+
         public override IPowerState CheckingStateModification(PowerController powerController)
         {
-            if (powerController._animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (!powerController._destroyEffect.isPlaying)
             {
-                GameObject.Destroy(powerController.gameObject);
-                return null;
+                if (destroySoundPlayed != null && !destroySoundPlayed.isPlaying)
+                {
+                    Object.Destroy(powerController.gameObject);
+                    return null;
+                }
+                else if (destroySoundPlayed == null)
+                {
+                    Object.Destroy(powerController.gameObject);
+                    return null;
+                }
             }
 
             return nextState;
@@ -19,10 +28,11 @@ namespace Assets.Script.FiniteStateMachine.Power.Implementation.Fire
 
         public override void OnEnter(PowerController powerController)
         {
-            powerController._animator.Play("Destroying");
+            powerController._destroyEffect.Play();
+            powerController._spriteRenderer.enabled = false;
             if (powerController._isDestroyedAfterDestructiveCollision)
             {
-                powerController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_DESTROYING, powerController._soundEffectByType);
+                destroySoundPlayed = powerController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_DESTROYING, powerController._soundEffectByType);
             }
         }
 
