@@ -9,7 +9,7 @@ namespace Assets.Script.Business
         /// </summary>
         public static bool IsTimeToBeDestruct(this PowerController controller)
         {
-            if (controller._selfDestructTimer != 0 && Time.time > controller._destroyLimitTimer)
+            if ((controller._selfDestructTimer != 0 && Time.time > controller._destroyLimitTimer) || controller._willBeDestroyed)
             {
                 return true;
             }
