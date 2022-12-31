@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorFirstFireballAttackState : PlayableCharacterStateV2
+    public class FireWarriorSecondFireballAttackState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -12,7 +12,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                return new FireWarriorFirstFireballAttackTransitionState();
+                return new FireWarriorSecondFireballAttackTransitionState();
             }
 
             return nextState;
@@ -20,8 +20,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterMoveSpeed = 0f;
-            playableCharacterController.playableCharacterAnimator.Play("MediumATK1");
+            playableCharacterController.playableCharacterAnimator.Play("MediumATK2");
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
