@@ -1,9 +1,10 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorSecondAirFireballAttackTransitionState : PlayableCharacterStateV2
+    public class FireWarriorFirstAirBigFireballAttackState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -16,15 +17,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityHighThreshold)
-                {
-                    return new FireWarriorJumpState();
-                }
-
-                if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityLowThreshold)
-                {
-                    return new FireWarriorFallState();
-                }
+                return new FireWarriorFirstAirBigFireballAttackTransitionState();
             }
 
             return nextState;
@@ -32,7 +25,8 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("AirMediumAttack2Transition");
+            playableCharacterController.playableCharacterAnimator.Play("AirHeavyAttack1");
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_CASTING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
@@ -44,9 +38,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.HeavyAtk:
-                    nextState = new FireWarriorFirstAirBigFireballAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorSecondAirFireballAttackTransitionState : PlayableCharacterStateV2
+    public class FireWarriorFirstAirBigFireballAttackTransitionState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -32,7 +32,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("AirMediumAttack2Transition");
+            playableCharacterController.playableCharacterAnimator.Play("AirHeavyAttack1Transition");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
@@ -44,9 +44,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.HeavyAtk:
-                    nextState = new FireWarriorFirstAirBigFireballAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;
