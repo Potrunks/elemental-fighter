@@ -52,6 +52,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 case PlayableCharacterActionReference.MediumAtk:
                     nextState = new FireWarriorFirstFireballAttackState();
                     break;
+                case PlayableCharacterActionReference.HeavyAtk:
+                    nextState = new FireWarriorFirstBigFireballAttackState();
+                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

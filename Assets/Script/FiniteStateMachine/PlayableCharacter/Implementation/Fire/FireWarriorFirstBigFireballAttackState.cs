@@ -1,9 +1,10 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorFirstFireballAttackTransitionState : PlayableCharacterStateV2
+    public class FireWarriorFirstBigFireballAttackState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -11,7 +12,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                return new FireWarriorIdleState();
+                return new FireWarriorFirstBigFireballAttackTransitionState();
             }
 
             return nextState;
@@ -19,7 +20,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("MediumATK1Transition");
+            playableCharacterController.playableCharacterMoveSpeed = 0f;
+            playableCharacterController.playableCharacterAnimator.Play("HeavyATK1");
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
@@ -31,12 +34,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.MediumAtk:
-                    nextState = new FireWarriorSecondFireballAttackState();
-                    break;
-                case PlayableCharacterActionReference.HeavyAtk:
-                    nextState = new FireWarriorFirstBigFireballAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

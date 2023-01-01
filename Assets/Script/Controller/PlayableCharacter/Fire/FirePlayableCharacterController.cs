@@ -13,13 +13,5 @@ namespace Assets.Script.Controller.PlayableCharacter.Fire
             currentState.OnEnter(this);
         }
         #endregion
-
-        #region Action
-        public void CastFireball()
-        {
-            kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Medium, out GameObject fireballToCast);
-            elementalBusiness.InstantiateElemental(fireballToCast, gameObjectElementalSpawnPoint, this);
-        }
-        #endregion
     }
 }

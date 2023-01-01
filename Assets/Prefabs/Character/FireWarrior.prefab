@@ -247,9 +247,9 @@ MonoBehaviour:
     m_ActionName: Gameplay/MediumATK[/XInputControllerWindows/buttonNorth]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: OnHeavyATK
+      - m_Target: {fileID: 528090407413492179}
+        m_TargetAssemblyTypeName: PlayableCharacterController, Assembly-CSharp
+        m_MethodName: OnInputHeavyAtk
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
