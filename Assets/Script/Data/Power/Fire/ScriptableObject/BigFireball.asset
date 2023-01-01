@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62ca0eafb65927459b70ea950dac89b, type: 3}
   m_Name: BigFireball
   m_EditorClassIdentifier: 
-  powerName: 
-  powerDescription: 
-  powerType: 0
-  powerLevel: 0
-  powerSpeed: 0
-  powerDamage: 0
-  powerModel: {fileID: 0}
-  <SoundEffectList>k__BackingField: []
+  powerName: BigFireball
+  powerDescription: A big fire ball
+  powerType: 1
+  powerLevel: 1
+  powerSpeed: 7
+  powerDamage: 167
+  powerModel: {fileID: 8491521707335108994, guid: a6fb304d9d483b04b823a1f469c70442, type: 3}
+  <SoundEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 37e844d55626e674caab1c4daa5b060f, type: 2}
+  - {fileID: 11400000, guid: fc6d5e652ee349941bb9f4161537d301, type: 2}

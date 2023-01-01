@@ -26,5 +26,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2587cbc52cfcfaa4cb167f7dc34fccf9, type: 2}
   <PowerEntityList>k__BackingField:
   - {fileID: 11400000, guid: eadf04051dab3de4dafdc8d93adeed21, type: 2}
+  - {fileID: 11400000, guid: 71744a06d981d8e4c89038016645fe53, type: 2}
   <AttackForce>k__BackingField: 42
   <MaxHealth>k__BackingField: 1000
