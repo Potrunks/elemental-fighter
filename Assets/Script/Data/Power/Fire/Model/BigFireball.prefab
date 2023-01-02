@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 8491521707335108996}
   - component: {fileID: 8491521707335108997}
   - component: {fileID: 8491521707335109000}
-  - component: {fileID: 8491521707335109001}
-  - component: {fileID: -2074939772911346362}
+  - component: {fileID: -2208972488708980088}
   m_Layer: 0
-  m_Name: HeavyFireElemental
+  m_Name: BigFireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,9 +29,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8491521707335108994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9107526838335077106}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -122,12 +123,12 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3082608, y: -0.1441864}
+  m_Offset: {x: 0.31524965, y: -0.13020867}
   serializedVersion: 2
-  m_Radius: 0.24493395
+  m_Radius: 0.33578894
 --- !u!95 &8491521707335109000
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -140,11 +141,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8491521707335109001
+--- !u!114 &-2208972488708980088
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,26 +155,85 @@ MonoBehaviour:
   m_GameObject: {fileID: 8491521707335108994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9761c333f6c8fd40a31f2231efea8df, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d403ae9f29b93042ac215d5ecbefa6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  heavyFireElementalDamage: 40
-  rb: {fileID: 8491521707335108996}
-  MediumFireElementalImpactEffect: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
-  target: {fileID: 0}
-  caster: {fileID: 0}
-  heavyATKPushForce: 50
---- !u!114 &-2074939772911346362
-MonoBehaviour:
+  _powerEntity: {fileID: 11400000, guid: 71744a06d981d8e4c89038016645fe53, type: 2}
+  _selfDestructTimer: 10
+  _caster: {fileID: 0}
+  _destroyEffect: {fileID: 9107526838335077107}
+  _spawnPoint: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  _animator: {fileID: 0}
+  _collider: {fileID: 0}
+  _spriteRenderer: {fileID: 0}
+  _willBeDestroyed: 0
+  _destroyLimitTimer: 0
+  _isDestroyedAfterDestructiveCollision: 0
+--- !u!1001 &9164071682545364003
+PrefabInstance:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8491521707335108998}
+    m_Modifications:
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.314
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.119
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 92673177399416542, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+      propertyPath: m_Name
+      value: FireExplosion
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+--- !u!4 &9107526838335077106 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 92673177399416529, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+  m_PrefabInstance: {fileID: 9164071682545364003}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8491521707335108994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04c89067105e5b04c969d04cf0499be0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selfdestruct_in: 10
+--- !u!198 &9107526838335077107 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 92673177399416528, guid: 185015caf95b2c3489e66a2480c17e9d, type: 3}
+  m_PrefabInstance: {fileID: 9164071682545364003}
+  m_PrefabAsset: {fileID: 0}

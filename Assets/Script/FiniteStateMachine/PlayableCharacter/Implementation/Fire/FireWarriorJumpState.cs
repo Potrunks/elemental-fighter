@@ -34,6 +34,12 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
+                case PlayableCharacterActionReference.HeavyAtk:
+                    nextState = new FireWarriorFirstAirBigFireballAttackState();
+                    break;
+                case PlayableCharacterActionReference.MediumAtk:
+                    nextState = new FireWarriorFirstAirFireballAttackState();
+                    break;
                 case PlayableCharacterActionReference.LightAtk:
                     nextState = new FireWarriorFirstAirSwordAttackState();
                     break;

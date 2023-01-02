@@ -1,4 +1,6 @@
-﻿using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
+﻿using Assets.Script.Data;
+using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
+using UnityEngine;
 
 namespace Assets.Script.Controller.PlayableCharacter.Fire
 {

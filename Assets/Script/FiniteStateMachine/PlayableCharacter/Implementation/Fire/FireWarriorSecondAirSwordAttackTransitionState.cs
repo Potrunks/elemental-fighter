@@ -9,6 +9,11 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
+            if (playableCharacterController.isGrounding)
+            {
+                return new FireWarriorIdleState();
+            }
+
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityHighThreshold)
@@ -19,11 +24,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityLowThreshold)
                 {
                     return new FireWarriorFallState();
-                }
-
-                if (playableCharacterController.isGrounding)
-                {
-                    return new FireWarriorIdleState();
                 }
             }
 
@@ -44,6 +44,12 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
+                case PlayableCharacterActionReference.HeavyAtk:
+                    nextState = new FireWarriorFirstAirBigFireballAttackState();
+                    break;
+                case PlayableCharacterActionReference.MediumAtk:
+                    nextState = new FireWarriorFirstAirFireballAttackState();
+                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

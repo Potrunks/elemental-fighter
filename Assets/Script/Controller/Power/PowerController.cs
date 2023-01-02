@@ -17,12 +17,12 @@ public class PowerController : MonoBehaviour
     public PlayableCharacterController _caster;
 
     [Header("Component")]
+    public ParticleSystem _destroyEffect;
     public Transform _spawnPoint;
     public Rigidbody2D _rigidbody;
     public Animator _animator;
     public Collider2D _collider;
-    [SerializeField]
-    private SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _spriteRenderer;
 
     [Header("InGame Value")]
     public bool _willBeDestroyed;

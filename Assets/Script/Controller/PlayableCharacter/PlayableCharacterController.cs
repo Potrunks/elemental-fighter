@@ -190,5 +190,11 @@ public class PlayableCharacterController : MonoBehaviour
     {
         characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
     }
+
+    public void CastElementalPower(PowerLevelReference level)
+    {
+        kvpPowerModelByPowerLevel.TryGetValue(level, out GameObject elementalToCast);
+        elementalBusiness.InstantiateElemental(elementalToCast, gameObjectElementalSpawnPoint, this);
+    }
     #endregion
 }
