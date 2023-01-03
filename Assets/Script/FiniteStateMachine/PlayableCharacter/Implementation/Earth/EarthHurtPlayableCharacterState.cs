@@ -6,18 +6,10 @@ namespace Assets.Script.FiniteStateMachine
     public class EarthHurtPlayableCharacterState : PlayableCharacterStateV2
     {
         IPlayableCharacterStateV2 nextState;
-        private float? _normalizedTimeOfAnimation = null;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            _normalizedTimeOfAnimation = playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
-            if (_normalizedTimeOfAnimation == 0f)
-            {
-                playableCharacterController._bloodEffectForDamage.Play();
-            }
-
-            if (_normalizedTimeOfAnimation >= 1f)
+            if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 if (playableCharacterController._currentHealth <= 0)
                 {
@@ -36,6 +28,8 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController._isTouchingByAttack = false;
+            playableCharacterController._bloodEffectForDamage.Play();
             playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);
         }
