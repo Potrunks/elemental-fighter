@@ -39,6 +39,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
+                case PlayableCharacterActionReference.HOLD_BLOCKING:
+                    nextState = new FireWarriorBlockIdleState();
+                    break;
                 case PlayableCharacterActionReference.Jump:
                     nextState = new FireWarriorJumpState();
                     break;

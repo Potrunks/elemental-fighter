@@ -1,5 +1,7 @@
 ﻿using Assets.Script.Business.Extension;
 using Assets.Script.Data;
+using Assets.Script.Data.ConstraintException;
+using Assets.Script.Data.Reference;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -231,6 +233,22 @@ namespace Assets.Script.Business
             bleedingEffectParticle.Play();
 
             return null;
+        }
+
+        public int ReturnBlockedDamage(int healthAfterDamage, int healthBeforeDamage, int damageReductionFactor)
+        {
+            if (healthAfterDamage <= 0 || healthBeforeDamage <= 0 || damageReductionFactor <= 0)
+            {
+                throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.NEGATIVE_VALUE_NOT_PERMITTED, new List<int> { healthAfterDamage, healthBeforeDamage, damageReductionFactor});
+            }
+
+            if (healthBeforeDamage <= healthAfterDamage)
+            {
+                throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.NOT_LOGIC_BETWEEN_VALUES, healthAfterDamage, healthBeforeDamage);
+            }
+
+            int damage = healthBeforeDamage - healthAfterDamage;
+            return damage / damageReductionFactor * (damageReductionFactor - 1);
         }
     }
 }
