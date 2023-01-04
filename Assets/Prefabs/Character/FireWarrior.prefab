@@ -263,9 +263,10 @@ MonoBehaviour:
     m_ActionName: Gameplay/HeavyATK[/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MovePlayer, Assembly-CSharp
-        m_MethodName: OnBlock
+      - m_Target: {fileID: 528090407413492179}
+        m_TargetAssemblyTypeName: Assets.Script.Controller.PlayableCharacter.Fire.FirePlayableCharacterController,
+          Assembly-CSharp
+        m_MethodName: OnInputBlocking
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
