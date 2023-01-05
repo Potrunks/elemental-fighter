@@ -7,8 +7,6 @@
         MediumAtk,
         HeavyAtk,
         SpecialAtk,
-        SpecialAtk2,
-        HOLD_BLOCKING,
-        RELEASE_BLOCKING
+        SpecialAtk2
     }
 }

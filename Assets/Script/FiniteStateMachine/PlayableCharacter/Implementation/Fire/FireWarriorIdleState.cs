@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Controller.PlayableCharacter.Fire;
+using Assets.Script.Data;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
@@ -9,14 +10,20 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
+            FirePlayableCharacterController controller = (FirePlayableCharacterController)playableCharacterController;
+            if (controller._isHoldingBlock)
+            {
+                return new FireWarriorBlockIdleState();
+            }
+
+            if (controller.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
                 return new FireWarriorFallState();
             }
 
-            if (playableCharacterController.isDeviceUsed
-                && (playableCharacterController.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
-                    || playableCharacterController.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold))
+            if (controller.isDeviceUsed
+                && (controller.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
+                    || controller.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold))
             {
                 return new FireWarriorMoveState();
             }
@@ -39,9 +46,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.HOLD_BLOCKING:
-                    nextState = new FireWarriorBlockIdleState();
-                    break;
                 case PlayableCharacterActionReference.Jump:
                     nextState = new FireWarriorJumpState();
                     break;

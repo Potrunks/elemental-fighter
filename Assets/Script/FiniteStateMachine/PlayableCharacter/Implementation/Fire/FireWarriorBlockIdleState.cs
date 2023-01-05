@@ -1,4 +1,4 @@
-﻿using Assets.Script.Business;
+﻿using Assets.Script.Controller.PlayableCharacter.Fire;
 using Assets.Script.Data;
 using UnityEngine;
 
@@ -7,7 +7,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
     public class FireWarriorBlockIdleState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
-        private ICharacterBusiness _characterBusiness = new CharacterBusiness();
 
         private int _healthBeforeBlock;
 
@@ -15,8 +14,13 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             if (playableCharacterController._isTouchingByAttack)
             {
-                playableCharacterController._currentHealth += _characterBusiness.ReturnBlockedDamage(playableCharacterController._currentHealth, _healthBeforeBlock, 3);
-                return new FireWarriorBlockingState();
+                return new FireWarriorBlockingState(_healthBeforeBlock);
+            }
+
+            FirePlayableCharacterController controller = (FirePlayableCharacterController)playableCharacterController;
+            if (!controller._isHoldingBlock)
+            {
+                return new FireWarriorIdleState();
             }
 
             return nextState;
@@ -31,16 +35,13 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.RELEASE_BLOCKING:
-                    nextState = new FireWarriorIdleState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;
