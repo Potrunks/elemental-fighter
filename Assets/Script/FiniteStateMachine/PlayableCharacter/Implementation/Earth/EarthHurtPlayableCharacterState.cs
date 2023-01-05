@@ -1,5 +1,7 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
+using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
+using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -41,7 +43,13 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            
+            switch (action)
+            {
+                default:
+                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
+                    nextState = null;
+                    break;
+            }
         }
     }
 }
