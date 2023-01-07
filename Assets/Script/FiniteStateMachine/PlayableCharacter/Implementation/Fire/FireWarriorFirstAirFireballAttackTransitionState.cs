@@ -27,7 +27,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                     return new FireWarriorJumpState();
                 }
 
-                if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityLowThreshold)
+                if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
                 {
                     return new FireWarriorFallState();
                 }
