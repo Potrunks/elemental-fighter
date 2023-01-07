@@ -32,7 +32,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

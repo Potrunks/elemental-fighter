@@ -1,5 +1,6 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
+using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -11,12 +12,12 @@ namespace Assets.Script.FiniteStateMachine
         {
             if (playableCharacterController._isTouchingByAttack)
             {
-                return nextState = new EarthHurtPlayableCharacterState();
+                return new EarthHurtPlayableCharacterState();
             }
 
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
-                return nextState = new EarthMediumAtk2TransitionPlayableCharacterState();
+                return new EarthMediumAtk2TransitionPlayableCharacterState();
             }
 
             return nextState;
@@ -30,12 +31,18 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            
+            switch (action)
+            {
+                default:
+                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
+                    nextState = null;
+                    break;
+            }
         }
     }
 }
