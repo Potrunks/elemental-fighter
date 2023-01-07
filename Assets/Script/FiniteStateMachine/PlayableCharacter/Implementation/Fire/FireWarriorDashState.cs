@@ -36,6 +36,8 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
             FirePlayableCharacterController character = (FirePlayableCharacterController)playableCharacterController;
+
+            character._nextDashMoveTime = Time.time + character._dashMoveCooldown;
             character.playableCharacterMoveSpeed = 0;
             character.playableCharacterAnimator.Play("DashMove");
             playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(playableCharacterController.playableCharacter.JumpForce * GamePlayValueReference.DASH_FORCE_MULTIPLICATOR * (playableCharacterController._isLeftFlip ? -1 : 1), 0));

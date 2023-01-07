@@ -412,6 +412,8 @@ MonoBehaviour:
   _isHoldingBlock: 0
   _blockVFX: {fileID: 5983508454866340900}
   _dashVFX: {fileID: 4152062393090402417}
+  _dashMoveCooldown: 3
+  _nextDashMoveTime: 0
 --- !u!1 &4152062392735839210
 GameObject:
   m_ObjectHideFlags: 0

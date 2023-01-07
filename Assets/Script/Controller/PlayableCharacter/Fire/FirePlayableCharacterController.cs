@@ -14,6 +14,9 @@ namespace Assets.Script.Controller.PlayableCharacter.Fire
 
         [Header("Dash component")]
         public ParticleSystem _dashVFX;
+        public float _dashMoveCooldown;
+        [HideInInspector]
+        public float _nextDashMoveTime = 0;
 
         #region MonoBehaviour Method
         private void Start()

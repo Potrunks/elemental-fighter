@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Controller.PlayableCharacter.Fire;
+using Assets.Script.Data;
 using Assets.Script.Data.Reference;
 using UnityEngine;
 
@@ -23,7 +24,12 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
             if (nextState != null && nextState.GetType() == typeof(FireWarriorDashState))
             {
-                if (playableCharacterController.isDeviceUsed && (playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityHighThreshold || playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityLowThreshold))
+                FirePlayableCharacterController character = (FirePlayableCharacterController)playableCharacterController;
+
+                if (character.isDeviceUsed
+                    && (character.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityHighThreshold
+                        || character.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityLowThreshold)
+                    && character._nextDashMoveTime <= Time.time)
                 {
                     return nextState;
                 }
