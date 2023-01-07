@@ -1,5 +1,6 @@
 ﻿using Assets.Script.Controller.PlayableCharacter.Fire;
 using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
@@ -40,6 +41,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             character._nextDashMoveTime = Time.time + character._dashMoveCooldown;
             character.playableCharacterMoveSpeed = 0;
             character.playableCharacterAnimator.Play("DashMove");
+            character._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_CASTING, character._soundEffectListByType);
             playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(playableCharacterController.playableCharacter.JumpForce * GamePlayValueReference.DASH_FORCE_MULTIPLICATOR * (playableCharacterController._isLeftFlip ? -1 : 1), 0));
             character._dashVFX.Play();
         }

@@ -1,6 +1,7 @@
 ﻿using Assets.Script.Business;
 using Assets.Script.Controller.PlayableCharacter.Fire;
 using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
@@ -58,6 +59,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             FirePlayableCharacterController character = (FirePlayableCharacterController)playableCharacterController;
             character._blockVFX.Play();
             character.playableCharacterAnimator.Play("Blocking", -1, 0);
+            character._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_BLOCKING, character._soundEffectListByType);
             character._currentHealth += _characterBusiness.ReturnBlockedDamage(character._currentHealth, _healthBeforeBlock, 3);
             _healthBeforeBlock = character._currentHealth;
         }
