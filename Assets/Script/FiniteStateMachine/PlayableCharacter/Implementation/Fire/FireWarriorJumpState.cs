@@ -15,6 +15,15 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 return new FireWarriorHurtState();
             }
 
+            if (nextState != null && nextState.GetType() == typeof(FireWarriorDashState))
+            {
+                if (playableCharacterController.isDeviceUsed && (playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityHighThreshold || playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityLowThreshold))
+                {
+                    return nextState;
+                }
+                nextState = null;
+            }
+
             if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
                 return new FireWarriorFallState();
@@ -39,6 +48,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
+                case PlayableCharacterActionReference.SpecialAtk:
+                    nextState = new FireWarriorDashState();
+                    break;
                 case PlayableCharacterActionReference.HeavyAtk:
                     nextState = new FireWarriorFirstAirBigFireballAttackState();
                     break;

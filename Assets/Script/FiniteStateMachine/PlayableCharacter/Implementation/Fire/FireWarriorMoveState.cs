@@ -21,8 +21,8 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 return new FireWarriorFallState();
             }
 
-            if (playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityHighThreshold
-                && playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityLowThreshold)
+            if ((playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityHighThreshold
+                && playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityLowThreshold) || !playableCharacterController.isDeviceUsed)
             {
                 return new FireWarriorIdleState();
             }
@@ -50,6 +50,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
+                case PlayableCharacterActionReference.SpecialAtk:
+                    nextState = new FireWarriorDashState();
+                    break;
                 case PlayableCharacterActionReference.Jump:
                     nextState = new FireWarriorJumpState();
                     break;
