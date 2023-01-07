@@ -12,6 +12,9 @@ namespace Assets.Script.Controller.PlayableCharacter.Fire
         [Header("Blocking component")]
         public ParticleSystem _blockVFX;
 
+        [Header("Dash component")]
+        public ParticleSystem _dashVFX;
+
         #region MonoBehaviour Method
         private void Start()
         {
