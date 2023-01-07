@@ -11,6 +11,11 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
+            if (playableCharacterController._isTouchingByAttack)
+            {
+                return new FireWarriorHurtState();
+            }
+
             if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
                 return new FireWarriorFallState();
@@ -37,6 +42,8 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             {
                 moveSoundEffectPlayed.Stop();
             }
+
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

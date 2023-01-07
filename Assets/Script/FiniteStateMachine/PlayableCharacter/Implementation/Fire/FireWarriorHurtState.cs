@@ -10,18 +10,18 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
+            if (playableCharacterController._isTouchingByAttack)
+            {
+                return new FireWarriorHurtState();
+            }
+
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 if (playableCharacterController._currentHealth <= 0)
                 {
-                    // TODO Die State
+                    return new FireWarriorDieState();
                 }
-                return nextState = new FireWarriorIdleState();
-            }
-
-            if (playableCharacterController._isTouchingByAttack)
-            {
-                return nextState = new FireWarriorHurtState();
+                return new FireWarriorIdleState();
             }
 
             return nextState;
@@ -29,7 +29,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController._isTouchingByAttack = false;
             playableCharacterController._bloodEffectForDamage.Play();
             playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);

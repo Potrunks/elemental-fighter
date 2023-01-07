@@ -35,7 +35,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             {
                 if (controller._currentHealth <= 0)
                 {
-                    // MORT
+                    return new FireWarriorDieState();
                 }
                 else
                 {

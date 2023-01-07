@@ -10,6 +10,11 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
+            if (playableCharacterController._isTouchingByAttack)
+            {
+                return new FireWarriorHurtState();
+            }
+
             if (playableCharacterController.isGrounding)
             {
                 playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.LANDING, playableCharacterController._soundEffectListByType);
@@ -26,7 +31,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
