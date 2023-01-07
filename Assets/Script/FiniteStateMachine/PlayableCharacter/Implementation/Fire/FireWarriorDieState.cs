@@ -1,28 +1,21 @@
 ﻿using Assets.Script.Data;
-using Assets.Script.Data.Reference;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorSecondAirSwordAttackState : PlayableCharacterStateV2
+    public class FireWarriorDieState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
         public override IPlayableCharacterStateV2 CheckingStateModification(PlayableCharacterController playableCharacterController)
         {
-            if (playableCharacterController._isTouchingByAttack)
-            {
-                return new FireWarriorHurtState();
-            }
-
-            if (playableCharacterController.isGrounding)
-            {
-                return new FireWarriorIdleState();
-            }
-
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                return new FireWarriorSecondAirSwordAttackTransitionState();
+                bool gameIsOver = playableCharacterController.characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
+                if (!gameIsOver)
+                {
+                    return new FireWarriorIdleState();
+                }
             }
 
             return nextState;
@@ -30,13 +23,13 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("AirAttack2");
-            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.SWORD_ATTACKING, playableCharacterController._soundEffectListByType);
+            playableCharacterController.playableCharacterMoveSpeed = 0;
+            playableCharacterController.playableCharacterAnimator.Play("Die");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController._isTouchingByAttack = false;
+            
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

@@ -1,5 +1,4 @@
-﻿using Assets.Script.Data;
-using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
+﻿using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
 using UnityEngine;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -7,7 +6,11 @@ namespace Assets.Script.Controller.PlayableCharacter.Fire
 {
     public class FirePlayableCharacterController : PlayableCharacterController
     {
-        public int _healthDuringBlockIdle;
+        [HideInInspector]
+        public bool _isHoldingBlock = false;
+
+        [Header("Blocking component")]
+        public ParticleSystem _blockVFX;
 
         #region MonoBehaviour Method
         private void Start()
@@ -22,11 +25,11 @@ namespace Assets.Script.Controller.PlayableCharacter.Fire
         {
             if (context.started)
             {
-                currentState.PerformingInput(PlayableCharacterActionReference.HOLD_BLOCKING);
+                _isHoldingBlock = true;
             }
             else if (context.canceled)
             {
-                currentState.PerformingInput(PlayableCharacterActionReference.RELEASE_BLOCKING);
+                _isHoldingBlock = false;
             }
         }
         #endregion

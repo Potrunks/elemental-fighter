@@ -41,6 +41,7 @@ namespace Assets.Script.FiniteStateMachine
             {
                 moveSoundEffect.Stop();
             }
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

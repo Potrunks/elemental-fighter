@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -13,7 +14,7 @@ namespace Assets.Script.FiniteStateMachine
                 bool gameIsOver = playableCharacterController.characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
                 if (!gameIsOver)
                 {
-                    return nextState = new EarthIdlePlayableCharacterState();
+                    return new EarthIdlePlayableCharacterState();
                 }
             }
             return nextState;
@@ -21,6 +22,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController.playableCharacterMoveSpeed = 0;
             playableCharacterController.playableCharacterAnimator.Play("Die");
         }
 
@@ -31,7 +33,13 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            
+            switch (action)
+            {
+                default:
+                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
+                    nextState = null;
+                    break;
+            }
         }
     }
 }

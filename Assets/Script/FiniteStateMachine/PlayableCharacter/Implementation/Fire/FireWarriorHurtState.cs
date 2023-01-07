@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorSecondAirSwordAttackState : PlayableCharacterStateV2
+    public class FireWarriorHurtState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -15,14 +15,13 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 return new FireWarriorHurtState();
             }
 
-            if (playableCharacterController.isGrounding)
-            {
-                return new FireWarriorIdleState();
-            }
-
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                return new FireWarriorSecondAirSwordAttackTransitionState();
+                if (playableCharacterController._currentHealth <= 0)
+                {
+                    return new FireWarriorDieState();
+                }
+                return new FireWarriorIdleState();
             }
 
             return nextState;
@@ -30,8 +29,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("AirAttack2");
-            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.SWORD_ATTACKING, playableCharacterController._soundEffectListByType);
+            playableCharacterController._bloodEffectForDamage.Play();
+            playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
+            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
