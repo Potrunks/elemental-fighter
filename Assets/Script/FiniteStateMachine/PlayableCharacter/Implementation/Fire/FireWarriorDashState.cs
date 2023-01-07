@@ -1,9 +1,10 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Controller.PlayableCharacter.Fire;
+using Assets.Script.Data;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
-    public class FireWarriorSecondAirFireballAttackTransitionState : PlayableCharacterStateV2
+    public class FireWarriorDashState : PlayableCharacterStateV2
     {
         private IPlayableCharacterStateV2 nextState;
 
@@ -21,15 +22,12 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityHighThreshold)
+                if (playableCharacterController.isGrounding)
                 {
-                    return new FireWarriorJumpState();
+                    return new FireWarriorIdleState();
                 }
 
-                if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
-                {
-                    return new FireWarriorFallState();
-                }
+                return new FireWarriorFallState();
             }
 
             return nextState;
@@ -37,11 +35,18 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
-            playableCharacterController.playableCharacterAnimator.Play("AirMediumAttack2Transition");
+            FirePlayableCharacterController character = (FirePlayableCharacterController)playableCharacterController;
+
+            character._nextDashMoveTime = Time.time + character._dashMoveCooldown;
+            character.playableCharacterMoveSpeed = 0;
+            character.playableCharacterAnimator.Play("DashMove");
+            playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(playableCharacterController.playableCharacter.JumpForce * GamePlayValueReference.DASH_FORCE_MULTIPLICATOR * (playableCharacterController._isLeftFlip ? -1 : 1), 0));
+            character._dashVFX.Play();
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController.playableCharacterMoveSpeed = playableCharacterController.playableCharacter.MoveSpeed;
             playableCharacterController._isTouchingByAttack = false;
         }
 
@@ -49,9 +54,6 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
-                case PlayableCharacterActionReference.HeavyAtk:
-                    nextState = new FireWarriorFirstAirBigFireballAttackState();
-                    break;
                 default:
                     Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
                     nextState = null;

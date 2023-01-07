@@ -11,5 +11,7 @@
         /// Percentage of health to starting bleeding effect for character.
         /// </summary>
         public static float START_PERCENTAGE_BLEEDING = 80f;
+
+        public static float DASH_FORCE_MULTIPLICATOR = 1.5f;
     }
 }

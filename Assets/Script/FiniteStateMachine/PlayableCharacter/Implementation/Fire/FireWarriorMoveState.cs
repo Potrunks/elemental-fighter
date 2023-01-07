@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Controller.PlayableCharacter.Fire;
+using Assets.Script.Data;
 using Assets.Script.Data.Reference;
 using UnityEngine;
 
@@ -16,13 +17,27 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 return new FireWarriorHurtState();
             }
 
+            if (nextState != null && nextState.GetType() == typeof(FireWarriorDashState))
+            {
+                FirePlayableCharacterController character = (FirePlayableCharacterController)playableCharacterController;
+
+                if (character.isDeviceUsed
+                    && (character.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityHighThreshold
+                        || character.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityLowThreshold)
+                    && character._nextDashMoveTime <= Time.time)
+                {
+                    return nextState;
+                }
+                nextState = null;
+            }
+
             if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
             {
                 return new FireWarriorFallState();
             }
 
-            if (playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityHighThreshold
-                && playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityLowThreshold)
+            if ((playableCharacterController.playableCharacterRigidbody.velocity.x <= GamePlayValueReference.velocityHighThreshold
+                && playableCharacterController.playableCharacterRigidbody.velocity.x >= GamePlayValueReference.velocityLowThreshold) || !playableCharacterController.isDeviceUsed)
             {
                 return new FireWarriorIdleState();
             }
@@ -50,6 +65,9 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             switch (action)
             {
+                case PlayableCharacterActionReference.SpecialAtk:
+                    nextState = new FireWarriorDashState();
+                    break;
                 case PlayableCharacterActionReference.Jump:
                     nextState = new FireWarriorJumpState();
                     break;
