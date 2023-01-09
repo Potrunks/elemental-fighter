@@ -58,6 +58,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     [Header("Audio")]
     public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
+    public IDictionary<VoiceType, List<AudioSource>> _voiceListByType;
 
     public IPlayableCharacterStateV2 currentState;
     public IPlayableCharacterStateV2 nextState;
@@ -119,6 +120,7 @@ public class PlayableCharacterController : MonoBehaviour
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
         _nextBleedingTime = null;
         _soundEffectListByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(playableCharacter.SoundEffectList, gameObject);
+        _voiceListByType = _audioBusiness.CreateAudioSourceListByVoiceType(playableCharacter.VoiceList, gameObject);
     }
     #endregion
 

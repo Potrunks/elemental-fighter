@@ -32,6 +32,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             playableCharacterController.playableCharacterAnimator.Play("AirMediumAttack2");
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.ELEMENTAL_CASTING, playableCharacterController._soundEffectListByType);
+            playableCharacterController._audioBusiness.PlayRandomVoice(VoiceType.MEDIUM_ATTACK, playableCharacterController._voiceListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

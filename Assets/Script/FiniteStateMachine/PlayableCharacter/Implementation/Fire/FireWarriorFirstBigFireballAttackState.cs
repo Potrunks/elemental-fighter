@@ -28,6 +28,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             playableCharacterController.playableCharacterMoveSpeed = 0f;
             playableCharacterController.playableCharacterAnimator.Play("HeavyATK1");
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
+            playableCharacterController._audioBusiness.PlayRandomVoice(VoiceType.HEAVY_ATTACK, playableCharacterController._voiceListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

@@ -32,6 +32,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             playableCharacterController._bloodEffectForDamage.Play();
             playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);
+            playableCharacterController._audioBusiness.PlayRandomVoice(VoiceType.HURT, playableCharacterController._voiceListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
