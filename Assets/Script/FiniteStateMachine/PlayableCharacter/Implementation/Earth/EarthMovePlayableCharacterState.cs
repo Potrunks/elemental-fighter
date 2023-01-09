@@ -1,6 +1,5 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
@@ -42,6 +41,7 @@ namespace Assets.Script.FiniteStateMachine
             {
                 moveSoundEffect.Stop();
             }
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

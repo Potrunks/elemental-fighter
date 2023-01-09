@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Data;
+using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
 {
@@ -10,23 +11,23 @@ namespace Assets.Script.FiniteStateMachine
         {
             if (playableCharacterController._isTouchingByAttack)
             {
-                return nextState = new EarthHurtPlayableCharacterState();
+                return new EarthHurtPlayableCharacterState();
             }
 
             if (playableCharacterController.isGrounding)
             {
-                return nextState = new EarthIdlePlayableCharacterState();
+                return new EarthIdlePlayableCharacterState();
             }
 
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 if (playableCharacterController.playableCharacterRigidbody.velocity.y >= GamePlayValueReference.velocityHighThreshold)
                 {
-                    return nextState = new EarthJumpPlayableCharacterState();
+                    return new EarthJumpPlayableCharacterState();
                 }
                 if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
                 {
-                    return nextState = new EarthFallPlayableCharacterState();
+                    return new EarthFallPlayableCharacterState();
                 }
             }
 
@@ -40,12 +41,18 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
         {
-            
+            switch (action)
+            {
+                default:
+                    Debug.LogWarning(GamePlayConstraintException.ActionNotPermitted + action);
+                    nextState = null;
+                    break;
+            }
         }
     }
 }

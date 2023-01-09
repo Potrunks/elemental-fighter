@@ -3,6 +3,7 @@ using Assets.Script.Entities;
 using DG.Tweening;
 using System.Linq;
 using UnityEngine;
+using static Pathfinding.Util.RetainedGizmos;
 
 namespace Assets.Script.Business
 {
@@ -34,14 +35,7 @@ namespace Assets.Script.Business
                 spawnPoint.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
 
-            elementalToCast.GetComponent<PowerController>()._caster = caster;
-
-            return GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        }
-
-        public void PushMediumElemental(PlayableCharacterController pusher)
-        {
-            throw new System.NotImplementedException();
+            return InstantiateElemental(elementalToCast, spawnPoint, caster);
         }
 
         public void InstantiateElementalUpperOrientation(GameObject elementalToCast, GameObject spawnPoint, PlayableCharacterController caster)
@@ -55,32 +49,7 @@ namespace Assets.Script.Business
                 spawnPoint.transform.rotation = Quaternion.Euler(spawnPoint.transform.rotation.x, spawnPoint.transform.rotation.y, 80);
             }
 
-            elementalToCast.GetComponent<PowerController>()._caster = caster;
-
-            GameObject.Instantiate(elementalToCast, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        }
-
-        /// <summary>
-        /// Calculate the angle for the elemental spawn point depending on elemental type and level.
-        /// </summary>
-        private Quaternion SetAngleOfSpawnPoint(Quaternion spawnPointQuaternion, PowerLevelReference powerLevel, PowerTypeReference powerType)
-        {
-            Quaternion quaternion = Quaternion.identity;
-
-            if (powerType == PowerTypeReference.Earth
-                && powerLevel == PowerLevelReference.Medium)
-            {
-                if (spawnPointQuaternion.eulerAngles.magnitude == 180)
-                {
-                    quaternion = Quaternion.Euler(spawnPointQuaternion.x, spawnPointQuaternion.y, 112);
-                }
-                else
-                {
-                    quaternion = Quaternion.Euler(spawnPointQuaternion.x, spawnPointQuaternion.y, 67);
-                }
-            }
-
-            return quaternion;
+            InstantiateElemental(elementalToCast, spawnPoint, caster);
         }
 
         public void CheckElementalStateChange(PowerController controller)
@@ -125,6 +94,12 @@ namespace Assets.Script.Business
                 enemy._enemy = caster;
                 enemy._isTouchingByAttack = true;
             }
+        }
+
+        public GameObject InstantiateElemental(GameObject elementalToInstantiate, GameObject spawnPoint, PlayableCharacterController caster)
+        {
+            elementalToInstantiate.GetComponent<PowerController>()._caster = caster;
+            return Object.Instantiate(elementalToInstantiate, spawnPoint.transform.position, spawnPoint.transform.rotation);
         }
     }
 }

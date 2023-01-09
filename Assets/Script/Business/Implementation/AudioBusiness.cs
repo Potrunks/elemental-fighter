@@ -26,7 +26,7 @@ namespace Assets.Script.Business.Implementation
                     {
                         AudioSource audioSource = gameObjectToAddAudioSource.AddComponent<AudioSource>();
                         audioSource.clip = sound.File;
-                        audioSource.volume = (GameManager.instance != null ? GameManager.instance.volumeMainTheme : 0.5f) * sound.AmplifyVolumeValue;
+                        audioSource.volume = (GameManager.instance != null ? GameManager.instance.volumeMainTheme : SettingValueReference.MAIN_VOLUME_DEFAULT) * sound.AmplifyVolumeValue;
                         audioSource.pitch = sound.Speed;
                         audioSource.loop = sound.IsLooping;
                         audioSource.time = sound.StartedTime;
@@ -54,7 +54,44 @@ namespace Assets.Script.Business.Implementation
 
         public AudioSource PlayRandomSoundEffect(SoundEffectType soundEffectTypeToPlay, IDictionary<SoundEffectType, List<AudioSource>> soundEffectListByType)
         {
-            List<AudioSource> audioSourceList = soundEffectListByType != null ? soundEffectListByType[soundEffectTypeToPlay] : null;
+            List<AudioSource> audioSourceList = soundEffectListByType.ContainsKey(soundEffectTypeToPlay) ? soundEffectListByType[soundEffectTypeToPlay] : null;
+            AudioSource audioSourcePlayed = PlayRandomAudioSource(audioSourceList);
+            return audioSourcePlayed;
+        }
+
+        public IDictionary<VoiceType, List<AudioSource>> CreateAudioSourceListByVoiceType(List<Voice> voiceList, GameObject gameObjectToAddAudioSource)
+        {
+            Debug.Log("Start of -> Class : " + nameof(AudioBusiness) + " -> Method : " + nameof(AudioBusiness.CreateAudioSourceListByVoiceType));
+            Debug.Log(voiceList.Count() + " voice in total");
+            IDictionary<VoiceType, List<AudioSource>> audioSourceListByType = null;
+            if (voiceList.Any())
+            {
+                audioSourceListByType = new Dictionary<VoiceType, List<AudioSource>>();
+                IEnumerable<VoiceType> existingVoiceTypeList = voiceList.Select(voice => voice.Type).Distinct();
+                Debug.Log(existingVoiceTypeList.Count() + " voice type existing in voice list");
+                foreach (VoiceType type in existingVoiceTypeList)
+                {
+                    audioSourceListByType.Add(type, new List<AudioSource>());
+                    foreach (Voice voice in voiceList.Where(voice => voice.Type == type))
+                    {
+                        AudioSource audioSource = gameObjectToAddAudioSource.AddComponent<AudioSource>();
+                        audioSource.clip = voice.File;
+                        audioSource.volume = (GameManager.instance != null ? GameManager.instance.volumeMainTheme : SettingValueReference.MAIN_VOLUME_DEFAULT) * voice.AmplifyVolumeValue;
+                        audioSource.pitch = voice.Speed;
+                        audioSource.loop = voice.IsLooping;
+                        audioSource.time = voice.StartedTime;
+                        audioSourceListByType[type].Add(audioSource);
+                    }
+                }
+                Debug.Log(audioSourceListByType.Keys.Count() + " voice type in the dictionnary and " + audioSourceListByType.Values.Count() + " voice in the dictionnary");
+            }
+            Debug.Log("End of -> Class : " + nameof(AudioBusiness) + " -> Method : " + nameof(AudioBusiness.CreateAudioSourceListByVoiceType));
+            return audioSourceListByType;
+        }
+
+        public AudioSource PlayRandomVoice(VoiceType voiceTypeToPlay, IDictionary<VoiceType, List<AudioSource>> voiceListByType)
+        {
+            List<AudioSource> audioSourceList = voiceListByType.ContainsKey(voiceTypeToPlay) ? voiceListByType[voiceTypeToPlay] : null;
             AudioSource audioSourcePlayed = PlayRandomAudioSource(audioSourceList);
             return audioSourcePlayed;
         }

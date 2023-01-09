@@ -23,6 +23,9 @@ namespace Assets.Script.Entities
         public List<SoundEffect> SoundEffectList { get; private set; }
 
         [field: SerializeField]
+        public List<Voice> VoiceList { get; private set; }
+
+        [field: SerializeField]
         public List<PowerEntity> PowerEntityList { get; private set; }
 
         [field: SerializeField]

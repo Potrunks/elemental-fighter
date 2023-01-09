@@ -1,13 +1,9 @@
 using Assets.Script.Business;
-using Assets.Script.Business.Extension;
 using Assets.Script.Business.Implementation;
 using Assets.Script.Business.Interface;
 using Assets.Script.Data;
-using Assets.Script.Data.ConstraintException;
 using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
-using Assets.Script.Entities.Audio;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -62,6 +58,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     [Header("Audio")]
     public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
+    public IDictionary<VoiceType, List<AudioSource>> _voiceListByType;
 
     public IPlayableCharacterStateV2 currentState;
     public IPlayableCharacterStateV2 nextState;
@@ -123,6 +120,7 @@ public class PlayableCharacterController : MonoBehaviour
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
         _nextBleedingTime = null;
         _soundEffectListByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(playableCharacter.SoundEffectList, gameObject);
+        _voiceListByType = _audioBusiness.CreateAudioSourceListByVoiceType(playableCharacter.VoiceList, gameObject);
     }
     #endregion
 
@@ -193,6 +191,12 @@ public class PlayableCharacterController : MonoBehaviour
     public void OnThrowLightAtk()
     {
         characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
+    }
+
+    public void CastElementalPower(PowerLevelReference level)
+    {
+        kvpPowerModelByPowerLevel.TryGetValue(level, out GameObject elementalToCast);
+        elementalBusiness.InstantiateElemental(elementalToCast, gameObjectElementalSpawnPoint, this);
     }
     #endregion
 }

@@ -1,7 +1,7 @@
 ﻿using Assets.Script.Data;
-using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Assets.Script.Business
 {
@@ -83,5 +83,10 @@ namespace Assets.Script.Business
         /// Play the bleeding effect of the character depending of the amount of damage taken.
         /// </summary>
         float? DoBleedingEffect(int currentHealth, int maxHealth, float? nextBleedingTime, ParticleSystem bleedingEffectParticle);
+
+        /// <summary>
+        /// Return the amount of damage blocked.
+        /// </summary>
+        int ReturnBlockedDamage(int healthAfterDamage, int healthBeforeDamage, int damageReductionFactor);
     }
 }

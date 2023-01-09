@@ -1,6 +1,5 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Script.FiniteStateMachine
@@ -27,15 +26,13 @@ namespace Assets.Script.FiniteStateMachine
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.JUMPING, playableCharacterController._soundEffectListByType);
-
             playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(0f, playableCharacterController.playableCharacter.JumpForce));
-
             playableCharacterController.playableCharacterAnimator.Play("Jump");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-            
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)

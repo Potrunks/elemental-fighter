@@ -14,6 +14,11 @@ namespace Assets.Script.FiniteStateMachine
                 return new EarthHurtPlayableCharacterState();
             }
 
+            if (playableCharacterController.playableCharacterRigidbody.velocity.y <= GamePlayValueReference.velocityLowThreshold)
+            {
+                return new EarthFallPlayableCharacterState();
+            }
+
             if (playableCharacterController.isDeviceUsed
                 && (playableCharacterController.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
                     || playableCharacterController.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold))
@@ -26,12 +31,12 @@ namespace Assets.Script.FiniteStateMachine
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
             playableCharacterController.playableCharacterMoveSpeed = playableCharacterController.playableCharacter.MoveSpeed;
-            playableCharacterController.playableCharacterAnimator.Play("Idle");
+            playableCharacterController.playableCharacterAnimator.Play("Idle", -1, 0);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
-
+            playableCharacterController._isTouchingByAttack = false;
         }
 
         public override void PerformingInput(PlayableCharacterActionReference action)
