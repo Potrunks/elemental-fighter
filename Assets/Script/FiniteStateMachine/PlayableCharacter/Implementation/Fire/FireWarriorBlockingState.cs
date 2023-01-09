@@ -60,6 +60,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             character._blockVFX.Play();
             character.playableCharacterAnimator.Play("Blocking", -1, 0);
             character._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_BLOCKING, character._soundEffectListByType);
+            character._audioBusiness.PlayRandomVoice(VoiceType.BLOCKING, character._voiceListByType);
             character._currentHealth += _characterBusiness.ReturnBlockedDamage(character._currentHealth, _healthBeforeBlock, 3);
             _healthBeforeBlock = character._currentHealth;
         }

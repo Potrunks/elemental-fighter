@@ -1,5 +1,7 @@
 ﻿using Assets.Script.Data;
+using Assets.Script.Data.Reference;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
@@ -25,6 +27,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             playableCharacterController.playableCharacterMoveSpeed = 0;
             playableCharacterController.playableCharacterAnimator.Play("Die");
+            playableCharacterController._audioBusiness.PlayRandomVoice(VoiceType.DIE, playableCharacterController._voiceListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

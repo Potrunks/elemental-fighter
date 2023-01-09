@@ -25,6 +25,38 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4bf6906926a89a46983e1a9e990c147, type: 2}
   - {fileID: 11400000, guid: 659ae2366a790994d8d13da7c125dfe4, type: 2}
   - {fileID: 11400000, guid: 0ab467f2bc83f384389a72ea2cd2f054, type: 2}
+  <VoiceList>k__BackingField:
+  - {fileID: 11400000, guid: 0018da008aab70c45b9e92b0ab667bd8, type: 2}
+  - {fileID: 11400000, guid: 7e8c9942a96ff1741bbdeecd2e48787a, type: 2}
+  - {fileID: 11400000, guid: 565fadbb43a4d31438799ad990463246, type: 2}
+  - {fileID: 11400000, guid: ab53b2c0ec9a82d45baa6efa765b6e42, type: 2}
+  - {fileID: 11400000, guid: a63244d718782f144821a4d871d2a3f5, type: 2}
+  - {fileID: 11400000, guid: af3012a8b29ff414cb8c6817beb2b208, type: 2}
+  - {fileID: 11400000, guid: dd27b43e40ae95245b0ece92e25f3182, type: 2}
+  - {fileID: 11400000, guid: 3d43ad0d828b0644182e89bbb9deff99, type: 2}
+  - {fileID: 11400000, guid: ea536cf99a384a241a4d84ac6b576209, type: 2}
+  - {fileID: 11400000, guid: deac0e53177ea4344ada4c8c1225ac27, type: 2}
+  - {fileID: 11400000, guid: 99019ad29680f73499093660b8893c5b, type: 2}
+  - {fileID: 11400000, guid: 73fd8a261a87c234c9af7bc748302faa, type: 2}
+  - {fileID: 11400000, guid: 17f8f772a784d834589ff70382034228, type: 2}
+  - {fileID: 11400000, guid: ade1e89763fbe24419291e0f8c17a01b, type: 2}
+  - {fileID: 11400000, guid: 87375ad139fe87d42a20e8ce882fa517, type: 2}
+  - {fileID: 11400000, guid: c8b0d5aa3b398ff4baae1ee7a7068d3f, type: 2}
+  - {fileID: 11400000, guid: b613ff84a06ba9441a33fe85311359fa, type: 2}
+  - {fileID: 11400000, guid: c4b9e91450f258f4f91e2279e05e195d, type: 2}
+  - {fileID: 11400000, guid: aaa364ffa33619b4ab2c9f5bbc03ae05, type: 2}
+  - {fileID: 11400000, guid: 885a68d01d24b714aa4aabb643058dce, type: 2}
+  - {fileID: 11400000, guid: 037e5e16f0f9feb40b2e756c977117f7, type: 2}
+  - {fileID: 11400000, guid: a03a12b62d6c14d43adf1c6864b1b8db, type: 2}
+  - {fileID: 11400000, guid: a8883cfe0b945774c825b25c52b5624d, type: 2}
+  - {fileID: 11400000, guid: 46a6f274061f7074eba8e02cbcf8bdca, type: 2}
+  - {fileID: 11400000, guid: f796312ec56d10a4cb8f9a0d5239c41b, type: 2}
+  - {fileID: 11400000, guid: fcc9e35133c19644c809845fd27cf058, type: 2}
+  - {fileID: 11400000, guid: 5c0b7bfdaa9e1bc4dba7f3f3cfe7a751, type: 2}
+  - {fileID: 11400000, guid: c10736d2913912c488332bf05a61b5ba, type: 2}
+  - {fileID: 11400000, guid: d90c8676ef192934d96c9025a3c0fd27, type: 2}
+  - {fileID: 11400000, guid: ec5ee512971ae094fb1545c385e50dd5, type: 2}
+  - {fileID: 11400000, guid: caef6cc052af9ab44af9022e06bc88ae, type: 2}
   <PowerEntityList>k__BackingField:
   - {fileID: 11400000, guid: eadf04051dab3de4dafdc8d93adeed21, type: 2}
   - {fileID: 11400000, guid: 71744a06d981d8e4c89038016645fe53, type: 2}

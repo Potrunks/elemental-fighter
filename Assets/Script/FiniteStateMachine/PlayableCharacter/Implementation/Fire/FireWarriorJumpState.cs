@@ -41,6 +41,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.JUMPING, playableCharacterController._soundEffectListByType);
+            playableCharacterController._audioBusiness.PlayRandomVoice(VoiceType.JUMP, playableCharacterController._voiceListByType);
             playableCharacterController.playableCharacterRigidbody.AddForce(new Vector2(0f, playableCharacterController.playableCharacter.JumpForce));
             playableCharacterController.playableCharacterAnimator.Play("Jump");
         }
