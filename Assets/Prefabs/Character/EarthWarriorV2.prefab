@@ -267,7 +267,19 @@ MonoBehaviour:
     m_ActionId: c21e1f7a-d2bb-497f-aac9-8e296a508095
     m_ActionName: Gameplay/New action
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1463338797390480162}
+        m_TargetAssemblyTypeName: PlayableCharacterController, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 337ebbf9-4f3c-44a0-9695-ce2e486a1a02
     m_ActionName: Gameplay/New action
   - m_PersistentCalls:
@@ -335,7 +347,7 @@ MonoBehaviour:
   playableCharacterRigidbody: {fileID: 0}
   playableCharacterMoveSpeed: 0
   isDeviceUsed: 0
-  isLeftFlip: 0
+  _isLeftFlip: 0
   gameObjectElementalSpawnPoint: {fileID: 0}
   _hitBoxAtk: {fileID: 4152062393142088505}
   _hitBoxAtkRadius: 0.36

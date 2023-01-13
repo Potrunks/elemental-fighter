@@ -73,16 +73,16 @@ public class PlayableCharacterController : MonoBehaviour
     #region MonoBehaviour Method
     private void FixedUpdate()
     {
-        isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
         playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
-        characterBusiness.CheckFlipCharacterModel(this);
-        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed);
-        _isInvincible = this.CheckInvincibleEndTime();
-        _nextBleedingTime = characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _nextBleedingTime, _bloodEffectForCurrentHealth);
     }
 
     private void Update()
     {
+        isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
+        characterBusiness.CheckFlipCharacterModel(this);
+        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed);
+        _isInvincible = this.CheckInvincibleEndTime();
+        _nextBleedingTime = characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _nextBleedingTime, _bloodEffectForCurrentHealth);
         characterBusiness.CheckCharacterStateChange(this);
     }
 
@@ -136,13 +136,17 @@ public class PlayableCharacterController : MonoBehaviour
     #region Action
     public void OnInputMove(InputAction.CallbackContext context)
     {
-        isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context, isDeviceUsed);
-        inputMoveValue = context.ReadValue<Vector2>();
+        if (PauseMenu.instance == null || !PauseMenu.instance.isPaused)
+        {
+            isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context, isDeviceUsed);
+            inputMoveValue = context.ReadValue<Vector2>();
+        }
+        
     }
 
     public void OnInputJump(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
         {
             currentState.PerformingInput(PlayableCharacterActionReference.Jump);
         }
@@ -150,7 +154,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnInputMediumAtk(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
         {
             currentState.PerformingInput(PlayableCharacterActionReference.MediumAtk);
         }
@@ -158,7 +162,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnInputLightAtk(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
         {
             currentState.PerformingInput(PlayableCharacterActionReference.LightAtk);
         }
@@ -166,7 +170,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnInputHeavyAtk(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
         {
             currentState.PerformingInput(PlayableCharacterActionReference.HeavyAtk);
         }
@@ -174,7 +178,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnInputSpecialAtk(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
         {
             currentState.PerformingInput(PlayableCharacterActionReference.SpecialAtk);
         }
@@ -182,7 +186,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnInputSpecialAtk2(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
         {
             currentState.PerformingInput(PlayableCharacterActionReference.SpecialAtk2);
         }
@@ -197,6 +201,14 @@ public class PlayableCharacterController : MonoBehaviour
     {
         kvpPowerModelByPowerLevel.TryGetValue(level, out GameObject elementalToCast);
         elementalBusiness.InstantiateElemental(elementalToCast, gameObjectElementalSpawnPoint, this);
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.started && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
+        {
+            PauseMenu.instance?.PauseGame(_playerIndex);
+        }
     }
     #endregion
 }

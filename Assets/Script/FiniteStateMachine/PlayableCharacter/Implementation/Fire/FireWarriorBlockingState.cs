@@ -22,7 +22,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             FirePlayableCharacterController controller = (FirePlayableCharacterController)playableCharacterController;
             if (controller._isTouchingByAttack)
             {
-                if (controller._isHoldingBlock)
+                if (controller._isHoldingBlock && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
                 {
                     return new FireWarriorBlockingState(_healthBeforeBlock);
                 }
@@ -40,7 +40,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
                 }
                 else
                 {
-                    if (controller._isHoldingBlock)
+                    if (controller._isHoldingBlock && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
                     {
                         return new FireWarriorBlockIdleState();
                     }
