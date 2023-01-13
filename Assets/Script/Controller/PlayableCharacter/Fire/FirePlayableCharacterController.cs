@@ -1,16 +1,15 @@
 ﻿using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
 using UnityEngine;
-using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.InputSystem;
 
 namespace Assets.Script.Controller.PlayableCharacter.Fire
 {
     public class FirePlayableCharacterController : PlayableCharacterController
     {
-        [HideInInspector]
-        public bool _isHoldingBlock = false;
-
         [Header("Blocking component")]
         public ParticleSystem _blockVFX;
+        [HideInInspector]
+        public bool _isHoldingBlock = false;
 
         [Header("Dash component")]
         public ParticleSystem _dashVFX;
@@ -27,7 +26,7 @@ namespace Assets.Script.Controller.PlayableCharacter.Fire
         #endregion
 
         #region Action
-        public void OnInputBlocking(CallbackContext context)
+        public void OnInputBlocking(InputAction.CallbackContext context)
         {
             if (context.started)
             {
