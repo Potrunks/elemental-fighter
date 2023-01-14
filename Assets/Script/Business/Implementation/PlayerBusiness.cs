@@ -11,7 +11,14 @@ namespace Assets.Script.Business
     {
         public Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice)
         {
-            int xVector2Modificator = characterIsFlipLeft && !playerIsUsingDevice ? -1 : 1;
+            int xVector2Modificator = 1;
+            if ((characterIsFlipLeft && !playerIsUsingDevice)
+                || (characterIsFlipLeft && playerIsUsingDevice && vector2.x > 0)
+                || (!characterIsFlipLeft && playerIsUsingDevice && vector2.x < 0))
+            {
+                xVector2Modificator = -1;
+            }
+
             int zDegreeModificator = characterIsFlipLeft && playerIsUsingDevice ? -1 : 1;
             float xDegreeModificator = characterIsFlipLeft ? 180f : 0f;
 
