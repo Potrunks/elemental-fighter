@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Business.Extension;
+using Assets.Script.Business.Tools;
 using Assets.Script.Data;
 using Assets.Script.Data.ConstraintException;
 using Assets.Script.Data.Reference;
@@ -132,7 +133,7 @@ namespace Assets.Script.Business
                         elemental.TriggerSelfDestruct(selfDestructTimer);
                         elemental._rigidbody.constraints = pusher._physicsBusiness.ApplyRigidbodyConstraint2D(rigidbodyConstraints2DList);
                         elemental.transform.rotation = elemental._rigidbody.constraints.HasFlag(RigidbodyConstraints2D.FreezeRotation) ? elemental.transform.rotation : pusher.gameObjectElementalSpawnPoint.transform.rotation;
-                        elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2), ForceMode2D.Impulse);
+                        elemental._rigidbody.AddForce(elemental.transform.right * (elemental._powerEntity.powerSpeed * 2 * AxisModificatorTools.DependCharacterAndElementalOrientation(pusher._isLeftFlip, elemental.transform.rotation.y)), ForceMode2D.Impulse);
                         elemental._collider.isTrigger = true;
                     }
                 }
