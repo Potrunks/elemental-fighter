@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Alexis Potrunks ARRIAL
+  companyName: Alexis "Potrunks" ARRIAL
   productName: Elemental Fighters
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -136,6 +136,7 @@ PlayerSettings:
     Others: 1
   bundleVersion: 2.1.0
   preloadedAssets:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -786,14 +787,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: UwpBuild001
-  metroPackageVersion: 2.0.0.0
+  metroPackageName: EFUWP
+  metroPackageVersion: 2.1.0.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: Alexis "Potrunks" ARRIAL
   metroCertificateIssuer: Alexis "Potrunks" ARRIAL
   metroCertificateNotAfter: 002b46050595d901
-  metroApplicationDescription: 2D_BuiltInRenderer
+  metroApplicationDescription: Elemental Fighters UWP version
   wsaImages: {}
   metroTileShortName: Elemental Fighter
   metroTileShowName: 0
