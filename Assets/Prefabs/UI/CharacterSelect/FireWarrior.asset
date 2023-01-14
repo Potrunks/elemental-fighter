@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb7dbe58e979cb4d843aa74efa68294, type: 3}
   m_Name: FireWarrior
   m_EditorClassIdentifier: 
-  characterName: FireWarrior
+  characterName: HongChen
   characterSprite: {fileID: 21300000, guid: 3cb137dd3ff682045a1b963de46ecb5e, type: 3}
   characterPrefab: {fileID: 4152062391814938593, guid: 70fab45ce69a95a46bda6a223168ff66, type: 3}
