@@ -25,6 +25,7 @@ namespace Assets.Script.FiniteStateMachine
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController.playableCharacterMoveSpeed = 0;
             playableCharacterController.playableCharacterAnimator.Play("SpecialATK2");
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.MELEE_ATTACKING, playableCharacterController._soundEffectListByType);
         }
