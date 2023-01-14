@@ -16,7 +16,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             }
 
             FirePlayableCharacterController controller = (FirePlayableCharacterController)playableCharacterController;
-
+            
             if (controller._isHoldingBlock && (PauseMenu.instance == null || !PauseMenu.instance.isPaused))
             {
                 return new FireWarriorBlockIdleState();
