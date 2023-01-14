@@ -29,6 +29,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnEnter(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController.playableCharacterMoveSpeed = 0;
             playableCharacterController._bloodEffectForDamage.Play();
             playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
             playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);
@@ -37,6 +38,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
         {
+            playableCharacterController.playableCharacterMoveSpeed = playableCharacterController.playableCharacter.MoveSpeed;
             playableCharacterController._isTouchingByAttack = false;
         }
 
