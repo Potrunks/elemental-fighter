@@ -1,4 +1,5 @@
 using Assets.Script.Business;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,6 +51,8 @@ public class SpawnPlayer : MonoBehaviour
                 {
                     Debug.Log("Activation of Player mode for player " + (_playableCharacterControllerSelected._playerIndex + 1));
                     playerInput.enabled = true;
+                    InputDevice currentInputDevice = (InputDevice)GameManager.instance.deviceAndCharacterPlayerByIndex[playerIndex + 1].Single(obj => obj is InputDevice);
+                    playerInput.SwitchCurrentControlScheme(currentInputDevice is Gamepad ? "Gamepad" : "Keyboard", currentInputDevice);
                     PauseMenu.instance.inputDeviceByPlayerIndex.Add(playerIndex, playerInput.devices[0]);
                 }
                 playersIsActivated = true;
