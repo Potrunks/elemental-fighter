@@ -142,7 +142,7 @@ namespace Assets.Script.Business
         public void RespawnPlayer(PlayableCharacterController characterToRespawn)
         {
             Debug.Log("The player " + (characterToRespawn._playerIndex + 1) + " respawn !!!");
-            characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint.transform.position;
+            characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint == null ? characterToRespawn.transform.position : characterToRespawn._spawnPlayerPoint.transform.position;
             characterToRespawn._currentHealth = characterToRespawn.playableCharacter.MaxHealth;
             characterToRespawn.TriggerInvincibility(3f);
         }
@@ -150,7 +150,7 @@ namespace Assets.Script.Business
         public bool ResetCharacterAfterDeath(PlayableCharacterController characterDied)
         {
             Debug.Log("The player " + (characterDied._playerIndex + 1) + " just died... Reset character in progress...");
-            bool hasEnemyWon = UpdateCharacterScore(characterDied._enemy._scorePlayer);
+            bool hasEnemyWon = characterDied._enemy._scorePlayer == null ? false : UpdateCharacterScore(characterDied._enemy._scorePlayer);
             if (hasEnemyWon)
             {
                 GameManager.instance.DisplayEndgameResults();
