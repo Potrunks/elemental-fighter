@@ -1,13 +1,12 @@
-﻿using Assets.Script.Business.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using System.Linq;
 
-namespace Assets.Script.Business.Implementation
+namespace Assets.Script.Business
 {
-    internal class SelectCharacterMenuBusiness : ISelectCharacterMenuBusiness
+    public class SelectCharacterMenuBusiness : ISelectCharacterMenuBusiness
     {
         private static readonly System.Random random = new System.Random();
 

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface IVFXBusiness
+    public interface IVFXBusiness
     {
         /// <summary>
         /// Clear the tween effect of image component of the child game object from a parent gameobject

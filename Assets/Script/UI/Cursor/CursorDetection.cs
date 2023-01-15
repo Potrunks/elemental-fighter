@@ -1,10 +1,9 @@
+using Assets.Script.Business;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
-using Assets.Script.Business.Interface;
-using Assets.Script.Business.Implementation;
 
 public class CursorDetection : MonoBehaviour
 {

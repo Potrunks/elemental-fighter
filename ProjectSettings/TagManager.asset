@@ -18,10 +18,10 @@ TagManager:
   - Enemy
   - Player2
   - Obstacle
-  - 
-  - 
-  - 
-  - 
+  - ElementalProjectile
+  - ElementalStatic
+  - ElementalProjectileMountable
+  - ElementalStaticMountable
   - 
   - 
   - 

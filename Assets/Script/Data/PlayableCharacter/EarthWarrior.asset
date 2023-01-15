@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2844163388c54194c8cf977b422626f0, type: 3}
+  m_Name: EarthWarrior
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Baptiste
+  <Model>k__BackingField: {fileID: 4152062391814938593, guid: 0624744d6edc6f4458beb6081fa1a908, type: 3}
+  <MoveSpeed>k__BackingField: 350
+  <JumpForce>k__BackingField: 500
+  <SoundEffectList>k__BackingField:
+  - {fileID: 11400000, guid: 5c2343966924a3e4d8ef47abbabb0120, type: 2}
+  - {fileID: 11400000, guid: 7ed1d37d261aa24448fded3ae5e0acfc, type: 2}
+  - {fileID: 11400000, guid: 2587cbc52cfcfaa4cb167f7dc34fccf9, type: 2}
+  - {fileID: 11400000, guid: d4bf6906926a89a46983e1a9e990c147, type: 2}
+  - {fileID: 11400000, guid: 04201ab5d5615d3408e7019b92e6b140, type: 2}
+  <PowerEntityList>k__BackingField:
+  - {fileID: 11400000, guid: 8119aacb8c1293a4db91c0cd87239999, type: 2}
+  - {fileID: 11400000, guid: f42020075b1159242ab36755096817de, type: 2}
+  - {fileID: 11400000, guid: ced7a176f338e2044bd95aa6ee77b301, type: 2}
+  <AttackForce>k__BackingField: 42
+  <MaxHealth>k__BackingField: 1000

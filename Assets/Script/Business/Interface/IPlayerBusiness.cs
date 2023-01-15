@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Script.Business.Interface
+namespace Assets.Script.Business
 {
-    internal interface IPlayerBusiness
+    public interface IPlayerBusiness
     {
         /// <summary>
         /// Create new Player in order to select character
@@ -58,5 +58,10 @@ namespace Assets.Script.Business.Interface
         /// </summary>
         /// <param name="inputDeviceByPlayerIndex">All device by player index connected</param>
         void ReactivateAllDevice(IDictionary<int, InputDevice> inputDeviceByPlayerIndex);
+
+        /// <summary>
+        /// Calculate the shoot angle of the player.
+        /// </summary>
+        Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice);
     }
 }
