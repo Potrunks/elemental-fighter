@@ -1,4 +1,5 @@
 ﻿using Assets.Script.Business.Extension;
+using Assets.Script.Business.Job;
 using Assets.Script.Business.Tools;
 using Assets.Script.Data;
 using Assets.Script.Data.ConstraintException;
@@ -8,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,11 +57,25 @@ namespace Assets.Script.Business
         public Vector2 MoveCharacter(Vector2 inputMoveValue, float moveSpeed, Rigidbody2D rigidbodyToMove, float smoothTime)
         {
             Vector3 reference = Vector3.zero;
-            float horizontalMovement = inputMoveValue.x * moveSpeed * Time.deltaTime;
-            return Vector3.SmoothDamp(rigidbodyToMove.velocity,
-                                      new Vector2(horizontalMovement, rigidbodyToMove.velocity.y),
+            NativeArray<float> result = new NativeArray<float>(1, Allocator.TempJob);
+            NativeArray<float> floatToMultiplicate = new NativeArray<float>(3, Allocator.TempJob);
+            floatToMultiplicate[0] = inputMoveValue.x;
+            floatToMultiplicate[1] = moveSpeed;
+            floatToMultiplicate[2] = Time.deltaTime;
+            MultiplicatorJob job = new MultiplicatorJob
+            {
+                floatListToMultiplicate = floatToMultiplicate,
+                resultMultiplicator = result
+            };
+            JobHandle jobHandle = job.Schedule();
+            jobHandle.Complete();
+            Vector2 vector2 = Vector3.SmoothDamp(rigidbodyToMove.velocity,
+                                      new Vector2(result[0], rigidbodyToMove.velocity.y),
                                       ref reference,
                                       smoothTime);
+            result.Dispose();
+            floatToMultiplicate.Dispose();
+            return vector2;
         }
 
         public void ShowCharacterInPlayerSlot(GameObject playerSlot, GameObject characterUnderPlayerCursor)
@@ -145,7 +162,7 @@ namespace Assets.Script.Business
             Debug.Log("The player " + (characterToRespawn._playerIndex + 1) + " respawn !!!");
             characterToRespawn.transform.position = characterToRespawn._spawnPlayerPoint == null ? characterToRespawn.transform.position : characterToRespawn._spawnPlayerPoint.transform.position;
             characterToRespawn._currentHealth = characterToRespawn.playableCharacter.MaxHealth;
-            characterToRespawn.TriggerInvincibility(3f);
+            characterToRespawn.StartCoroutine(characterToRespawn.DoInvincibleCoroutine(GamePlayValueReference.INVINCIBLE_DURATION));
         }
 
         public bool ResetCharacterAfterDeath(PlayableCharacterController characterDied)
@@ -191,49 +208,30 @@ namespace Assets.Script.Business
                                });
         }
 
-        public float? DoBleedingEffect(int currentHealth, int maxHealth, float? nextBleedingTime, ParticleSystem bleedingEffectParticle)
-        {
-            if (nextBleedingTime == null && currentHealth <= maxHealth.PercentageOf(GamePlayValueReference.START_PERCENTAGE_BLEEDING))
-            {
-                return PrepareNextBleedingTime(currentHealth, maxHealth, nextBleedingTime);
-            }
-
-            if (nextBleedingTime != null && Time.time > nextBleedingTime)
-            {
-                return PlayBleedingEffect(bleedingEffectParticle);
-            }
-
-            return nextBleedingTime;
-        }
-
-        private float? PrepareNextBleedingTime(int currentHealth, int maxHealth, float? nextBleedingTime)
+        public float DoBleedingEffect(int currentHealth, int maxHealth, ParticleSystem bleedingEffectParticle)
         {
             float percentageCurrentHealth = currentHealth.ToPercentage(maxHealth);
+            float nextBleedingTime = 0;
 
             switch (percentageCurrentHealth)
             {
-                case >= 60f:
-                    nextBleedingTime = Time.time + 4f;
+                case >= 60:
+                    nextBleedingTime = 4;
                     break;
-                case >= 40f:
-                    nextBleedingTime = Time.time + 3f;
+                case >= 40:
+                    nextBleedingTime = 3;
                     break;
-                case >= 20f:
-                    nextBleedingTime = Time.time + 2f;
+                case >= 20:
+                    nextBleedingTime = 2;
                     break;
-                case > 0f:
-                    nextBleedingTime = Time.time + 1f;
+                case > 0:
+                    nextBleedingTime = 1;
                     break;
             }
 
-            return nextBleedingTime;
-        }
-
-        private float? PlayBleedingEffect(ParticleSystem bleedingEffectParticle)
-        {
             bleedingEffectParticle.Play();
 
-            return null;
+            return nextBleedingTime;
         }
 
         public int ReturnBlockedDamage(int healthAfterDamage, int healthBeforeDamage, int damageReductionFactor)

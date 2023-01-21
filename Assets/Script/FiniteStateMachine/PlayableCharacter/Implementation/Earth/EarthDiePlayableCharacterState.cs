@@ -11,7 +11,7 @@ namespace Assets.Script.FiniteStateMachine
         {
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
-                bool gameIsOver = playableCharacterController.characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
+                bool gameIsOver = playableCharacterController._characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
                 if (!gameIsOver)
                 {
                     return new EarthIdlePlayableCharacterState();
@@ -20,10 +20,12 @@ namespace Assets.Script.FiniteStateMachine
             return nextState;
         }
 
-        public override void OnEnter(PlayableCharacterController playableCharacterController)
+        public override void OnEnter(PlayableCharacterController controller)
         {
-            playableCharacterController.playableCharacterMoveSpeed = 0;
-            playableCharacterController.playableCharacterAnimator.Play("Die");
+            controller.StopCoroutine(controller.DoBleedingCoroutine());
+            controller._isBleeding = false;
+            controller.playableCharacterMoveSpeed = 0;
+            controller.playableCharacterAnimator.Play("Die");
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
