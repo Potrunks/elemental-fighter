@@ -1,7 +1,6 @@
 ﻿using Assets.Script.Data;
 using Assets.Script.Data.Reference;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
 {
@@ -13,7 +12,7 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
         {
             if (playableCharacterController.playableCharacterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                bool gameIsOver = playableCharacterController.characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
+                bool gameIsOver = playableCharacterController._characterBusiness.ResetCharacterAfterDeath(playableCharacterController);
                 if (!gameIsOver)
                 {
                     return new FireWarriorIdleState();
@@ -23,11 +22,13 @@ namespace Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire
             return nextState;
         }
 
-        public override void OnEnter(PlayableCharacterController playableCharacterController)
+        public override void OnEnter(PlayableCharacterController controller)
         {
-            playableCharacterController.playableCharacterMoveSpeed = 0;
-            playableCharacterController.playableCharacterAnimator.Play("Die");
-            playableCharacterController._audioBusiness.PlayRandomVoice(VoiceType.DIE, playableCharacterController._voiceListByType);
+            controller.StopCoroutine(controller.DoBleedingCoroutine());
+            controller._isBleeding = false;
+            controller.playableCharacterMoveSpeed = 0;
+            controller.playableCharacterAnimator.Play("Die");
+            controller._audioBusiness.PlayRandomVoice(VoiceType.DIE, controller._voiceListByType);
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)

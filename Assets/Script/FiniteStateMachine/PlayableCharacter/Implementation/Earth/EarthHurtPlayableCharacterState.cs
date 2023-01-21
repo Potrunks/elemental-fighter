@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Business.Extension;
+using Assets.Script.Data;
 using Assets.Script.Data.Reference;
 using Assets.Script.FiniteStateMachine.PlayableCharacter.Implementation.Fire;
 using UnityEngine;
@@ -28,12 +29,18 @@ namespace Assets.Script.FiniteStateMachine
             return nextState;
         }
 
-        public override void OnEnter(PlayableCharacterController playableCharacterController)
+        public override void OnEnter(PlayableCharacterController controller)
         {
-            playableCharacterController.playableCharacterMoveSpeed = 0;
-            playableCharacterController._bloodEffectForDamage.Play();
-            playableCharacterController.playableCharacterAnimator.Play("Hurt", -1, 0f);
-            playableCharacterController._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, playableCharacterController._soundEffectListByType);
+            controller.playableCharacterMoveSpeed = 0;
+            controller._bloodEffectForDamage.Play();
+            controller.playableCharacterAnimator.Play("Hurt", -1, 0f);
+            controller._audioBusiness.PlayRandomSoundEffect(SoundEffectType.HURTING, controller._soundEffectListByType);
+            if (controller._currentHealth <= controller.playableCharacter.MaxHealth.PercentageOf(GamePlayValueReference.START_PERCENTAGE_BLEEDING)
+                && !controller._isBleeding)
+            {
+                controller._isBleeding = true;
+                controller.StartCoroutine(controller.DoBleedingCoroutine());
+            }
         }
 
         public override void OnExit(PlayableCharacterController playableCharacterController)
