@@ -31,8 +31,8 @@ namespace Assets.Script.Controller
 
         public void OnThrowMediumAtk()
         {
-            characterBusiness.PushElementalProjectile(this, new List<PowerLevelReference> { PowerLevelReference.Medium }, 5f);
-            characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
+            _characterBusiness.PushElementalProjectile(this, new List<PowerLevelReference> { PowerLevelReference.Medium }, 5f);
+            _characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
 
         public void OnCastHeavyAtk()
@@ -43,7 +43,7 @@ namespace Assets.Script.Controller
             }
             kvpPowerModelByPowerLevel.TryGetValue(PowerLevelReference.Heavy, out GameObject heavyElementalToCast);
             _groundLineAlreadyInTheScene = elementalBusiness.InstantiateStaticElemental(heavyElementalToCast, gameObjectElementalSpawnPoint, this);
-            characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
+            _characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
 
         public void OnCastEarthSpecialElemental()
@@ -58,8 +58,8 @@ namespace Assets.Script.Controller
 
         public void OnThrowSpecialAtk2()
         {
-            characterBusiness.PushElementalProjectile(this, new List<PowerLevelReference> { PowerLevelReference.Special }, 5f, rigidbodyConstraints2DList: new List<RigidbodyConstraints2D> { RigidbodyConstraints2D.FreezePositionY, RigidbodyConstraints2D.FreezeRotation });
-            characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
+            _characterBusiness.PushElementalProjectile(this, new List<PowerLevelReference> { PowerLevelReference.Special }, 5f, rigidbodyConstraints2DList: new List<RigidbodyConstraints2D> { RigidbodyConstraints2D.FreezePositionY, RigidbodyConstraints2D.FreezeRotation });
+            _characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
         }
         #endregion
     }

@@ -82,7 +82,7 @@ namespace Assets.Script.Business
         /// <summary>
         /// Play the bleeding effect of the character depending of the amount of damage taken.
         /// </summary>
-        float? DoBleedingEffect(int currentHealth, int maxHealth, float? nextBleedingTime, ParticleSystem bleedingEffectParticle);
+        float DoBleedingEffect(int currentHealth, int maxHealth, ParticleSystem bleedingEffectParticle);
 
         /// <summary>
         /// Return the amount of damage blocked.

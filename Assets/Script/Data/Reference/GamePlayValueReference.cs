@@ -13,5 +13,10 @@
         public static float START_PERCENTAGE_BLEEDING = 80f;
 
         public static float DASH_FORCE_MULTIPLICATOR = 1.5f;
+
+        /// <summary>
+        /// Invincible duration after death during the respawn.
+        /// </summary>
+        public static int INVINCIBLE_DURATION = 3;
     }
 }

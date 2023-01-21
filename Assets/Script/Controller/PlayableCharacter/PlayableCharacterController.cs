@@ -4,6 +4,7 @@ using Assets.Script.Business.Interface;
 using Assets.Script.Data;
 using Assets.Script.Data.Reference;
 using Assets.Script.Entities;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +30,7 @@ public class PlayableCharacterController : MonoBehaviour
     [Header("Blood effect component")]
     public ParticleSystem _bloodEffectForDamage;
     public ParticleSystem _bloodEffectForCurrentHealth;
-    private float? _nextBleedingTime;
+    public bool _isBleeding = false;
 
     [Header("Move Parameter")]
     public Vector2 inputMoveValue;
@@ -54,7 +55,6 @@ public class PlayableCharacterController : MonoBehaviour
 
     [Header("Invincible State")]
     public bool _isInvincible;
-    public float _invincibleLimitTimer;
 
     [Header("Audio")]
     public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
@@ -65,7 +65,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     IPlayerBusiness playerBusiness;
     IInputDeviceBusiness inputDeviceBusiness;
-    public ICharacterBusiness characterBusiness;
+    public ICharacterBusiness _characterBusiness;
     public IElementalBusiness elementalBusiness;
     public IPhysicsBusiness _physicsBusiness;
     public IAudioBusiness _audioBusiness;
@@ -73,24 +73,25 @@ public class PlayableCharacterController : MonoBehaviour
     #region MonoBehaviour Method
     private void FixedUpdate()
     {
-        playableCharacterRigidbody.velocity = characterBusiness.MoveCharacter(inputMoveValue, playableCharacterMoveSpeed, playableCharacterRigidbody, GamePlayValueReference.smoothTimeDuringMove);
+        playableCharacterRigidbody.velocity = _characterBusiness.MoveCharacter(inputMoveValue,
+                                                                                playableCharacterMoveSpeed,
+                                                                                playableCharacterRigidbody,
+                                                                                GamePlayValueReference.smoothTimeDuringMove);
+        _characterBusiness.CheckFlipCharacterModel(this);
+        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed);
     }
 
     private void Update()
     {
         isGrounding = groundCheck.isTouchingLayer(groundCheckRadius, groundLayer);
-        characterBusiness.CheckFlipCharacterModel(this);
-        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed);
-        _isInvincible = this.CheckInvincibleEndTime();
-        _nextBleedingTime = characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _nextBleedingTime, _bloodEffectForCurrentHealth);
-        characterBusiness.CheckCharacterStateChange(this);
+        _characterBusiness.CheckCharacterStateChange(this);
     }
 
     private void Awake()
     {
         playerBusiness = new PlayerBusiness();
         inputDeviceBusiness = new InputDeviceBusiness();
-        characterBusiness = new CharacterBusiness();
+        _characterBusiness = new CharacterBusiness();
         elementalBusiness = new ElementalBusiness();
         _physicsBusiness = new PhysicsBusiness();
         _audioBusiness = new AudioBusiness();
@@ -118,7 +119,6 @@ public class PlayableCharacterController : MonoBehaviour
             MultipleTargetCamFollow.instance.players.Add(transform);
         }
         _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
-        _nextBleedingTime = null;
         _soundEffectListByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(playableCharacter.SoundEffectList, gameObject);
         _voiceListByType = _audioBusiness.CreateAudioSourceListByVoiceType(playableCharacter.VoiceList, gameObject);
     }
@@ -194,7 +194,7 @@ public class PlayableCharacterController : MonoBehaviour
 
     public void OnThrowLightAtk()
     {
-        characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
+        _characterBusiness.InflictedMeleeDamageAfterHitBoxContact(_hitBoxAtk, _hitBoxAtkRadius, this, isPushingAtk: true);
     }
 
     public void CastElementalPower(PowerLevelReference level)
@@ -210,5 +210,30 @@ public class PlayableCharacterController : MonoBehaviour
             PauseMenu.instance?.PauseGame(_playerIndex);
         }
     }
+    #endregion
+
+    #region Coroutine
+
+    /// <summary>
+    /// Coroutine for bleeding effect execution.
+    /// </summary>
+    public IEnumerator DoBleedingCoroutine()
+    {
+        while (_isBleeding)
+        {
+            yield return new WaitForSeconds(_characterBusiness.DoBleedingEffect(_currentHealth, playableCharacter.MaxHealth, _bloodEffectForCurrentHealth));
+        }
+    }
+
+    /// <summary>
+    /// Coroutine for the invincible effect execution after death.
+    /// </summary>
+    public IEnumerator DoInvincibleCoroutine(int invicibleDuration)
+    {
+        this.TriggerInvincibility();
+        yield return new WaitForSeconds(invicibleDuration);
+        this.StopInvincibility();
+    }
+
     #endregion
 }
