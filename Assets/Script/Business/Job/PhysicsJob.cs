@@ -1,17 +1,17 @@
-﻿using Assets.Script.Data;
-using Unity.Burst;
+﻿using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Jobs;
+using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Script.Business.Job
 {
     [BurstCompile]
-    public struct MoveJob : IJob
+    public struct MoveRigidbody2DJob : IJob
     {
         public float inputXValue;
         public float speed;
@@ -38,7 +38,7 @@ namespace Assets.Script.Business.Job
     }
 
     [BurstCompile]
-    public struct FlipJob : IJobParallelForTransform
+    public struct FlipTransformJob : IJobParallelForTransform
     {
         public bool isDeviceUsed;
         public float velocityX;
@@ -65,6 +65,31 @@ namespace Assets.Script.Business.Job
                     isLeftFlip[index] = false;
                 }
             }
+        }
+    }
+
+    [BurstCompile]
+    public struct CalculateAngleJob : IJobParallelForTransform
+    {
+        public bool isFlipLeft;
+        public bool isDeviceUsed;
+        public float2 inputValue;
+
+        [BurstCompile]
+        public void Execute(int index, TransformAccess transform)
+        {
+            int xVector2Modificator = 1;
+            if ((isFlipLeft && !isDeviceUsed)
+                || (isFlipLeft && isDeviceUsed && inputValue.x > 0)
+                || (!isFlipLeft && isDeviceUsed && inputValue.x < 0))
+            {
+                xVector2Modificator = -1;
+            }
+
+            int zDegreeModificator = isFlipLeft && isDeviceUsed ? -1 : 1;
+            float xDegreeModificator = isFlipLeft ? 180f : 0f;
+
+            transform.rotation = Quaternion.Euler(xDegreeModificator, 0, Mathf.Atan2(inputValue.y, inputValue.x * xVector2Modificator) * Mathf.Rad2Deg * zDegreeModificator);
         }
     }
 }

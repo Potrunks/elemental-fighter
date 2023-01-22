@@ -34,10 +34,9 @@ namespace Assets.Script.Business
         {
             NativeArray<bool> isLeftFlip = new NativeArray<bool>(1, Allocator.TempJob);
             isLeftFlip[0] = controller._isLeftFlip;
-            TransformAccessArray transformAccessArray = new TransformAccessArray(1);
-            transformAccessArray.Add(controller.transform);
+            TransformAccessArray transformAccessArray = new TransformAccessArray(new Transform[] { controller.transform });
 
-            FlipJob flipJob = new FlipJob
+            FlipTransformJob flipJob = new FlipTransformJob
             {
                 isDeviceUsed = controller.isDeviceUsed,
                 isLeftFlip = isLeftFlip,
@@ -64,9 +63,9 @@ namespace Assets.Script.Business
         {
             NativeArray<float2> float2Result = new NativeArray<float2>(1, Allocator.TempJob);
 
-            MoveJob moveJob = new MoveJob
+            MoveRigidbody2DJob moveJob = new MoveRigidbody2DJob
             {
-                smoothTime= smoothTime,
+                smoothTime = smoothTime,
                 speed = moveSpeed,
                 time = Time.deltaTime,
                 inputXValue = inputMoveValue.x,
@@ -119,7 +118,7 @@ namespace Assets.Script.Business
 
         public void InflictedMeleeDamageAfterHitBoxContact(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false)
         {
-            Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] {"Player"}));
+            Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] { "Player" }));
 
             if (enemyColliderArray.Any())
             {
@@ -243,7 +242,7 @@ namespace Assets.Script.Business
         {
             if (healthAfterDamage <= 0 || healthBeforeDamage <= 0 || damageReductionFactor <= 0)
             {
-                throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.NEGATIVE_VALUE_NOT_PERMITTED, new List<int> { healthAfterDamage, healthBeforeDamage, damageReductionFactor});
+                throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.NEGATIVE_VALUE_NOT_PERMITTED, new List<int> { healthAfterDamage, healthBeforeDamage, damageReductionFactor });
             }
 
             if (healthBeforeDamage <= healthAfterDamage)

@@ -1,28 +1,32 @@
-﻿using System;
+﻿using Assets.Script.Business.Job;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Jobs;
 
 namespace Assets.Script.Business
 {
     public class PlayerBusiness : IPlayerBusiness
     {
-        public Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice)
+        public void CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice, Transform transformToRotate)
         {
-            int xVector2Modificator = 1;
-            if ((characterIsFlipLeft && !playerIsUsingDevice)
-                || (characterIsFlipLeft && playerIsUsingDevice && vector2.x > 0)
-                || (!characterIsFlipLeft && playerIsUsingDevice && vector2.x < 0))
+            TransformAccessArray transformAccessArray = new TransformAccessArray(new Transform[] {transformToRotate});
+
+            CalculateAngleJob job = new CalculateAngleJob
             {
-                xVector2Modificator = -1;
-            }
+                inputValue = vector2,
+                isDeviceUsed = playerIsUsingDevice,
+                isFlipLeft = characterIsFlipLeft
+            };
 
-            int zDegreeModificator = characterIsFlipLeft && playerIsUsingDevice ? -1 : 1;
-            float xDegreeModificator = characterIsFlipLeft ? 180f : 0f;
+            JobHandle jobHandle = job.Schedule(transformAccessArray);
+            jobHandle.Complete();
 
-            return Quaternion.Euler(xDegreeModificator, 0, Mathf.Atan2(vector2.y, vector2.x * xVector2Modificator) * Mathf.Rad2Deg * zDegreeModificator);
+            transformAccessArray.Dispose();
         }
 
         public void CreateNewPlayer(GameObject playerSelectionPreviewPrefab, GameObject tokenPrefab, GameObject cursorPrefab, Transform currentTransform, Transform playerSelectionGridTransform, List<CursorDetection> cursorDetectionList, IColorBusiness colorBusiness, InputDevice device, IDictionary<InputDevice, List<GameObject>> playerSelectGameObjectByDevice, int indexPlayer)
