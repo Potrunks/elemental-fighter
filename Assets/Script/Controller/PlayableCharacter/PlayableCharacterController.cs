@@ -78,7 +78,7 @@ public class PlayableCharacterController : MonoBehaviour
                                                                                 playableCharacterRigidbody,
                                                                                 GamePlayValueReference.smoothTimeDuringMove);
         _characterBusiness.CheckFlipCharacterModel(this);
-        gameObjectElementalSpawnPoint.transform.rotation = playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed);
+        playerBusiness.CalculateShootAngle(inputMoveValue, _isLeftFlip, isDeviceUsed, gameObjectElementalSpawnPoint.transform);
     }
 
     private void Update()

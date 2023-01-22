@@ -11,7 +11,9 @@ using System.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Jobs;
 using UnityEngine.UI;
 
 namespace Assets.Script.Business
@@ -30,21 +32,24 @@ namespace Assets.Script.Business
 
         public void CheckFlipCharacterModel(PlayableCharacterController controller)
         {
-            if (controller.isDeviceUsed)
+            NativeArray<bool> isLeftFlip = new NativeArray<bool>(1, Allocator.TempJob);
+            isLeftFlip[0] = controller._isLeftFlip;
+            TransformAccessArray transformAccessArray = new TransformAccessArray(new Transform[] { controller.transform });
+
+            FlipTransformJob flipJob = new FlipTransformJob
             {
-                if (controller.playableCharacterRigidbody.velocity.x < GamePlayValueReference.velocityLowThreshold
-                    && !controller._isLeftFlip)
-                {
-                    controller.transform.Rotate(0f, 180f, 0f);
-                    controller._isLeftFlip = true;
-                }
-                if (controller.playableCharacterRigidbody.velocity.x > GamePlayValueReference.velocityHighThreshold
-                    && controller._isLeftFlip)
-                {
-                    controller.transform.Rotate(0f, 180f, 0f);
-                    controller._isLeftFlip = false;
-                }
-            }
+                isDeviceUsed = controller.isDeviceUsed,
+                isLeftFlip = isLeftFlip,
+                velocityX = controller.playableCharacterRigidbody.velocity.x,
+                velocityHighThreshold = GamePlayValueReference.velocityHighThreshold,
+                velocityLowThreshold = GamePlayValueReference.velocityLowThreshold
+            };
+
+            JobHandle jobHandle = flipJob.Schedule(transformAccessArray);
+            jobHandle.Complete();
+            controller._isLeftFlip = isLeftFlip[0];
+            isLeftFlip.Dispose();
+            transformAccessArray.Dispose();
         }
 
         public GameObject GetRandomCharacter()
@@ -56,25 +61,24 @@ namespace Assets.Script.Business
 
         public Vector2 MoveCharacter(Vector2 inputMoveValue, float moveSpeed, Rigidbody2D rigidbodyToMove, float smoothTime)
         {
-            Vector3 reference = Vector3.zero;
-            NativeArray<float> result = new NativeArray<float>(1, Allocator.TempJob);
-            NativeArray<float> floatToMultiplicate = new NativeArray<float>(3, Allocator.TempJob);
-            floatToMultiplicate[0] = inputMoveValue.x;
-            floatToMultiplicate[1] = moveSpeed;
-            floatToMultiplicate[2] = Time.deltaTime;
-            MultiplicatorJob job = new MultiplicatorJob
+            NativeArray<float2> float2Result = new NativeArray<float2>(1, Allocator.TempJob);
+
+            MoveRigidbody2DJob moveJob = new MoveRigidbody2DJob
             {
-                floatListToMultiplicate = floatToMultiplicate,
-                resultMultiplicator = result
+                smoothTime = smoothTime,
+                speed = moveSpeed,
+                time = Time.deltaTime,
+                inputXValue = inputMoveValue.x,
+                float2Result = float2Result,
+                velocity = new float3(rigidbodyToMove.velocity.x, rigidbodyToMove.velocity.y, 0)
             };
-            JobHandle jobHandle = job.Schedule();
+            JobHandle jobHandle = moveJob.Schedule();
             jobHandle.Complete();
-            Vector2 vector2 = Vector3.SmoothDamp(rigidbodyToMove.velocity,
-                                      new Vector2(result[0], rigidbodyToMove.velocity.y),
-                                      ref reference,
-                                      smoothTime);
-            result.Dispose();
-            floatToMultiplicate.Dispose();
+
+            Vector2 vector2 = new Vector2(float2Result[0].x, float2Result[0].y);
+
+            float2Result.Dispose();
+
             return vector2;
         }
 
@@ -114,7 +118,7 @@ namespace Assets.Script.Business
 
         public void InflictedMeleeDamageAfterHitBoxContact(GameObject hitBox, float hitBoxRadius, PlayableCharacterController caster, bool isPushingAtk = false)
         {
-            Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] {"Player"}));
+            Collider2D[] enemyColliderArray = Physics2D.OverlapCircleAll(hitBox.transform.position, hitBoxRadius, LayerMask.GetMask(new string[] { "Player" }));
 
             if (enemyColliderArray.Any())
             {
@@ -238,7 +242,7 @@ namespace Assets.Script.Business
         {
             if (healthAfterDamage <= 0 || healthBeforeDamage <= 0 || damageReductionFactor <= 0)
             {
-                throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.NEGATIVE_VALUE_NOT_PERMITTED, new List<int> { healthAfterDamage, healthBeforeDamage, damageReductionFactor});
+                throw new ImpossibleValueConstraintException(ImpossibleValueConstraintExceptionMessageReference.NEGATIVE_VALUE_NOT_PERMITTED, new List<int> { healthAfterDamage, healthBeforeDamage, damageReductionFactor });
             }
 
             if (healthBeforeDamage <= healthAfterDamage)
