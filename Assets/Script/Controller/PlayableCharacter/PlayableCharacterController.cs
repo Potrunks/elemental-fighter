@@ -7,6 +7,7 @@ using Assets.Script.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,7 +37,7 @@ public class PlayableCharacterController : MonoBehaviour
     public Vector2 inputMoveValue;
     public Rigidbody2D playableCharacterRigidbody;
     public float playableCharacterMoveSpeed;
-    public bool isDeviceUsed;
+    public bool isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
     public bool _isLeftFlip;
 
     [Header("Elemental Spawn")]
@@ -49,12 +50,12 @@ public class PlayableCharacterController : MonoBehaviour
     [Header("InGame Data")]
     public int _playerIndex;
     public PlayableCharacterController _enemy;
-    public bool _isTouchingByAttack;
+    public bool _isTouchingByAttack = false;
     public SpawnPlayer _spawnPlayerPoint;
     public ScorePlayer _scorePlayer;
 
     [Header("Invincible State")]
-    public bool _isInvincible;
+    public bool _isInvincible = false;
 
     [Header("Audio")]
     public IDictionary<SoundEffectType, List<AudioSource>> _soundEffectListByType;
@@ -96,29 +97,37 @@ public class PlayableCharacterController : MonoBehaviour
         _physicsBusiness = new PhysicsBusiness();
         _audioBusiness = new AudioBusiness();
 
-        playableCharacterAnimator = gameObject.GetComponent<Animator>();
-        playableCharacterRigidbody = gameObject.GetComponent<Rigidbody2D>();
         _spawnPlayerPoint = GetComponentInParent<SpawnPlayer>();
         if (_spawnPlayerPoint != null)
         {
             _scorePlayer = _spawnPlayerPoint.scorePlayer.GetComponent<ScorePlayer>();
         }
-        _spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        gameObjectElementalSpawnPoint = transform.Find("ElementalSpawnPoint").gameObject;
-        _hitBoxAtk = transform.Find("HitBoxAtk").gameObject;
-
-        isDeviceUsed = GamePlayValueReference.startDeviceUsingState;
-        playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
         _isLeftFlip = this.IsFlipLeft();
-        _isTouchingByAttack = false;
-        _isInvincible = false;
-        kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
-        _currentHealth = playableCharacter.MaxHealth;
+        _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
         if (MultipleTargetCamFollow.instance != null)
         {
             MultipleTargetCamFollow.instance.players.Add(transform);
         }
-        _spriteRenderer.ChangeColorByIndexPlayer(_playerIndex);
+
+        Task initMoveSpeedTask = new Task(() =>
+        {
+            playableCharacterMoveSpeed = playableCharacter.MoveSpeed;
+        });
+        Task initHealthTask = new Task(() =>
+        {
+            _currentHealth = playableCharacter.MaxHealth;
+        });
+        Task initKvpPowerByLevel = new Task(() =>
+        {
+            kvpPowerModelByPowerLevel = playableCharacter.PowerEntityList.ToDictionary(pow => pow.powerLevel, pow => pow.powerModel);
+        });
+        Task[] taskArrayToExecute = { initMoveSpeedTask, initHealthTask, initKvpPowerByLevel };
+        foreach (Task task in taskArrayToExecute)
+        {
+            task.Start();
+        }
+        Task.WaitAll(taskArrayToExecute);
+
         _soundEffectListByType = _audioBusiness.CreateAudioSourceListBySoundEffectType(playableCharacter.SoundEffectList, gameObject);
         _voiceListByType = _audioBusiness.CreateAudioSourceListByVoiceType(playableCharacter.VoiceList, gameObject);
     }
@@ -141,7 +150,7 @@ public class PlayableCharacterController : MonoBehaviour
             isDeviceUsed = inputDeviceBusiness.CheckPlayerUsingDevice(context, isDeviceUsed);
             inputMoveValue = context.ReadValue<Vector2>();
         }
-        
+
     }
 
     public void OnInputJump(InputAction.CallbackContext context)
