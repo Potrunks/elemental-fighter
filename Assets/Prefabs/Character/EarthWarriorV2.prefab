@@ -339,16 +339,17 @@ MonoBehaviour:
   groundCheck: {fileID: 4152062392815420814}
   playableCharacter: {fileID: 11400000, guid: dc0c8977fb72f2c49bdc06479c979c80, type: 2}
   _currentHealth: 0
-  playableCharacterAnimator: {fileID: 0}
-  _spriteRenderer: {fileID: 0}
+  playableCharacterAnimator: {fileID: 4152062391814938596}
+  _spriteRenderer: {fileID: 4152062391814938600}
   _bloodEffectForDamage: {fileID: 3003757487408969805}
   _bloodEffectForCurrentHealth: {fileID: 1333191153991818883}
+  _isBleeding: 0
   inputMoveValue: {x: 0, y: 0}
-  playableCharacterRigidbody: {fileID: 0}
+  playableCharacterRigidbody: {fileID: 4152062391814938602}
   playableCharacterMoveSpeed: 0
   isDeviceUsed: 0
   _isLeftFlip: 0
-  gameObjectElementalSpawnPoint: {fileID: 0}
+  gameObjectElementalSpawnPoint: {fileID: 4152062392735839210}
   _hitBoxAtk: {fileID: 4152062393142088505}
   _hitBoxAtkRadius: 0.36
   _playerIndex: 0
@@ -357,7 +358,6 @@ MonoBehaviour:
   _spawnPlayerPoint: {fileID: 0}
   _scorePlayer: {fileID: 0}
   _isInvincible: 0
-  _invincibleLimitTimer: 0
   _wallRockAlreadyInTheScene: {fileID: 0}
   _groundLineAlreadyInTheScene: {fileID: 0}
 --- !u!114 &1766690604846548335
