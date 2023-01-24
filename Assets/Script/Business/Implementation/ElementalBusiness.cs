@@ -1,4 +1,5 @@
-﻿using Assets.Script.Data;
+﻿using Assets.Script.Controller;
+using Assets.Script.Data;
 using Assets.Script.Entities;
 using DG.Tweening;
 using System.Linq;
@@ -76,6 +77,16 @@ namespace Assets.Script.Business
                         powerControllerCasted._willBeDestroyed = true;
                         powerControllerCasted._isDestroyedAfterDestructiveCollision = true;
                     }
+                }
+                else if (colliderTouched.TryGetComponent(out SpecialEarthPowerController wallRockTouched)
+                            && powerControllerCasted.GetType() == wallRockTouched.GetType())
+                {
+                    powerControllerCasted._willBeDestroyed = true;
+                    powerControllerCasted._isDestroyedAfterDestructiveCollision = true;
+                    powerControllerCasted._collider.isTrigger = isTriggerAfterCollision;
+
+                    wallRockTouched._willBeDestroyed = true;
+                    wallRockTouched._isDestroyedAfterDestructiveCollision = true;
                 }
                 else
                 {

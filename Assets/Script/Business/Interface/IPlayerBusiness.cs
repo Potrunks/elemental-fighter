@@ -62,6 +62,6 @@ namespace Assets.Script.Business
         /// <summary>
         /// Calculate the shoot angle of the player.
         /// </summary>
-        Quaternion CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice);
+        void CalculateShootAngle(Vector2 vector2, bool characterIsFlipLeft, bool playerIsUsingDevice, Transform transformToRotate);
     }
 }
