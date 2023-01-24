@@ -78,7 +78,8 @@ namespace Assets.Script.Business
                         powerControllerCasted._isDestroyedAfterDestructiveCollision = true;
                     }
                 }
-                else if (colliderTouched.TryGetComponent(out SpecialEarthPowerController wallRockTouched))
+                else if (colliderTouched.TryGetComponent(out SpecialEarthPowerController wallRockTouched)
+                            && powerControllerCasted.GetType() == wallRockTouched.GetType())
                 {
                     powerControllerCasted._willBeDestroyed = true;
                     powerControllerCasted._isDestroyedAfterDestructiveCollision = true;
